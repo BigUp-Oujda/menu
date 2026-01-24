@@ -16,7 +16,8 @@
       --white: #ffffff;
       --gray: #a0a0a0;
       --gray-dark: #6b6b6b;
-      /* Define fixed heights for consistency */
+      
+      /* Desktop Defaults */
       --header-height: 140px;
       --nav-height: 60px;
     }
@@ -27,6 +28,10 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg-dark);
@@ -35,13 +40,13 @@
       line-height: 1.5;
     }
 
-    /* --- FIXED HEADER --- */
+    /* --- HEADER --- */
     header {
       background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-card) 100%);
       padding: 1rem;
       text-align: center;
       border-bottom: 3px solid var(--orange);
-      position: fixed; /* Forced to stay at top */
+      position: fixed;
       top: 0;
       left: 0;
       right: 0;
@@ -50,6 +55,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      transition: all 0.3s ease;
     }
 
     .tagline {
@@ -57,11 +63,12 @@
       letter-spacing: 0.25em;
       color: var(--orange);
       text-transform: uppercase;
+      margin-bottom: 0.2rem;
     }
 
     h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 6vw, 3rem);
+      font-size: 3rem;
       letter-spacing: 0.05em;
       color: var(--white);
       line-height: 1;
@@ -71,27 +78,32 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.5rem 1rem;
+      gap: 0.2rem 1rem;
       margin-top: 0.5rem;
       font-size: 0.75rem;
       color: var(--gray);
     }
 
+    .header-info span {
+      display: inline-block;
+    }
+
     .header-info a {
       color: var(--orange);
       text-decoration: none;
+      font-weight: 500;
     }
 
-    /* --- FIXED NAV --- */
+    /* --- NAV --- */
     nav {
       display: flex;
       gap: 0.5rem;
-      justify-content: flex-start; /* Better for mobile scrolling */
+      justify-content: center;
       align-items: center;
       padding: 0 1rem;
       background: var(--bg-card);
       border-bottom: 1px solid rgba(255,107,53,0.2);
-      position: fixed; /* Forced to stay */
+      position: fixed;
       top: var(--header-height);
       left: 0;
       right: 0;
@@ -100,110 +112,147 @@
       overflow-x: auto;
       white-space: nowrap;
       -webkit-overflow-scrolling: touch;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
 
-    /* Hide scrollbar but keep functionality */
     nav::-webkit-scrollbar { display: none; }
 
     nav a {
       color: var(--gray);
       text-decoration: none;
-      padding: 0.4rem 0.8rem;
-      border-radius: 4px;
-      font-size: 0.85rem;
+      padding: 0.5rem 1rem;
+      border-radius: 50px; /* Pill shape looks better on mobile */
+      font-size: 0.9rem;
       font-weight: 500;
       transition: all 0.2s;
+      border: 1px solid transparent;
     }
 
-    nav a:hover,
+    nav a:hover {
+      color: var(--white);
+      border-color: rgba(255,255,255,0.1);
+    }
+
     nav a.active {
       color: var(--white);
       background: var(--orange);
+      border-color: var(--orange);
     }
 
-    /* --- ADJUST MAIN CONTENT --- */
+    /* --- MAIN --- */
     main {
       max-width: 900px;
       margin: 0 auto;
-      /* Add padding top so content doesn't hide under fixed header/nav */
+      /* Padding top = Header + Nav + Buffer */
       padding: calc(var(--header-height) + var(--nav-height) + 2rem) 1.5rem 4rem;
     }
 
     .section {
-      margin-bottom: 3rem;
-      /* Offset for anchor links */
-      scroll-margin-top: calc(var(--header-height) + var(--nav-height) + 10px);
+      margin-bottom: 3.5rem;
+      scroll-margin-top: calc(var(--nav-height) + 20px);
     }
 
     .section-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.75rem;
-      letter-spacing: 0.08em;
+      font-size: 2rem;
+      letter-spacing: 0.05em;
       color: var(--orange);
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.25rem;
       border-bottom: 2px solid rgba(255,107,53,0.4);
+      display: inline-block;
     }
 
+    /* --- MENU ITEMS --- */
     .item {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: 1rem;
-      padding: 0.85rem 0;
+      padding: 1rem 0;
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    .item-name { font-weight: 600; color: var(--white); font-size: 1rem; }
-    .item-desc { font-size: 0.8rem; color: var(--gray-dark); margin-top: 0.2rem; }
-    .item-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; color: var(--orange); white-space: nowrap; }
-    .item-price span { font-size: 0.7rem; color: var(--gray); font-family: 'DM Sans', sans-serif; }
+    .item-name { 
+      font-weight: 700; 
+      color: var(--white); 
+      font-size: 1.1rem; 
+    }
+    
+    .item-desc { 
+      font-size: 0.85rem; 
+      color: var(--gray); 
+      margin-top: 0.3rem; 
+      line-height: 1.4;
+    }
 
-    .pizza-sizes { display: flex; gap: 0.75rem; margin-top: 0.25rem; font-size: 0.8rem; color: var(--gray-dark); }
-    .pizza-sizes span { color: var(--orange); font-weight: 600; }
+    .item-price { 
+      font-family: 'Bebas Neue', sans-serif; 
+      font-size: 1.4rem; 
+      color: var(--orange); 
+      white-space: nowrap; 
+      text-align: right;
+    }
+    
+    .item-price span { 
+      font-size: 0.8rem; 
+      color: var(--gray); 
+      font-family: 'DM Sans', sans-serif; 
+    }
 
-    .sub-list { margin-top: 0.5rem; padding-left: 1rem; font-size: 0.8rem; color: var(--gray-dark); list-style: none; }
-    .sub-list li { margin-bottom: 0.25rem; }
+    .pizza-sizes { 
+      display: flex; 
+      gap: 1rem; 
+      margin-top: 0.4rem; 
+      font-size: 0.9rem; 
+      color: var(--white); 
+    }
+    
+    .pizza-sizes span { 
+      color: var(--orange); 
+      font-weight: 700; 
+    }
 
-    /* --- TACOS COMPOSE GRID --- */
+    .sub-list { margin-top: 0.5rem; font-size: 0.85rem; color: var(--gray); }
+    .sub-list li { margin-bottom: 0.3rem; }
+
+    /* --- COMPONENT GRIDS --- */
     .compose-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 0.75rem;
-      margin-top: 0.5rem;
       margin-bottom: 2rem;
     }
 
     .compose-item {
-      background: rgba(255,107,53,0.1);
+      background: rgba(255,107,53,0.08);
       border: 1px solid rgba(255,107,53,0.3);
-      border-radius: 6px;
-      padding: 0.6rem;
-      font-size: 0.85rem;
+      border-radius: 8px;
+      padding: 0.8rem 0.5rem;
+      font-size: 0.9rem;
       text-align: center;
     }
 
-    .compose-item strong { color: var(--orange); font-size: 1.1rem; display: block; margin-bottom: 0.2rem;}
-    
-    /* New Styles for Tacos Steps */
+    .compose-item strong { color: var(--orange); font-size: 1.25rem; display: block; margin-bottom: 0.2rem;}
+
     .step-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .step-card {
-      background: rgba(255,107,53,0.05);
-      border: 1px solid rgba(255,107,53,0.2);
-      border-radius: 8px;
-      padding: 1.5rem;
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 1.25rem;
     }
 
     .step-title {
       color: var(--orange);
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
     }
 
     .pill-grid {
@@ -214,30 +263,90 @@
 
     .pill {
       font-size: 0.8rem;
-      background: var(--bg-card);
-      padding: 4px 10px;
-      border-radius: 4px;
+      background: #2a2a2a;
+      padding: 6px 12px;
+      border-radius: 6px;
       border: 1px solid #444;
-      color: var(--gray);
+      color: #ccc;
     }
-    .pill strong { color: var(--orange); }
+    .pill strong { color: var(--orange); margin-left: 3px;}
 
     footer {
       text-align: center;
-      padding: 2rem 1.5rem;
+      padding: 3rem 1.5rem;
       background: var(--bg-card);
       border-top: 1px solid rgba(255,107,53,0.2);
-      color: var(--gray);
-      font-size: 0.9rem;
+      color: var(--gray-dark);
+      font-size: 0.85rem;
       margin-top: 4rem;
     }
 
-    .social { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-top: 1rem; }
-    .social a { color: var(--orange); text-decoration: none; font-weight: 600; }
+    .social { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin-top: 1.5rem; }
+    .social a { color: var(--white); text-decoration: none; font-weight: 600; background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 50px; width: 100%; max-width: 250px;}
+    .social a:hover { background: var(--orange); }
 
-    @media (max-width: 600px) {
-      .item { flex-direction: column; gap: 0.25rem; }
-      .item-price { align-self: flex-end; }
+    /* --- MOBILE OPTIMIZATION --- */
+    @media (max-width: 768px) {
+      
+      /* 1. Header is NO LONGER fixed on mobile to save screen space */
+      header {
+        position: relative; 
+        height: auto;
+        padding: 1.5rem 1rem 1rem;
+      }
+
+      /* 2. Nav becomes Sticky at top: 0 */
+      nav {
+        position: sticky;
+        top: 0;
+        justify-content: flex-start; /* Alignment for scroll */
+        padding-left: 1rem;
+        background: rgba(36, 36, 36, 0.98); /* Slight opacity */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      }
+
+      /* 3. Remove huge top padding from main since header scrolls away */
+      main {
+        padding: 2rem 1.25rem 4rem; 
+      }
+
+      .section {
+        scroll-margin-top: calc(var(--nav-height) + 10px);
+      }
+
+      h1 { font-size: 2.5rem; }
+
+      .item {
+        flex-direction: column; /* Stack name and price */
+        gap: 0.4rem;
+        padding: 1.25rem 0; /* More breathing room for fingers */
+      }
+
+      .item-name { font-size: 1.15rem; }
+
+      .item-price {
+        align-self: flex-start; /* Align left under description */
+        font-size: 1.35rem;
+        background: rgba(255, 107, 53, 0.1);
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-top: 0.25rem;
+      }
+
+      .compose-grid {
+        /* Ensure compose buttons don't get too skinny */
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .step-grid {
+        grid-template-columns: 1fr; /* Stack steps vertically */
+      }
+
+      /* Hide less critical header info on very small screens if needed, 
+         or just stack them neatly (already flex-wrapped) */
+      .header-info {
+         gap: 0.5rem;
+      }
     }
   </style>
 </head>
@@ -246,11 +355,10 @@
     <p class="tagline">Fast Food</p>
     <h1>BIG UP</h1>
     <div class="header-info">
-      <span>📍 BD AL MAQDIS, OUJDA</span>
+      <span>📍 BD AL MAQDIS</span>
       <span>📞 <a href="tel:+212536503590">05 36 50 35 90</a></span>
       <span>📞 <a href="tel:+212765806052">07 65 80 60 52</a></span>
-      <span>  Sur place · Emporté · Livraison  </span>
-      <span>📍 Av. Omar Ibn Khattab, Oujda</span>
+      <span style="width: 100%; height: 0; margin: 0.2rem 0;"></span> <span>📍 Av. Omar Ibn Khattab</span>
        <span>📞 <a href="tel:+212536688027">05 36 68 80 27</a></span>
       <span>📞 <a href="tel:+212765806051">07 65 80 60 51</a></span>
     </div>
@@ -616,9 +724,9 @@
       <h2 class="section-title">Compose selon tes goûts (Tacos)</h2>
       
       <div class="compose-grid">
-        <div class="compose-item"><strong>M</strong> — 30 DH <br><small>1 Viande</small></div>
-        <div class="compose-item"><strong>L</strong> — 35 DH <br><small>2 Viandes</small></div>
-        <div class="compose-item"><strong>XL</strong> — 60 DH <br><small>3 Viandes</small></div>
+        <div class="compose-item"><strong>M</strong>30 DH <br><small>1 Viande</small></div>
+        <div class="compose-item"><strong>L</strong>35 DH <br><small>2 Viandes</small></div>
+        <div class="compose-item"><strong>XL</strong>60 DH <br><small>3 Viandes</small></div>
       </div>
 
       <div class="step-grid">
@@ -660,7 +768,7 @@
         </div>
       </div>
 
-      <h3 class="section-title" style="margin-top:3rem; font-size:1.4rem; border:none;">Ou nos Recettes Signatures</h3>
+      <h3 class="section-title" style="margin-top:3rem; font-size:1.6rem; border:none; display: block;">Ou nos Recettes Signatures</h3>
       
       <div class="item">
         <div>
@@ -690,13 +798,11 @@
   <footer>
     <p><strong>BIG UP</strong> · Fast Food</p>
     <p>BD AL MAQDIS, OUJDA</p>
-    <p>05 36 50 35 90 · 07 65 80 60 52</p>
-      <p>Av. Omar Ibn Khattab, Oujda</p>
-    <p>05 36 68 80 27 · 07 65 80 60 51</p>
+    <p>Av. Omar Ibn Khattab, Oujda</p>
     
     <div class="social">
-      <a href="https://www.facebook.com/bigup.oujda/" target="_blank" rel="noopener">Facebook — f BIGUP</a>
-       <a href="https://www.instagram.com/big_up_oujda_" target="_blank" rel="noopener">Instagram — BIGUP OUJDA</a>
+      <a href="https://www.facebook.com/bigup.oujda/" target="_blank" rel="noopener">Facebook</a>
+       <a href="https://www.instagram.com/big_up_oujda_" target="_blank" rel="noopener">Instagram</a>
       <p style="margin-top:1rem; font-size:0.75rem; color:#555;">Suhayb Dawson</p>
     </div>
   </footer>
@@ -704,23 +810,34 @@
   <script>
     const sections = document.querySelectorAll('.section');
     const navLinks = document.querySelectorAll('nav a');
+    const nav = document.querySelector('nav');
 
     function updateActive() {
       const scrollY = window.scrollY;
+      
+      // Calculate offset based on whether we are on mobile (header relative) or desktop (header fixed)
+      const isMobile = window.innerWidth <= 768;
+      const offset = isMobile ? 100 : 220; 
+
       sections.forEach((sec) => {
-        const top = sec.offsetTop - 220; 
+        const top = sec.offsetTop - offset; 
         const height = sec.offsetHeight;
         if (scrollY >= top && scrollY < top + height) {
           navLinks.forEach(a => a.classList.remove('active'));
           const id = sec.getAttribute('id');
           const link = document.querySelector(`nav a[href="#${id}"]`);
-          if (link) link.classList.add('active');
+          if (link) {
+            link.classList.add('active');
+            // Auto scroll nav to active item
+            link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }
         }
       });
     }
 
     window.addEventListener('scroll', updateActive);
     window.addEventListener('load', updateActive);
+    window.addEventListener('resize', updateActive);
   </script>
 </body>
 </html>
