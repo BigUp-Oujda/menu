@@ -165,11 +165,13 @@
     .sub-list { margin-top: 0.5rem; padding-left: 1rem; font-size: 0.8rem; color: var(--gray-dark); list-style: none; }
     .sub-list li { margin-bottom: 0.25rem; }
 
+    /* --- TACOS COMPOSE GRID --- */
     .compose-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
       gap: 0.75rem;
       margin-top: 0.5rem;
+      margin-bottom: 2rem;
     }
 
     .compose-item {
@@ -178,9 +180,47 @@
       border-radius: 6px;
       padding: 0.6rem;
       font-size: 0.85rem;
+      text-align: center;
     }
 
-    .compose-item strong { color: var(--orange); }
+    .compose-item strong { color: var(--orange); font-size: 1.1rem; display: block; margin-bottom: 0.2rem;}
+    
+    /* New Styles for Tacos Steps */
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .step-card {
+      background: rgba(255,107,53,0.05);
+      border: 1px solid rgba(255,107,53,0.2);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .step-title {
+      color: var(--orange);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      font-size: 0.8rem;
+      background: var(--bg-card);
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid #444;
+      color: var(--gray);
+    }
+    .pill strong { color: var(--orange); }
 
     footer {
       text-align: center;
@@ -189,9 +229,10 @@
       border-top: 1px solid rgba(255,107,53,0.2);
       color: var(--gray);
       font-size: 0.9rem;
+      margin-top: 4rem;
     }
 
-    .social { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; }
+    .social { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-top: 1rem; }
     .social a { color: var(--orange); text-decoration: none; font-weight: 600; }
 
     @media (max-width: 600px) {
@@ -201,7 +242,7 @@
   </style>
 </head>
 <body>
-  <header>
+   <header>
     <p class="tagline">Fast Food</p>
     <h1>BIG UP</h1>
     <div class="header-info">
@@ -214,6 +255,7 @@
       <span>📞 <a href="tel:+212765806051">07 65 80 60 51</a></span>
     </div>
   </header>
+
 
   <nav id="navbar">
     <a href="#burgers">Burgers</a>
@@ -228,7 +270,7 @@
     <a href="#jus">Jus & Desserts</a>
     <a href="#bowls">Bowls</a>
     <a href="#twister">Twister</a>
-    <a href="#compose">Compose</a>
+    <a href="#compose">Compose Tacos</a>
   </nav>
 
   <main>
@@ -310,6 +352,13 @@
       </div>
       <div class="item">
         <div>
+          <div class="item-name">Chilli Turkish</div>
+          <div class="item-desc">Kebab, viande hachée, chou rouge, sauce piquante</div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
           <div class="item-name">Savoyard</div>
           <div class="item-desc">Poulet mariné à la crème fraîche, jambon de dinde, cheddar</div>
         </div>
@@ -318,7 +367,7 @@
       <div class="item">
         <div>
           <div class="item-name">America</div>
-          <div class="item-desc">2 steaks</div>
+          <div class="item-desc">2 steaks hachés, salade, tomate, fromage</div>
         </div>
         <div class="item-price">40 <span>DH</span></div>
       </div>
@@ -428,9 +477,7 @@
       </div>
     </section>
 
-   
-
-<section class="section" id="jus">
+    <section class="section" id="jus">
       <h2 class="section-title">Jus & Desserts</h2>
       <div class="item"><div><div class="item-name">Jus d'Orange</div></div><div class="item-price">15 <span>DH</span></div></div>
       <div class="item"><div><div class="item-name">Jus de Citron</div></div><div class="item-price">15 <span>DH</span></div></div>
@@ -440,219 +487,182 @@
       <div class="item"><div><div class="item-name">Flan Cuajada</div></div><div class="item-price">15 <span>DH</span></div></div>
     </section>
 
-   <section class="section" id="bowls">
-  <h2 class="section-title">Bowls</h2>
-  
-  <div class="item">
-    <div>
-      <div class="item-name">Steak & Tenders</div>
-      <div class="item-desc">Viande hachée, tenders, sauce fromagère, frites</div>
-    </div>
-    <div class="item-price">45 <span>DH</span></div>
-  </div>
-
-  <div class="item">
-    <div>
-      <div class="item-name">Magic Bowls</div>
-      <div class="item-desc">Tikka, jambon de dinde, oignon rings, sauce fromagère, frites</div>
-    </div>
-    <div class="item-price">45 <span>DH</span></div>
-  </div>
-
-  <div class="item">
-    <div>
-      <div class="item-name">Cordon Bleu & Tenders</div>
-      <div class="item-desc">Cordon bleu, tenders, sauce fromagère, frites</div>
-    </div>
-    <div class="item-price">45 <span>DH</span></div>
-  </div>
-</section>
-
-   <section class="section" id="twister">
-  <h2 class="section-title">Twister</h2>
-
-  <div class="item">
-    <div>
-      <div class="item-name">Cheezy Twister</div>
-      <div class="item-desc">Viande hachée, tenders, galette de pomme de terre, sauce fromagère</div>
-    </div>
-    <div class="item-price">45 <span>DH</span></div>
-  </div>
-
-  <div class="item">
-    <div>
-      <div class="item-name">Crunchy Twister</div>
-      <div class="item-desc">Tenders, onion rings, sauce au choix</div>
-    </div>
-    <div class="item-price">45 <span>DH</span></div>
-  </div>
-
-  <div class="item">
-    <div>
-      <div class="item-name">Swiss Twister</div>
-      <div class="item-desc">Poulet, merguez, jambon de dinde, galette de pomme de terre</div>
-    </div>
-    <div class="item-price">50 <span>DH</span></div>
-  </div>
-</section>
-    <section class="section" id="pizza">
-
-      <h2 class="section-title">Menu Pizza</h2>
-
-      <p class="item-desc" style="margin-bottom:1rem;color:var(--gray);">Toutes en M et G</p>
-
+    <section class="section" id="bowls">
+      <h2 class="section-title">Bowls</h2>
       <div class="item">
-
         <div>
-
-          <div class="item-name">Pizza Rouge</div>
-
-          <div class="item-desc">Sauce tomate, fromage, origan</div>
-
-          <div class="pizza-sizes">M <span>32 DH</span> · G <span>47 DH</span></div>
-
+          <div class="item-name">Steak & Tenders</div>
+          <div class="item-desc">Viande hachée, tenders, sauce fromagère, frites</div>
         </div>
-
+        <div class="item-price">45 <span>DH</span></div>
       </div>
-
       <div class="item">
-
         <div>
-
-          <div class="item-name">Pizza Blancca</div>
-
-          <div class="item-desc">Sauce gruyère, fromage, basilic</div>
-
-          <div class="pizza-sizes">M <span>35 DH</span> · G <span>50 DH</span></div>
-
+          <div class="item-name">Magic Bowls</div>
+          <div class="item-desc">Tikka, jambon de dinde, oignon rings, sauce fromagère, frites</div>
         </div>
-
+        <div class="item-price">45 <span>DH</span></div>
       </div>
-
       <div class="item">
-
         <div>
-
-          <div class="item-name">Pizza Thon</div>
-
-          <div class="item-desc">Sauce tomate, fromage, thon, olive, origan</div>
-
-          <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
-
+          <div class="item-name">Cordon Bleu & Tenders</div>
+          <div class="item-desc">Cordon bleu, tenders, sauce fromagère, frites</div>
         </div>
-
+        <div class="item-price">45 <span>DH</span></div>
       </div>
-
-      <div class="item">
-
-        <div>
-
-          <div class="item-name">Pizza Végétarienne</div>
-
-          <div class="item-desc">Sauce tomate, fromage, oignon, courgette, poivron, champignon, tomate, origan</div>
-
-          <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
-
-        </div>
-
-      </div>
-
-      <div class="item">
-
-        <div>
-
-          <div class="item-name">Pizza Fumé</div>
-
-          <div class="item-desc">Sauce tomate, fromage, jambon fumé, origan</div>
-
-          <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
-
-        </div>
-
-      </div>
-
-      <div class="item">
-
-        <div>
-
-          <div class="item-name">Pizza Bolognaise</div>
-
-          <div class="item-desc">Sauce tomate, fromage, viande hachée, champignon, poivron, origan</div>
-
-          <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
-
-        </div>
-
-      </div>
-
-      <div class="item">
-
-        <div>
-
-          <div class="item-name">Pizza Chicken</div>
-
-          <div class="item-desc">Sauce gruyère, fromage, poulet, olive, origan</div>
-
-          <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
-
-        </div>
-
-      </div>
-
-      <div class="item">
-
-        <div>
-
-          <div class="item-name">Pizza 4 Fromage</div>
-
-          <div class="item-desc">Sauce tomate, mozzarella, masdam, roquefort, cheddar</div>
-
-          <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
-
-        </div>
-
-      </div>
-
-      <div class="item">
-
-        <div>
-
-          <div class="item-name">Pizza Fruits de Mer</div>
-
-          <div class="item-desc">Sauce tomate, crevettes, surimi, calamars, olive, origan</div>
-
-          <div class="pizza-sizes">M <span>45 DH</span> · G <span>65 DH</span></div>
-
-        </div>
-
-      </div>
-
-      <div class="item">
-
-        <div>
-
-          <div class="item-name">Pizza Big Up</div>
-
-          <div class="item-desc">Sauce gruyère, fromage, crispy chicken, basilic</div>
-
-          <div class="pizza-sizes">M <span>45 DH</span> · G <span>65 DH</span></div>
-
-        </div>
-
-      </div>
-
     </section>
 
-     <!-- COMPOSE SELON TES GOÛTS -->
-    <section class="section" id="compose">
-      <h2 class="section-title">Compose selon tes goûts</h2>
-      <p class="item-desc" style="margin-bottom:1rem;color:var(--gray);">Viande au choix : Viande hachée, Poulet, Merguez, Nuggets, Tenders</p>
-      <div class="compose-grid">
-        <div class="compose-item"><strong>M</strong> — 30 DH · 1 dose</div>
-        <div class="compose-item"><strong>L</strong> — 35 DH · 1 dose</div>
-        <div class="compose-item"><strong>XXL</strong> — 60 DH · double tortilla, triple dose</div>
+    <section class="section" id="twister">
+      <h2 class="section-title">Twister</h2>
+      <div class="item">
+        <div>
+          <div class="item-name">Cheezy Twister</div>
+          <div class="item-desc">Viande hachée, tenders, galette de pomme de terre, sauce fromagère</div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
       </div>
-      <div class="item" style="margin-top:1.5rem;">
+      <div class="item">
+        <div>
+          <div class="item-name">Crunchy Twister</div>
+          <div class="item-desc">Tenders, onion rings, sauce au choix</div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Swiss Twister</div>
+          <div class="item-desc">Poulet, merguez, jambon de dinde, galette de pomme de terre</div>
+        </div>
+        <div class="item-price">50 <span>DH</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="pizza">
+      <h2 class="section-title">Menu Pizza</h2>
+      <p class="item-desc" style="margin-bottom:1rem;color:var(--gray);">Toutes en M et G</p>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Rouge</div>
+          <div class="item-desc">Sauce tomate, fromage, origan</div>
+          <div class="pizza-sizes">M <span>32 DH</span> · G <span>47 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Blancca</div>
+          <div class="item-desc">Sauce gruyère, fromage, basilic</div>
+          <div class="pizza-sizes">M <span>35 DH</span> · G <span>50 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Thon</div>
+          <div class="item-desc">Sauce tomate, fromage, thon, olive, origan</div>
+          <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Végétarienne</div>
+          <div class="item-desc">Sauce tomate, fromage, oignon, courgette, poivron, champignon, tomate, origan</div>
+          <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Fumé</div>
+          <div class="item-desc">Sauce tomate, fromage, jambon fumé, origan</div>
+          <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Bolognaise</div>
+          <div class="item-desc">Sauce tomate, fromage, viande hachée, champignon, poivron, origan</div>
+          <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Chicken</div>
+          <div class="item-desc">Sauce gruyère, fromage, poulet, olive, origan</div>
+          <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza 4 Fromage</div>
+          <div class="item-desc">Sauce tomate, mozzarella, masdam, roquefort, cheddar</div>
+          <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Fruits de Mer</div>
+          <div class="item-desc">Sauce tomate, crevettes, surimi, calamars, olive, origan</div>
+          <div class="pizza-sizes">M <span>45 DH</span> · G <span>65 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Big Up</div>
+          <div class="item-desc">Sauce gruyère, fromage, crispy chicken, basilic</div>
+          <div class="pizza-sizes">M <span>45 DH</span> · G <span>65 DH</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="compose">
+      <h2 class="section-title">Compose selon tes goûts (Tacos)</h2>
+      
+      <div class="compose-grid">
+        <div class="compose-item"><strong>M</strong> — 30 DH <br><small>1 Viande</small></div>
+        <div class="compose-item"><strong>L</strong> — 35 DH <br><small>2 Viandes</small></div>
+        <div class="compose-item"><strong>XL</strong> — 60 DH <br><small>3 Viandes</small></div>
+      </div>
+
+      <div class="step-grid">
+        <div class="step-card">
+          <h3 class="step-title">1. Choisis ta base</h3>
+          <p class="item-desc" style="color: var(--white);">Nos bases sont garnies de frites et de notre sauce fromagère maison.</p>
+        </div>
+
+        <div class="step-card">
+          <h3 class="step-title">2. Choisis ta viande</h3>
+          <ul class="sub-list" style="padding-left:0;">
+            <li style="list-style:none;">Poulet · Viande Hachée · Merguez</li>
+            <li style="list-style:none;">Nuggets <strong style="color: var(--orange);">+5 DH</strong></li>
+            <li style="list-style:none;">Tenders <strong style="color: var(--orange);">+8 DH</strong></li>
+            <li style="list-style:none;">Cordon Bleu <strong style="color: var(--orange);">+15 DH</strong></li>
+            <li style="list-style:none;">Pepperoni <strong style="color: var(--orange);">+5 DH</strong></li>
+          </ul>
+        </div>
+
+        <div class="step-card">
+          <h3 class="step-title">3. Choisis ta sauce</h3>
+          <p class="item-desc" style="color: var(--white); line-height: 1.6;">
+            Algérienne, Andalouse, Brasil, Harissa, Cheezy Eazy, Mayonnaise, Biggy Burger, Ketchup, Barbecue, Fromagère, Pitakebab
+          </p>
+        </div>
+
+        <div class="step-card">
+          <h3 class="step-title">4. Choisis tes suppléments</h3>
+          <div class="pill-grid">
+            <span class="pill">Sauce <strong>+2DH</strong></span>
+            <span class="pill">Cheddar <strong>+5DH</strong></span>
+            <span class="pill">Oeuf <strong>+5DH</strong></span>
+            <span class="pill">Jambon de dinde <strong>+5DH</strong></span>
+            <span class="pill">Frites <strong>+8DH</strong></span>
+            <span class="pill">Frites Fromagère <strong>+10DH</strong></span>
+            <span class="pill">Soda 25cl <strong>+8DH</strong></span>
+            <span class="pill">Oasis <strong>+15DH</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="margin-top:3rem; font-size:1.4rem; border:none;">Ou nos Recettes Signatures</h3>
+      
+      <div class="item">
         <div>
           <div class="item-name">Tac'Arabia</div>
           <div class="item-desc">Viande au choix, poivron, oignon confit, oignon caramélisé, cheddar</div>
@@ -673,16 +683,8 @@
         </div>
         <div class="item-price">45 <span>DH</span></div>
       </div>
-      <div style="margin-top:1.5rem;">
-        <div class="section-title" style="font-size:1.2rem;margin-bottom:0.5rem;">Suppléments</div>
-        <ul class="sub-list" style="list-style:none;padding:0;">
-          <li>Pepperoni +5 DH · Tenders +8 DH · Cordon Bleu +15 DH · Nuggets +5 DH</li>
-          <li>Sauce +2 DH · Cheddar +5 DH · Œuf +5 DH · Jambon de dinde +5 DH</li>
-          <li>Frites sauce fromagère +10 DH · Soda 25cl +8 DH · Eau minérale +5 DH</li>
-          <li>Oasis +15 DH · Frites +8 DH</li>
-        </ul>
-      </div>
     </section>
+
   </main>
 
   <footer>
@@ -695,11 +697,9 @@
     <div class="social">
       <a href="https://www.facebook.com/bigup.oujda/" target="_blank" rel="noopener">Facebook — f BIGUP</a>
        <a href="https://www.instagram.com/big_up_oujda_" target="_blank" rel="noopener">Instagram — BIGUP OUJDA</a>
-      <p>Suhayb Dawson</p>
+      <p style="margin-top:1rem; font-size:0.75rem; color:#555;">Suhayb Dawson</p>
     </div>
   </footer>
-
-  
 
   <script>
     const sections = document.querySelectorAll('.section');
