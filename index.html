@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIG UP — Fast Food | Oujda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #1a1a1a;
+      --bg-card: #242424;
+      --orange: #ff6b35;
+      --orange-light: #ff8c5a;
+      --white: #ffffff;
+      --gray: #a0a0a0;
+      --gray-dark: #6b6b6b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-dark);
+      color: var(--white);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-card) 100%);
+      padding: 1.5rem 1.5rem 2rem;
+      text-align: center;
+      border-bottom: 3px solid var(--orange);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .tagline {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      letter-spacing: 0.05em;
+      color: var(--white);
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem 2rem;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .header-info span {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .header-info a {
+      color: var(--orange);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .header-info a:hover {
+      color: var(--orange-light);
+    }
+
+    /* Nav */
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      padding: 1rem;
+      background: var(--bg-card);
+      border-bottom: 1px solid rgba(255,107,53,0.2);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    nav a {
+      color: var(--gray);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--white);
+      background: var(--orange);
+    }
+
+    /* Main */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+      scroll-margin-top: 8rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem;
+      letter-spacing: 0.08em;
+      color: var(--orange);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(255,107,53,0.4);
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .item:last-child {
+      border-bottom: none;
+    }
+
+    .item-name {
+      font-weight: 600;
+      color: var(--white);
+      font-size: 1rem;
+    }
+
+    .item-desc {
+      font-size: 0.8rem;
+      color: var(--gray-dark);
+      margin-top: 0.2rem;
+    }
+
+    .item-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      color: var(--orange);
+      white-space: nowrap;
+    }
+
+    .item-price span {
+      font-size: 0.7rem;
+      color: var(--gray);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* Pizza sizes */
+    .pizza-sizes {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.25rem;
+      font-size: 0.8rem;
+      color: var(--gray-dark);
+    }
+
+    .pizza-sizes span {
+      color: var(--orange);
+      font-weight: 600;
+    }
+
+    /* Sub-items / supplements */
+    .sub-list {
+      margin-top: 0.5rem;
+      padding-left: 1rem;
+      font-size: 0.8rem;
+      color: var(--gray-dark);
+    }
+
+    .sub-list li {
+      margin-bottom: 0.25rem;
+    }
+
+    .compose-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .compose-item {
+      background: rgba(255,107,53,0.1);
+      border: 1px solid rgba(255,107,53,0.3);
+      border-radius: 6px;
+      padding: 0.6rem;
+      font-size: 0.85rem;
+    }
+
+    .compose-item strong {
+      color: var(--orange);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: var(--bg-card);
+      border-top: 1px solid rgba(255,107,53,0.2);
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    footer p {
+      margin-bottom: 0.5rem;
+    }
+
+    .social {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .social a {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      .item {
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .item-price {
+        align-self: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="tagline">Fast Food</p>
+    <h1>BIG UP</h1>
+    <div class="header-info">
+      <span>📍 BD AL MAQDIS, OUJDA</span>
+      <span>📞 <a href="tel:+212536503590">05 36 50 35 90</a></span>
+      <span>📞 <a href="tel:+212765806052">07 65 80 60 52</a></span>
+      <span>Sur place · Emporté · Livraison</span>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#burgers">Burgers</a>
+    <a href="#sandwiches">Sandwichs</a>
+    <a href="#naan">Cheese Naan</a>
+    <a href="#panini">Panini</a>
+    <a href="#wraps">Wraps</a>
+    <a href="#shawarma">Shawarma</a>
+    <a href="#finger">Finger Food</a>
+    <a href="#salads">Salades</a>
+    <a href="#pizza">Pizza</a>
+    <a href="#jus">Jus & Desserts</a>
+    <a href="#bowls">Bowls</a>
+    <a href="#twister">Twister</a>
+    <a href="#compose">Compose</a>
+  </nav>
+
+  <main>
+    <!-- THE BURGER HOUSE -->
+    <section class="section" id="burgers">
+      <h2 class="section-title">The Burger House</h2>
+      <div class="item">
+        <div>
+          <div class="item-name">Whooper</div>
+          <div class="item-desc">Steak haché, salade, tomate, cheddar</div>
+        </div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Le Crispy</div>
+          <div class="item-desc">Poulet pané, salade, tomate, cheddar</div>
+        </div>
+        <div class="item-price">28 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Double Cheese</div>
+          <div class="item-desc">Double steak haché, salade, tomate, cheddar</div>
+        </div>
+        <div class="item-price">28 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Big Up</div>
+          <div class="item-desc">Steak haché, poulet pané, tomate, salade, fromage, oignon caramélisé</div>
+        </div>
+        <div class="item-price">35 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Bleu Chicken</div>
+          <div class="item-desc">Cordon bleu, crispy chicken, cheddar, salade, tomate</div>
+        </div>
+        <div class="item-price">38 <span>DH</span></div>
+      </div>
+    </section>
+
+    <!-- SANDWICH MENU -->
+    <section class="section" id="sandwiches">
+      <h2 class="section-title">Sandwich Menu</h2>
+      <div class="item">
+        <div>
+          <div class="item-name">Chicken Tikka</div>
+          <div class="item-desc">Poulet mariné au massala, salade, tomate, fromage, oignons</div>
+        </div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Chicken Curry</div>
+          <div class="item-desc">Poulet mariné au curry, salade, tomate, fromage</div>
+        </div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Chicken Tandoori</div>
+          <div class="item-desc">Poulet mariné au tandoori, salade, tomate, fromage</div>
+        </div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Le Figaro</div>
+          <div class="item-desc">Steak haché, salade, tomate, fromage</div>
+        </div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Le Gourmand</div>
+          <div class="item-desc">Poulet, viande hachée, salade, tomate, fromage, œuf</div>
+        </div>
+        <div class="item-price">28 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Savoyard</div>
+          <div class="item-desc">Poulet mariné à la crème fraîche, jambon de dinde, cheddar</div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">America</div>
+          <div class="item-desc">2 steaks</div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Triple X</div>
+          <div class="item-desc">3 steaks, jambon de dinde, boursin, cheddar</div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Big Up</div>
+          <div class="item-desc">Fromage frais, crispy chicken, cheddar, sauce maison</div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+    </section>
+
+    <!-- CHEESE NAAN -->
+    <section class="section" id="naan">
+      <h2 class="section-title">Menu Cheese Naan</h2>
+      <div class="item">
+        <div>
+          <div class="item-name">Tandoori</div>
+          <div class="item-desc">Cheesenaan, poulet mariné au tandoori, laitue, tomate, cheddar</div>
+        </div>
+        <div class="item-price">35 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Curry</div>
+          <div class="item-desc">Cheesenaan, poulet mariné au curry, laitue, tomate, cheddar</div>
+        </div>
+        <div class="item-price">35 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Kebab</div>
+          <div class="item-desc">Cheesenaan, kebab, laitue, tomate, cheddar</div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Bombay</div>
+          <div class="item-desc">Cheesenaan, viande hachée, crispy chicken, rosty, laitue, tomate, cheddar</div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Big Up</div>
+          <div class="item-desc">Cheesenaan, cordon bleu, nugget, jambon de dinde, laitue, tomate, cheddar</div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+    </section>
+
+    <!-- PANINI -->
+    <section class="section" id="panini">
+      <h2 class="section-title">Panini</h2>
+      <div class="item">
+        <div><div class="item-name">Charcuterie</div></div>
+        <div class="item-price">18 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Merguez</div></div>
+        <div class="item-price">18 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Chicken</div></div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Viande Hachée</div></div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Nuggets</div></div>
+        <div class="item-price">22 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Mixte</div></div>
+        <div class="item-price">25 <span>DH</span></div>
+      </div>
+    </section>
+
+    <!-- WRAPS -->
+    <section class="section" id="wraps">
+      <h2 class="section-title">Wraps</h2>
+      <div class="item">
+        <div>
+          <div class="item-name">Nuggets</div>
+          <div class="item-desc">Nuggets, salade, tomate, fromage</div>
+        </div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Cordon Bleu</div>
+          <div class="item-desc">Cordon bleu, cheddar, salade, tomate</div>
+        </div>
+        <div class="item-price">25 <span>DH</span></div>
+      </div>
+    </section>
+
+    <!-- SHAWARMA -->
+    <section class="section" id="shawarma">
+      <h2 class="section-title">Shawarma</h2>
+      <div class="item">
+        <div><div class="item-name">Banais</div></div>
+        <div class="item-price">25 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Doner Kebab</div></div>
+        <div class="item-price">30 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Le Blinde</div></div>
+        <div class="item-price">30 <span>DH</span></div>
+      </div>
+    </section>
+
+    <!-- FINGER FOOD -->
+    <section class="section" id="finger">
+      <h2 class="section-title">Finger Food</h2>
+      <div class="item">
+        <div><div class="item-name">Cheesy Fries</div></div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Oignon Rings</div><div class="item-desc">5 pièces</div></div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Finger Mozza</div><div class="item-desc">4 pièces</div></div>
+        <div class="item-price">25 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Nuggets</div><div class="item-desc">5 pièces</div></div>
+        <div class="item-price">25 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Croquant Gouda</div><div class="item-desc">5 pièces</div></div>
+        <div class="item-price">30 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Tenders</div><div class="item-desc">4 pièces</div></div>
+        <div class="item-price">30 <span>DH</span></div>
+      </div>
+    </section>
+
+    <!-- SALADES -->
+    <section class="section" id="salads">
+      <h2 class="section-title">Menu Salades</h2>
+      <div class="item">
+        <div>
+          <div class="item-name">Salade César</div>
+          <div class="item-desc">Laitue, tomates cerises, poulet, croutons, fromage</div>
+        </div>
+        <div class="item-price">25 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Salade Big Up</div>
+          <div class="item-desc">Pennes, crispy chicken, tomates cerises, jambon de dinde, fromage</div>
+        </div>
+        <div class="item-price">30 <span>DH</span></div>
+      </div>
+    </section>
+
+    <!-- PIZZA -->
+    <section class="section" id="pizza">
+      <h2 class="section-title">Menu Pizza</h2>
+      <p class="item-desc" style="margin-bottom:1rem;color:var(--gray);">Toutes en M et G</p>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Rouge</div>
+          <div class="item-desc">Sauce tomate, fromage, origan</div>
+          <div class="pizza-sizes">M <span>32 DH</span> · G <span>47 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Blancca</div>
+          <div class="item-desc">Sauce gruyère, fromage, basilic</div>
+          <div class="pizza-sizes">M <span>35 DH</span> · G <span>50 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Thon</div>
+          <div class="item-desc">Sauce tomate, fromage, thon, olive, origan</div>
+          <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Végétarienne</div>
+          <div class="item-desc">Sauce tomate, fromage, oignon, courgette, poivron, champignon, tomate, origan</div>
+          <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Fumé</div>
+          <div class="item-desc">Sauce tomate, fromage, jambon fumé, origan</div>
+          <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Bolognaise</div>
+          <div class="item-desc">Sauce tomate, fromage, viande hachée, champignon, poivron, origan</div>
+          <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Chicken</div>
+          <div class="item-desc">Sauce gruyère, fromage, poulet, olive, origan</div>
+          <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza 4 Fromage</div>
+          <div class="item-desc">Sauce tomate, mozzarella, masdam, roquefort, cheddar</div>
+          <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Fruits de Mer</div>
+          <div class="item-desc">Sauce tomate, crevettes, surimi, calamars, olive, origan</div>
+          <div class="pizza-sizes">M <span>45 DH</span> · G <span>65 DH</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Pizza Big Up</div>
+          <div class="item-desc">Sauce gruyère, fromage, crispy chicken, basilic</div>
+          <div class="pizza-sizes">M <span>45 DH</span> · G <span>65 DH</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JUS & DESSERTS -->
+    <section class="section" id="jus">
+      <h2 class="section-title">Jus & Desserts</h2>
+      <div class="item">
+        <div><div class="item-name">Jus d'Orange</div></div>
+        <div class="item-price">15 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Jus de Citron</div></div>
+        <div class="item-price">15 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Cocktail</div><div class="item-desc">Fruits de saison</div></div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Tiramisu</div></div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Cheesecake</div></div>
+        <div class="item-price">15 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Flan Cuajada</div></div>
+        <div class="item-price">15 <span>DH</span></div>
+      </div>
+    </section>
+
+    <!-- BOWLS -->
+    <section class="section" id="bowls">
+      <h2 class="section-title">Bowls</h2>
+      <div class="item">
+        <div>
+          <div class="item-name">Steak & Tenders</div>
+          <div class="item-desc">Viande hachée, tenders, sauce fromagère, frites</div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Magic Bowls</div>
+          <div class="item-desc">Tikka, jambon de dinde, oignon rings, sauce fromagère, frites</div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Cordon Bleu & Tenders</div>
+          <div class="item-desc">Cordon bleu, tenders, sauce fromagère, frites</div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div><div class="item-name">Bowl au Choix</div></div>
+        <div class="item-price">55 <span>DH</span></div>
+      </div>
+    </section>
+
+    <!-- TWISTER -->
+    <section class="section" id="twister">
+      <h2 class="section-title">Twister</h2>
+      <div class="item">
+        <div>
+          <div class="item-name">Crunchy Twister</div>
+          <div class="item-desc">Viande hachée, tenders, galette pomme de terre, sauce fromagère</div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Swiss Twister</div>
+          <div class="item-desc">Viande hachée, merguez, galette pomme de terre, sauce fromagère</div>
+        </div>
+        <div class="item-price">50 <span>DH</span></div>
+      </div>
+    </section>
+
+    <!-- COMPOSE SELON TES GOÛTS -->
+    <section class="section" id="compose">
+      <h2 class="section-title">Compose selon tes goûts</h2>
+      <p class="item-desc" style="margin-bottom:1rem;color:var(--gray);">Viande au choix : Viande hachée, Poulet, Merguez, Nuggets, Tenders</p>
+      <div class="compose-grid">
+        <div class="compose-item"><strong>M</strong> — 30 DH · 1 dose</div>
+        <div class="compose-item"><strong>L</strong> — 35 DH · 1 dose</div>
+        <div class="compose-item"><strong>XXL</strong> — 60 DH · double tortilla, triple dose</div>
+      </div>
+      <div class="item" style="margin-top:1.5rem;">
+        <div>
+          <div class="item-name">Tac'Arabia</div>
+          <div class="item-desc">Viande au choix, poivron, oignon confit, oignon caramélisé, cheddar</div>
+        </div>
+        <div class="item-price">35 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Le Chakal</div>
+          <div class="item-desc">Gratiné cheddar, viande au choix</div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div>
+          <div class="item-name">Le Smoky</div>
+          <div class="item-desc">Gratiné cheddar et pepperoni, viande au choix</div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+      <div style="margin-top:1.5rem;">
+        <div class="section-title" style="font-size:1.2rem;margin-bottom:0.5rem;">Suppléments</div>
+        <ul class="sub-list" style="list-style:none;padding:0;">
+          <li>Pepperoni +5 DH · Tenders +8 DH · Cordon Bleu +15 DH · Nuggets +5 DH</li>
+          <li>Sauce +2 DH · Cheddar +5 DH · Œuf +5 DH · Jambon de dinde +5 DH</li>
+          <li>Frites sauce fromagère +10 DH · Soda 25cl +8 DH · Eau minérale +5 DH</li>
+          <li>Oasis +15 DH · Frites +8 DH</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>BIG UP</strong> · Fast Food</p>
+    <p>BD AL MAQDIS, OUJDA</p>
+    <p>05 36 50 35 90 · 07 65 80 60 52</p>
+    <div class="social">
+      <a href="https://facebook.com/BIGUP" target="_blank" rel="noopener">Facebook — f BIGUP</a>
+      <a href="https://instagram.com/BIGUPOUJDA" target="_blank" rel="noopener">Instagram — BIGUP OUJDA</a>
+    </div>
+  </footer>
+
+  <script>
+    // Highlight active nav on scroll
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('nav a');
+
+    function updateActive() {
+      const scrollY = window.scrollY;
+      sections.forEach((sec, i) => {
+        const top = sec.offsetTop - 120;
+        const height = sec.offsetHeight;
+        if (scrollY >= top && scrollY < top + height) {
+          navLinks.forEach(a => a.classList.remove('active'));
+          const id = sec.getAttribute('id');
+          const link = document.querySelector(`nav a[href="#${id}"]`);
+          if (link) link.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActive);
+    window.addEventListener('load', updateActive);
+  </script>
+</body>
+</html>
