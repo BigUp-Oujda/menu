@@ -16,6 +16,9 @@
       --white: #ffffff;
       --gray: #a0a0a0;
       --gray-dark: #6b6b6b;
+      /* Define fixed heights for consistency */
+      --header-height: 140px;
+      --nav-height: 60px;
     }
 
     * {
@@ -32,15 +35,21 @@
       line-height: 1.5;
     }
 
-    /* Header */
+    /* --- FIXED HEADER --- */
     header {
       background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-card) 100%);
-      padding: 1.5rem 1.5rem 2rem;
+      padding: 1rem;
       text-align: center;
       border-bottom: 3px solid var(--orange);
-      position: sticky;
+      position: fixed; /* Forced to stay at top */
       top: 0;
-      z-index: 100;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .tagline {
@@ -48,43 +57,33 @@
       letter-spacing: 0.25em;
       color: var(--orange);
       text-transform: uppercase;
-      margin-bottom: 0.25rem;
     }
 
     h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-size: clamp(2rem, 6vw, 3rem);
       letter-spacing: 0.05em;
       color: var(--white);
+      line-height: 1;
     }
 
     .header-info {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1rem 2rem;
-      margin-top: 1rem;
-      font-size: 0.85rem;
+      gap: 0.5rem 1rem;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
       color: var(--gray);
-    }
-
-    .header-info span {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
     }
 
     .header-info a {
       color: var(--orange);
       text-decoration: none;
-      transition: color 0.2s;
     }
 
-    .header-info a:hover {
-      color: var(--orange-light);
-    }
-  
-   nav {
+    /* --- FIXED NAV --- */
+    nav {
       display: flex;
       gap: 0.5rem;
       justify-content: flex-start; /* Better for mobile scrolling */
@@ -102,16 +101,17 @@
       white-space: nowrap;
       -webkit-overflow-scrolling: touch;
     }
-    
+
+    /* Hide scrollbar but keep functionality */
+    nav::-webkit-scrollbar { display: none; }
 
     nav a {
       color: var(--gray);
       text-decoration: none;
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 0.8rem;
       border-radius: 4px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 500;
-      white-space: nowrap;
       transition: all 0.2s;
     }
 
@@ -121,16 +121,18 @@
       background: var(--orange);
     }
 
-    /* Main */
+    /* --- ADJUST MAIN CONTENT --- */
     main {
       max-width: 900px;
       margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
+      /* Add padding top so content doesn't hide under fixed header/nav */
+      padding: calc(var(--header-height) + var(--nav-height) + 2rem) 1.5rem 4rem;
     }
 
     .section {
       margin-bottom: 3rem;
-      scroll-margin-top: 8rem;
+      /* Offset for anchor links */
+      scroll-margin-top: calc(var(--header-height) + var(--nav-height) + 10px);
     }
 
     .section-title {
@@ -152,60 +154,16 @@
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    .item:last-child {
-      border-bottom: none;
-    }
+    .item-name { font-weight: 600; color: var(--white); font-size: 1rem; }
+    .item-desc { font-size: 0.8rem; color: var(--gray-dark); margin-top: 0.2rem; }
+    .item-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; color: var(--orange); white-space: nowrap; }
+    .item-price span { font-size: 0.7rem; color: var(--gray); font-family: 'DM Sans', sans-serif; }
 
-    .item-name {
-      font-weight: 600;
-      color: var(--white);
-      font-size: 1rem;
-    }
+    .pizza-sizes { display: flex; gap: 0.75rem; margin-top: 0.25rem; font-size: 0.8rem; color: var(--gray-dark); }
+    .pizza-sizes span { color: var(--orange); font-weight: 600; }
 
-    .item-desc {
-      font-size: 0.8rem;
-      color: var(--gray-dark);
-      margin-top: 0.2rem;
-    }
-
-    .item-price {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.25rem;
-      color: var(--orange);
-      white-space: nowrap;
-    }
-
-    .item-price span {
-      font-size: 0.7rem;
-      color: var(--gray);
-      font-family: 'DM Sans', sans-serif;
-    }
-
-    /* Pizza sizes */
-    .pizza-sizes {
-      display: flex;
-      gap: 0.75rem;
-      margin-top: 0.25rem;
-      font-size: 0.8rem;
-      color: var(--gray-dark);
-    }
-
-    .pizza-sizes span {
-      color: var(--orange);
-      font-weight: 600;
-    }
-
-    /* Sub-items / supplements */
-    .sub-list {
-      margin-top: 0.5rem;
-      padding-left: 1rem;
-      font-size: 0.8rem;
-      color: var(--gray-dark);
-    }
-
-    .sub-list li {
-      margin-bottom: 0.25rem;
-    }
+    .sub-list { margin-top: 0.5rem; padding-left: 1rem; font-size: 0.8rem; color: var(--gray-dark); list-style: none; }
+    .sub-list li { margin-bottom: 0.25rem; }
 
     .compose-grid {
       display: grid;
@@ -222,11 +180,8 @@
       font-size: 0.85rem;
     }
 
-    .compose-item strong {
-      color: var(--orange);
-    }
+    .compose-item strong { color: var(--orange); }
 
-    /* Footer */
     footer {
       text-align: center;
       padding: 2rem 1.5rem;
@@ -236,32 +191,12 @@
       font-size: 0.9rem;
     }
 
-    footer p {
-      margin-bottom: 0.5rem;
-    }
-
-    .social {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-
-    .social a {
-      color: var(--orange);
-      text-decoration: none;
-      font-weight: 600;
-    }
+    .social { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; }
+    .social a { color: var(--orange); text-decoration: none; font-weight: 600; }
 
     @media (max-width: 600px) {
-      .item {
-        flex-direction: column;
-        gap: 0.25rem;
-      }
-
-      .item-price {
-        align-self: flex-end;
-      }
+      .item { flex-direction: column; gap: 0.25rem; }
+      .item-price { align-self: flex-end; }
     }
   </style>
 </head>
@@ -280,7 +215,7 @@
     </div>
   </header>
 
-  <nav>
+  <nav id="navbar">
     <a href="#burgers">Burgers</a>
     <a href="#sandwiches">Sandwichs</a>
     <a href="#naan">Cheese Naan</a>
@@ -297,7 +232,6 @@
   </nav>
 
   <main>
-    <!-- THE BURGER HOUSE -->
     <section class="section" id="burgers">
       <h2 class="section-title">The Burger House</h2>
       <div class="item">
@@ -337,7 +271,6 @@
       </div>
     </section>
 
-    <!-- SANDWICH MENU -->
     <section class="section" id="sandwiches">
       <h2 class="section-title">Sandwich Menu</h2>
       <div class="item">
@@ -405,7 +338,6 @@
       </div>
     </section>
 
-    <!-- CHEESE NAAN -->
     <section class="section" id="naan">
       <h2 class="section-title">Menu Cheese Naan</h2>
       <div class="item">
@@ -445,120 +377,57 @@
       </div>
     </section>
 
-    <!-- PANINI -->
     <section class="section" id="panini">
       <h2 class="section-title">Panini</h2>
-      <div class="item">
-        <div><div class="item-name">Charcuterie</div></div>
-        <div class="item-price">18 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Merguez</div></div>
-        <div class="item-price">18 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Chicken</div></div>
-        <div class="item-price">20 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Viande Hachée</div></div>
-        <div class="item-price">20 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Nuggets</div></div>
-        <div class="item-price">22 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Mixte</div></div>
-        <div class="item-price">25 <span>DH</span></div>
-      </div>
+      <div class="item"><div><div class="item-name">Charcuterie</div></div><div class="item-price">18 <span>DH</span></div></div>
+      <div class="item"><div><div class="item-name">Merguez</div></div><div class="item-price">18 <span>DH</span></div></div>
+      <div class="item"><div><div class="item-name">Chicken</div></div><div class="item-price">20 <span>DH</span></div></div>
+      <div class="item"><div><div class="item-name">Viande Hachée</div></div><div class="item-price">20 <span>DH</span></div></div>
+      <div class="item"><div><div class="item-name">Nuggets</div></div><div class="item-price">22 <span>DH</span></div></div>
+      <div class="item"><div><div class="item-name">Mixte</div></div><div class="item-price">25 <span>DH</span></div></div>
     </section>
 
-    <!-- WRAPS -->
     <section class="section" id="wraps">
       <h2 class="section-title">Wraps</h2>
       <div class="item">
-        <div>
-          <div class="item-name">Nuggets</div>
-          <div class="item-desc">Nuggets, salade, tomate, fromage</div>
-        </div>
+        <div><div class="item-name">Nuggets</div><div class="item-desc">Nuggets, salade, tomate, fromage</div></div>
         <div class="item-price">20 <span>DH</span></div>
       </div>
       <div class="item">
-        <div>
-          <div class="item-name">Cordon Bleu</div>
-          <div class="item-desc">Cordon bleu, cheddar, salade, tomate</div>
-        </div>
+        <div><div class="item-name">Cordon Bleu</div><div class="item-desc">Cordon bleu, cheddar, salade, tomate</div></div>
         <div class="item-price">25 <span>DH</span></div>
       </div>
     </section>
 
-    <!-- SHAWARMA -->
     <section class="section" id="shawarma">
       <h2 class="section-title">Shawarma</h2>
-      <div class="item">
-        <div><div class="item-name">Banais</div></div>
-        <div class="item-price">25 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Doner Kebab</div></div>
-        <div class="item-price">30 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Le Blinde</div></div>
-        <div class="item-price">30 <span>DH</span></div>
-      </div>
+      <div class="item"><div><div class="item-name">Banais</div></div><div class="item-price">25 <span>DH</span></div></div>
+      <div class="item"><div><div class="item-name">Doner Kebab</div></div><div class="item-price">30 <span>DH</span></div></div>
+      <div class="item"><div><div class="item-name">Le Blinde</div></div><div class="item-price">30 <span>DH</span></div></div>
     </section>
 
-    <!-- FINGER FOOD -->
     <section class="section" id="finger">
       <h2 class="section-title">Finger Food</h2>
-      <div class="item">
-        <div><div class="item-name">Cheesy Fries</div></div>
-        <div class="item-price">20 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Oignon Rings</div><div class="item-desc">5 pièces</div></div>
-        <div class="item-price">20 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Finger Mozza</div><div class="item-desc">4 pièces</div></div>
-        <div class="item-price">25 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Nuggets</div><div class="item-desc">5 pièces</div></div>
-        <div class="item-price">25 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Croquant Gouda</div><div class="item-desc">5 pièces</div></div>
-        <div class="item-price">30 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Tenders</div><div class="item-desc">4 pièces</div></div>
-        <div class="item-price">30 <span>DH</span></div>
-      </div>
+      <div class="item"><div><div class="item-name">Cheesy Fries</div></div><div class="item-price">20 <span>DH</span></div></div>
+      <div class="item"><div><div class="item-name">Oignon Rings</div><div class="item-desc">5 pièces</div></div><div class="item-price">20 <span>DH</span></div></div>
+      <div class="item"><div><div class="item-name">Finger Mozza</div><div class="item-desc">4 pièces</div></div><div class="item-price">25 <span>DH</span></div></div>
+      <div class="item"><div><div class="item-name">Nuggets</div><div class="item-desc">5 pièces</div></div><div class="item-price">25 <span>DH</span></div></div>
+      <div class="item"><div><div class="item-name">Croquant Gouda</div><div class="item-desc">5 pièces</div></div><div class="item-price">30 <span>DH</span></div></div>
+      <div class="item"><div><div class="item-name">Tenders</div><div class="item-desc">4 pièces</div></div><div class="item-price">30 <span>DH</span></div></div>
     </section>
 
-    <!-- SALADES -->
     <section class="section" id="salads">
       <h2 class="section-title">Menu Salades</h2>
       <div class="item">
-        <div>
-          <div class="item-name">Salade César</div>
-          <div class="item-desc">Laitue, tomates cerises, poulet, croutons, fromage</div>
-        </div>
+        <div><div class="item-name">Salade César</div><div class="item-desc">Laitue, tomates cerises, poulet, croutons, fromage</div></div>
         <div class="item-price">25 <span>DH</span></div>
       </div>
       <div class="item">
-        <div>
-          <div class="item-name">Salade Big Up</div>
-          <div class="item-desc">Pennes, crispy chicken, tomates cerises, jambon de dinde, fromage</div>
-        </div>
+        <div><div class="item-name">Salade Big Up</div><div class="item-desc">Pennes, crispy chicken, tomates cerises, jambon de dinde, fromage</div></div>
         <div class="item-price">30 <span>DH</span></div>
       </div>
     </section>
 
-    <!-- PIZZA -->
     <section class="section" id="pizza">
       <h2 class="section-title">Menu Pizza</h2>
       <p class="item-desc" style="margin-bottom:1rem;color:var(--gray);">Toutes en M et G</p>
@@ -569,149 +438,31 @@
           <div class="pizza-sizes">M <span>32 DH</span> · G <span>47 DH</span></div>
         </div>
       </div>
-      <div class="item">
-        <div>
-          <div class="item-name">Pizza Blancca</div>
-          <div class="item-desc">Sauce gruyère, fromage, basilic</div>
-          <div class="pizza-sizes">M <span>35 DH</span> · G <span>50 DH</span></div>
-        </div>
-      </div>
-      <div class="item">
-        <div>
-          <div class="item-name">Pizza Thon</div>
-          <div class="item-desc">Sauce tomate, fromage, thon, olive, origan</div>
-          <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
-        </div>
-      </div>
-      <div class="item">
-        <div>
-          <div class="item-name">Pizza Végétarienne</div>
-          <div class="item-desc">Sauce tomate, fromage, oignon, courgette, poivron, champignon, tomate, origan</div>
-          <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
-        </div>
-      </div>
-      <div class="item">
-        <div>
-          <div class="item-name">Pizza Fumé</div>
-          <div class="item-desc">Sauce tomate, fromage, jambon fumé, origan</div>
-          <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
-        </div>
-      </div>
-      <div class="item">
-        <div>
-          <div class="item-name">Pizza Bolognaise</div>
-          <div class="item-desc">Sauce tomate, fromage, viande hachée, champignon, poivron, origan</div>
-          <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
-        </div>
-      </div>
-      <div class="item">
-        <div>
-          <div class="item-name">Pizza Chicken</div>
-          <div class="item-desc">Sauce gruyère, fromage, poulet, olive, origan</div>
-          <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
-        </div>
-      </div>
-      <div class="item">
-        <div>
-          <div class="item-name">Pizza 4 Fromage</div>
-          <div class="item-desc">Sauce tomate, mozzarella, masdam, roquefort, cheddar</div>
-          <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
-        </div>
-      </div>
-      <div class="item">
-        <div>
-          <div class="item-name">Pizza Fruits de Mer</div>
-          <div class="item-desc">Sauce tomate, crevettes, surimi, calamars, olive, origan</div>
-          <div class="pizza-sizes">M <span>45 DH</span> · G <span>65 DH</span></div>
-        </div>
-      </div>
-      <div class="item">
-        <div>
-          <div class="item-name">Pizza Big Up</div>
-          <div class="item-desc">Sauce gruyère, fromage, crispy chicken, basilic</div>
-          <div class="pizza-sizes">M <span>45 DH</span> · G <span>65 DH</span></div>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- JUS & DESSERTS -->
     <section class="section" id="jus">
       <h2 class="section-title">Jus & Desserts</h2>
-      <div class="item">
-        <div><div class="item-name">Jus d'Orange</div></div>
-        <div class="item-price">15 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Jus de Citron</div></div>
-        <div class="item-price">15 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Cocktail</div><div class="item-desc">Fruits de saison</div></div>
-        <div class="item-price">20 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Tiramisu</div></div>
-        <div class="item-price">20 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Cheesecake</div></div>
-        <div class="item-price">15 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Flan Cuajada</div></div>
-        <div class="item-price">15 <span>DH</span></div>
-      </div>
+      <div class="item"><div><div class="item-name">Jus d'Orange</div></div><div class="item-price">15 <span>DH</span></div></div>
+      <div class="item"><div><div class="item-name">Cocktail</div></div><div class="item-price">20 <span>DH</span></div></div>
     </section>
 
-    <!-- BOWLS -->
     <section class="section" id="bowls">
       <h2 class="section-title">Bowls</h2>
       <div class="item">
-        <div>
-          <div class="item-name">Steak & Tenders</div>
-          <div class="item-desc">Viande hachée, tenders, sauce fromagère, frites</div>
-        </div>
+        <div><div class="item-name">Steak & Tenders</div><div class="item-desc">Viande hachée, tenders, sauce fromagère, frites</div></div>
         <div class="item-price">45 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div>
-          <div class="item-name">Magic Bowls</div>
-          <div class="item-desc">Tikka, jambon de dinde, oignon rings, sauce fromagère, frites</div>
-        </div>
-        <div class="item-price">45 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div>
-          <div class="item-name">Cordon Bleu & Tenders</div>
-          <div class="item-desc">Cordon bleu, tenders, sauce fromagère, frites</div>
-        </div>
-        <div class="item-price">45 <span>DH</span></div>
-      </div>
-      <div class="item">
-        <div><div class="item-name">Bowl au Choix</div></div>
-        <div class="item-price">55 <span>DH</span></div>
       </div>
     </section>
 
-    <!-- TWISTER -->
     <section class="section" id="twister">
       <h2 class="section-title">Twister</h2>
       <div class="item">
-        <div>
-          <div class="item-name">Crunchy Twister</div>
-          <div class="item-desc">Viande hachée, tenders, galette pomme de terre, sauce fromagère</div>
-        </div>
+        <div><div class="item-name">Crunchy Twister</div><div class="item-desc">Viande hachée, tenders, galette pomme de terre, sauce fromagère</div></div>
         <div class="item-price">45 <span>DH</span></div>
       </div>
-      <div class="item">
-        <div>
-          <div class="item-name">Swiss Twister</div>
-          <div class="item-desc">Viande hachée, merguez, galette pomme de terre, sauce fromagère</div>
-        </div>
-        <div class="item-price">50 <span>DH</span></div>
-      </div>
     </section>
-    <!-- COMPOSE SELON TES GOÛTS -->
+
+     <!-- COMPOSE SELON TES GOÛTS -->
     <section class="section" id="compose">
       <h2 class="section-title">Compose selon tes goûts</h2>
       <p class="item-desc" style="margin-bottom:1rem;color:var(--gray);">Viande au choix : Viande hachée, Poulet, Merguez, Nuggets, Tenders</p>
@@ -767,15 +518,16 @@
     </div>
   </footer>
 
+  
+
   <script>
-    // Highlight active nav on scroll
     const sections = document.querySelectorAll('.section');
     const navLinks = document.querySelectorAll('nav a');
 
     function updateActive() {
       const scrollY = window.scrollY;
-      sections.forEach((sec, i) => {
-        const top = sec.offsetTop - 120;
+      sections.forEach((sec) => {
+        const top = sec.offsetTop - 220; 
         const height = sec.offsetHeight;
         if (scrollY >= top && scrollY < top + height) {
           navLinks.forEach(a => a.classList.remove('active'));
@@ -788,7 +540,6 @@
 
     window.addEventListener('scroll', updateActive);
     window.addEventListener('load', updateActive);
-    
   </script>
 </body>
 </html>
