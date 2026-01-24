@@ -86,14 +86,21 @@
 
     /* Nav */
     nav {
-    display: flex;
-      flex-wrap: wrap;
+      display: flex;
       gap: 0.5rem;
-      justify-content: center;
-      padding: 1rem;
+      justify-content: flex-start; /* Better for mobile scrolling */
+      align-items: center;
+      padding: 0 1rem;
       background: var(--bg-card);
       border-bottom: 1px solid rgba(255,107,53,0.2);
+      position: fixed; /* Forced to stay */
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      z-index: 999;
       overflow-x: auto;
+      white-space: nowrap;
       -webkit-overflow-scrolling: touch;
     }
     }
