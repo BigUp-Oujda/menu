@@ -798,13 +798,11 @@
   <footer>
     <p><strong>BIG UP</strong> · Fast Food</p>
     <p>BD AL MAQDIS, OUJDA</p>
-    <p>05 36 50 35 90 · 07 65 80 60 52</p>
-      <p>Av. Omar Ibn Khattab, Oujda</p>
-    <p>05 36 68 80 27 · 07 65 80 60 51</p>
+    <p>Av. Omar Ibn Khattab, Oujda</p>
     
     <div class="social">
-      <a href="https://www.facebook.com/bigup.oujda/" target="_blank" rel="noopener">Facebook — f BIGUP</a>
-       <a href="https://www.instagram.com/big_up_oujda_" target="_blank" rel="noopener">Instagram — BIGUP OUJDA</a>
+      <a href="https://www.facebook.com/bigup.oujda/" target="_blank" rel="noopener">Facebook</a>
+       <a href="https://www.instagram.com/big_up_oujda_" target="_blank" rel="noopener">Instagram</a>
       <p style="margin-top:1rem; font-size:0.75rem; color:#555;">Suhayb Dawson</p>
     </div>
   </footer>
@@ -812,23 +810,34 @@
   <script>
     const sections = document.querySelectorAll('.section');
     const navLinks = document.querySelectorAll('nav a');
+    const nav = document.querySelector('nav');
 
     function updateActive() {
       const scrollY = window.scrollY;
+      
+      // Calculate offset based on whether we are on mobile (header relative) or desktop (header fixed)
+      const isMobile = window.innerWidth <= 768;
+      const offset = isMobile ? 100 : 220; 
+
       sections.forEach((sec) => {
-        const top = sec.offsetTop - 220; 
+        const top = sec.offsetTop - offset; 
         const height = sec.offsetHeight;
         if (scrollY >= top && scrollY < top + height) {
           navLinks.forEach(a => a.classList.remove('active'));
           const id = sec.getAttribute('id');
           const link = document.querySelector(`nav a[href="#${id}"]`);
-          if (link) link.classList.add('active');
+          if (link) {
+            link.classList.add('active');
+            // Auto scroll nav to active item
+            link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }
         }
       });
     }
 
     window.addEventListener('scroll', updateActive);
     window.addEventListener('load', updateActive);
+    window.addEventListener('resize', updateActive);
   </script>
 </body>
 </html>
