@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIG UP — Fast Food | Oujda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #1a1a1a;
+      --bg-card: #242424;
+      --orange: #ff6b35;
+      --orange-light: #ff8c5a;
+      --white: #ffffff;
+      --gray: #a0a0a0;
+      --gray-dark: #6b6b6b;
+      
+      /* Desktop Defaults */
+      --header-height: 140px;
+      --nav-height: 60px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-dark);
+      color: var(--white);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* --- HEADER --- */
+    header {
+      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-card) 100%);
+      padding: 1rem;
+      text-align: center;
+      border-bottom: 3px solid var(--orange);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .tagline {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .header-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.2rem 1rem;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--gray);
+    }
+
+    .header-info span {
+      display: inline-block;
+    }
+
+    .header-info a {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* --- NAV --- */
+    nav {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      align-items: center;
+      padding: 0 1rem;
+      background: var(--bg-card);
+      border-bottom: 1px solid rgba(255,107,53,0.2);
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      z-index: 999;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    nav::-webkit-scrollbar { display: none; }
+
+    nav a {
+      color: var(--gray);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+
+    nav a:hover {
+      color: var(--white);
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    nav a.active {
+      color: var(--white);
+      background: var(--orange);
+      border-color: var(--orange);
+    }
+
+    /* --- MAIN --- */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      /* Padding top = Header + Nav + Buffer */
+      padding: calc(var(--header-height) + var(--nav-height) + 2rem) 1.5rem 4rem;
+    }
+
+    .section {
+      margin-bottom: 3.5rem;
+      scroll-margin-top: calc(var(--nav-height) + 20px);
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.05em;
+      color: var(--orange);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid rgba(255,107,53,0.4);
+      display: inline-block;
+    }
+
+    /* --- MENU ITEMS --- */
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* NEW STYLES FOR IMAGES */
+    .item-header {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .food-img {
+      width: 70px;
+      height: 70px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.1);
+      flex-shrink: 0;
+    }
+    /* END NEW STYLES */
+
+    .item-name { 
+      font-weight: 700; 
+      color: var(--white); 
+      font-size: 1.1rem; 
+    }
+    
+    .item-desc { 
+      font-size: 0.85rem; 
+      color: var(--gray); 
+      margin-top: 0.3rem; 
+      line-height: 1.4;
+    }
+
+    .item-price { 
+      font-family: 'Bebas Neue', sans-serif; 
+      font-size: 1.4rem; 
+      color: var(--orange); 
+      white-space: nowrap; 
+      text-align: right;
+    }
+    
+    .item-price span { 
+      font-size: 0.8rem; 
+      color: var(--gray); 
+      font-family: 'DM Sans', sans-serif; 
+    }
+
+    .pizza-sizes { 
+      display: flex; 
+      gap: 1rem; 
+      margin-top: 0.4rem; 
+      font-size: 0.9rem; 
+      color: var(--white); 
+    }
+    
+    .pizza-sizes span { 
+      color: var(--orange); 
+      font-weight: 700; 
+    }
+
+    .sub-list { margin-top: 0.5rem; font-size: 0.85rem; color: var(--gray); }
+    .sub-list li { margin-bottom: 0.3rem; }
+
+    /* --- COMPONENT GRIDS --- */
+    .compose-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .compose-item {
+      background: rgba(255,107,53,0.08);
+      border: 1px solid rgba(255,107,53,0.3);
+      border-radius: 8px;
+      padding: 0.8rem 0.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .compose-item strong { color: var(--orange); font-size: 1.25rem; display: block; margin-bottom: 0.2rem;}
+
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .step-card {
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .step-title {
+      color: var(--orange);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      font-size: 0.8rem;
+      background: #2a2a2a;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #444;
+      color: #ccc;
+    }
+    .pill strong { color: var(--orange); margin-left: 3px;}
+
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: var(--bg-card);
+      border-top: 1px solid rgba(255,107,53,0.2);
+      color: var(--gray-dark);
+      font-size: 0.85rem;
+      margin-top: 4rem;
+    }
+
+    .social { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin-top: 1.5rem; }
+    .social a { color: var(--white); text-decoration: none; font-weight: 600; background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 50px; width: 100%; max-width: 250px;}
+    .social a:hover { background: var(--orange); }
+
+    /* --- MOBILE OPTIMIZATION --- */
+    @media (max-width: 768px) {
+      
+      header {
+        position: relative; 
+        height: auto;
+        padding: 1.5rem 1rem 1rem;
+      }
+
+      nav {
+        position: sticky;
+        top: 0;
+        justify-content: flex-start; 
+        padding-left: 1rem;
+        background: rgba(36, 36, 36, 0.98); 
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      }
+
+      main {
+        padding: 2rem 1.25rem 4rem; 
+      }
+
+      .section {
+        scroll-margin-top: calc(var(--nav-height) + 10px);
+      }
+
+      h1 { font-size: 2.5rem; }
+
+      .item {
+        flex-direction: column; 
+        gap: 0.4rem;
+        padding: 1.25rem 0; 
+      }
+      
+      .item-header {
+        width: 100%;
+      }
+      
+      .food-img {
+         width: 60px;
+         height: 60px;
+      }
+
+      .item-name { font-size: 1.15rem; }
+
+      .item-price {
+        align-self: flex-start; 
+        font-size: 1.35rem;
+        background: rgba(255, 107, 53, 0.1);
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-top: 0.25rem;
+        /* Push price below image on mobile, or keep nice layout? */
+        /* Let's align it with text by adding margin left equal to img width + gap */
+        margin-left: 75px; 
+      }
+
+      .compose-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .step-grid {
+        grid-template-columns: 1fr; 
+      }
+
+      .header-info {
+         gap: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+   <header>
+    <p class="tagline">Fast Food</p>
+    <h1>BIG UP</h1>
+    <div class="header-info">
+      <span>📍 BD AL MAQDIS</span>
+      <span>📞 <a href="tel:+212536503590">05 36 50 35 90</a></span>
+      <span>📞 <a href="tel:+212765806052">07 65 80 60 52</a></span>
+      <span style="width: 100%; height: 0; margin: 0.2rem 0;"></span> <span>📍 Av. Omar Ibn Khattab</span>
+       <span>📞 <a href="tel:+212536688027">05 36 68 80 27</a></span>
+      <span>📞 <a href="tel:+212765806051">07 65 80 60 51</a></span>
+    </div>
+  </header>
+
+
+  <nav id="navbar">
+    <a href="#burgers">Burgers</a>
+    <a href="#sandwiches">Sandwichs</a>
+    <a href="#naan">Cheese Naan</a>
+    <a href="#panini">Panini</a>
+    <a href="#wraps">Wraps</a>
+    <a href="#shawarma">Shawarma</a>
+    <a href="#finger">Finger Food</a>
+    <a href="#salads">Salades</a>
+    <a href="#pizza">Pizza</a>
+    <a href="#jus">Jus & Desserts</a>
+    <a href="#bowls">Bowls</a>
+    <a href="#twister">Twister</a>
+    <a href="#compose">Compose Tacos</a>
+  </nav>
+
+  <main>
+    <section class="section" id="burgers">
+      <h2 class="section-title">The Burger House</h2>
+      <div class="item">
+        <div class="item-header">
+          <img src="whooper.jpeg" alt="Burger" class="food-img">
+          <div>
+            <div class="item-name">Whooper</div>
+            <div class="item-desc">Steak haché, salade, tomate, cheddar</div>
+          </div>
+        </div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="crispy.jpeg" alt="Crispy Burger" class="food-img">
+          <div>
+            <div class="item-name">Le Crispy</div>
+            <div class="item-desc">Poulet pané, salade, tomate, cheddar</div>
+          </div>
+        </div>
+        <div class="item-price">28 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="double cheese.jpeg" alt="Double Burger" class="food-img">
+          <div>
+            <div class="item-name">Double Cheese</div>
+            <div class="item-desc">Double steak haché, salade, tomate, cheddar</div>
+          </div>
+        </div>
+        <div class="item-price">28 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="bigup.jpeg" alt="Big Up Burger" class="food-img">
+          <div>
+            <div class="item-name">Big Up</div>
+            <div class="item-desc">Steak haché, poulet pané, tomate, salade, fromage, oignon caramélisé</div>
+          </div>
+        </div>
+        <div class="item-price">35 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="bleu chicken.jpeg" alt="Chicken Burger" class="food-img">
+          <div>
+            <div class="item-name">Bleu Chicken</div>
+            <div class="item-desc">Cordon bleu, crispy chicken, cheddar, salade, tomate</div>
+          </div>
+        </div>
+        <div class="item-price">38 <span>DH</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="sandwiches">
+      <h2 class="section-title">Sandwich Menu</h2>
+      <div class="item">
+        <div class="item-header">
+          <img src="chiken curry.jpeg" alt="Sandwich" class="food-img">
+          <div>
+            <div class="item-name">Chicken Tikka</div>
+            <div class="item-desc">Poulet mariné au massala, salade, tomate, fromage, oignons</div>
+          </div>
+        </div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="chiken curry.jpeg" alt="Sandwich" class="food-img">
+          <div>
+            <div class="item-name">Chicken Curry</div>
+            <div class="item-desc">Poulet mariné au curry, salade, tomate, fromage</div>
+          </div>
+        </div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="chiken tandoori.jpeg" alt="Sandwich" class="food-img">
+          <div>
+            <div class="item-name">Chicken Tandoori</div>
+            <div class="item-desc">Poulet mariné au tandoori, salade, tomate, fromage</div>
+          </div>
+        </div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="figaro.jpeg" alt="Sandwich" class="food-img">
+          <div>
+            <div class="item-name">Le Figaro</div>
+            <div class="item-desc">Steak haché, salade, tomate, fromage</div>
+          </div>
+        </div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="gourmand.jpeg" alt="Sandwich" class="food-img">
+          <div>
+            <div class="item-name">Le Gourmand</div>
+            <div class="item-desc">Poulet, viande hachée, salade, tomate, fromage, œuf</div>
+          </div>
+        </div>
+        <div class="item-price">28 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="chilli turkish.jpeg" alt="Sandwich" class="food-img">
+          <div>
+            <div class="item-name">Chilli Turkish</div>
+            <div class="item-desc">Kebab, viande hachée, chou rouge, sauce piquante</div>
+          </div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="savoyard.jpeg" alt="Sandwich" class="food-img">
+          <div>
+            <div class="item-name">Savoyard</div>
+            <div class="item-desc">Poulet mariné à la crème fraîche, jambon de dinde, cheddar</div>
+          </div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="american.jpeg" alt="Sandwich" class="food-img">
+          <div>
+            <div class="item-name">America</div>
+            <div class="item-desc">2 steaks hachés, salade, tomate, fromage</div>
+          </div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="triple x.jpeg" alt="Sandwich" class="food-img">
+          <div>
+            <div class="item-name">Triple X</div>
+            <div class="item-desc">3 steaks, jambon de dinde, boursin, cheddar</div>
+          </div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="bigupS (1).jpeg" alt="Sandwich" class="food-img">
+          <div>
+            <div class="item-name">Big Up</div>
+            <div class="item-desc">Fromage frais, crispy chicken, cheddar, sauce maison</div>
+          </div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="naan">
+      <h2 class="section-title">Menu Cheese Naan</h2>
+      <div class="item">
+        <div class="item-header">
+          <img src="tandooriN.jpeg" alt="Naan" class="food-img">
+          <div>
+            <div class="item-name">Tandoori</div>
+            <div class="item-desc">Cheesenaan, poulet mariné au tandoori, laitue, tomate, cheddar</div>
+          </div>
+        </div>
+        <div class="item-price">35 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="curryN.jpeg" alt="Naan" class="food-img">
+          <div>
+            <div class="item-name">Curry</div>
+            <div class="item-desc">Cheesenaan, poulet mariné au curry, laitue, tomate, cheddar</div>
+          </div>
+        </div>
+        <div class="item-price">35 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="kebabN.jpeg" alt="Naan" class="food-img">
+          <div>
+            <div class="item-name">Kebab</div>
+            <div class="item-desc">Cheesenaan, kebab, laitue, tomate, cheddar</div>
+          </div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="bombayN.jpeg" alt="Naan" class="food-img">
+          <div>
+            <div class="item-name">Bombay</div>
+            <div class="item-desc">Cheesenaan, viande hachée, crispy chicken, rosty, laitue, tomate, cheddar</div>
+          </div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="bigupN.jpeg" alt="Naan" class="food-img">
+          <div>
+            <div class="item-name">Big Up</div>
+            <div class="item-desc">Cheesenaan, cordon bleu, nugget, jambon de dinde, laitue, tomate, cheddar</div>
+          </div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="panini">
+      <h2 class="section-title">Panini</h2>
+      <div class="item"><div class="item-header"><img src="chacutrerieSH.jpeg" alt="Panini" class="food-img"><div class="item-name">Charcuterie</div></div><div class="item-price">18 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="merguezSH.jpeg" alt="Panini" class="food-img"><div class="item-name">Merguez</div></div><div class="item-price">18 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="chickenSH.jpeg" alt="Panini" class="food-img"><div class="item-name">Chicken</div></div><div class="item-price">20 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="viandeHacheeSH.jpeg" alt="Panini" class="food-img"><div class="item-name">Viande Hachée</div></div><div class="item-price">20 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="nuggetsSH.jpeg" alt="Panini" class="food-img"><div class="item-name">Nuggets</div></div><div class="item-price">22 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="mixteSH.jpeg" alt="Panini" class="food-img"><div class="item-name">Mixte</div></div><div class="item-price">25 <span>DH</span></div></div>
+    </section>
+
+    <section class="section" id="wraps">
+      <h2 class="section-title">Wraps</h2>
+      <div class="item">
+        <div class="item-header">
+          <img src="wrapnuggts.jpeg" alt="Wrap" class="food-img">
+          <div><div class="item-name">Nuggets</div><div class="item-desc">Nuggets, salade, tomate, fromage</div></div>
+        </div>
+        <div class="item-price">20 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="wrapcordonbleu.jpeg" alt="Wrap" class="food-img">
+          <div><div class="item-name">Cordon Bleu</div><div class="item-desc">Cordon bleu, cheddar, salade, tomate</div></div>
+        </div>
+        <div class="item-price">25 <span>DH</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="shawarma">
+      <h2 class="section-title">Shawarma</h2>
+      <div class="item"><div class="item-header"><img src="libanaisPA.jpeg" alt="Shawarma" class="food-img"><div class="item-name">Lbanais</div></div><div class="item-price">25 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="donerkebabPA.jpeg" alt="Shawarma" class="food-img"><div class="item-name">Doner Kebab</div></div><div class="item-price">30 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="lebilndePA.jpeg" alt="Shawarma" class="food-img"><div class="item-name">Le Blinde</div></div><div class="item-price">30 <span>DH</span></div></div>
+    </section>
+
+    <section class="section" id="finger">
+      <h2 class="section-title">Finger Food</h2>
+      <div class="item"><div class="item-header"><img src="cheesyfriesFA.jpeg" alt="Fries" class="food-img"><div class="item-name">Cheesy Fries</div></div><div class="item-price">20 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="oniognringsFA.jpeg" alt="Onion Rings" class="food-img"><div><div class="item-name">Oignon Rings</div><div class="item-desc">5 pièces</div></div></div><div class="item-price">20 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="fingermozzaFA.jpeg" alt="Mozza Sticks" class="food-img"><div><div class="item-name">Finger Mozza</div><div class="item-desc">4 pièces</div></div></div><div class="item-price">25 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="nuggtsFA.jpeg" alt="Nuggets" class="food-img"><div><div class="item-name">Nuggets</div><div class="item-desc">5 pièces</div></div></div><div class="item-price">25 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="croquantgoudaFA.jpeg" alt="Gouda" class="food-img"><div><div class="item-name">Croquant Gouda</div><div class="item-desc">5 pièces</div></div></div><div class="item-price">30 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="tendersFA.jpeg" alt="Tenders" class="food-img"><div><div class="item-name">Tenders</div><div class="item-desc">4 pièces</div></div></div><div class="item-price">30 <span>DH</span></div></div>
+    </section>
+
+    <section class="section" id="salads">
+      <h2 class="section-title">Menu Salades</h2>
+      <div class="item">
+        <div class="item-header">
+          <img src="saladecesar.jpeg" alt="Salad" class="food-img">
+          <div><div class="item-name">Salade César</div><div class="item-desc">Laitue, tomates cerises, poulet, croutons, fromage</div></div>
+        </div>
+        <div class="item-price">25 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="saladebigup.jpeg" alt="Salad" class="food-img">
+          <div><div class="item-name">Salade Big Up</div><div class="item-desc">Pennes, crispy chicken, tomates cerises, jambon de dinde, fromage</div></div>
+        </div>
+        <div class="item-price">30 <span>DH</span></div>
+      </div>
+    </section>
+     <section class="section" id="pizza">
+      <h2 class="section-title">Menu Pizza</h2>
+      <p class="item-desc" style="margin-bottom:1rem;color:var(--gray);">Toutes en M et G</p>
+      <div class="item">
+        <div class="item-header">
+          <img src="pizzarouge.png" alt="Pizza Rouge" class="food-img">
+          <div>
+            <div class="item-name">Pizza Rouge</div>
+            <div class="item-desc">Sauce tomate, fromage, origan</div>
+            <div class="pizza-sizes">M <span>32 DH</span> · G <span>47 DH</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+          <img src="pizzablancca.png" alt="Pizza Blancca" class="food-img">
+          <div>
+            <div class="item-name">Pizza Blancca</div>
+            <div class="item-desc">Sauce gruyère, fromage, basilic</div>
+            <div class="pizza-sizes">M <span>35 DH</span> · G <span>50 DH</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="pizzathon.png" alt="Pizza Thon" class="food-img">
+          <div>
+            <div class="item-name">Pizza Thon</div>
+            <div class="item-desc">Sauce tomate, fromage, thon, olive, origan</div>
+            <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="pizzavegetarienne.png" alt="Pizza Veg" class="food-img">
+          <div>
+            <div class="item-name">Pizza Végétarienne</div>
+            <div class="item-desc">Sauce tomate, fromage, oignon, courgette, poivron, champignon, tomate, origan</div>
+            <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="pizzafume.png" alt="Pizza Fumé" class="food-img">
+          <div>
+            <div class="item-name">Pizza Fumé</div>
+            <div class="item-desc">Sauce tomate, fromage, jambon fumé, origan</div>
+            <div class="pizza-sizes">M <span>37 DH</span> · G <span>52 DH</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="pizzabologanaise.png" alt="Pizza Bolognaise" class="food-img">
+          <div>
+            <div class="item-name">Pizza Bolognaise</div>
+            <div class="item-desc">Sauce tomate, fromage, viande hachée, champignon, poivron, origan</div>
+            <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="pizzachiken.png" alt="Pizza Chicken" class="food-img">
+          <div>
+            <div class="item-name">Pizza Chicken</div>
+            <div class="item-desc">Sauce gruyère, fromage, poulet, olive, origan</div>
+            <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="pizza4fromage.png" alt="Pizza 4 Fromage" class="food-img">
+          <div>
+            <div class="item-name">Pizza 4 Fromage</div>
+            <div class="item-desc">Sauce tomate, mozzarella, masdam, roquefort, cheddar</div>
+            <div class="pizza-sizes">M <span>40 DH</span> · G <span>60 DH</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="pizzafruitdemer.png" alt="Pizza Mer" class="food-img">
+          <div>
+            <div class="item-name">Pizza Fruits de Mer</div>
+            <div class="item-desc">Sauce tomate, crevettes, surimi, calamars, olive, origan</div>
+            <div class="pizza-sizes">M <span>45 DH</span> · G <span>65 DH</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="pizzabigup.png" alt="Pizza Big Up" class="food-img">
+          <div>
+            <div class="item-name">Pizza Big Up</div>
+            <div class="item-desc">Sauce gruyère, fromage, crispy chicken, basilic</div>
+            <div class="pizza-sizes">M <span>45 DH</span> · G <span>65 DH</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="jus">
+      <h2 class="section-title">Jus & Desserts</h2>
+      <div class="item"><div class="item-header"><img src="jusdorange.jpeg" alt="Jus" class="food-img"><div class="item-name">Jus d'Orange</div></div><div class="item-price">15 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="jusdecitron.jpeg" alt="Jus" class="food-img"><div class="item-name">Jus de Citron</div></div><div class="item-price">15 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="cocktail.jpeg" alt="Cocktail" class="food-img"><div class="item-name">Cocktail</div></div><div class="item-price">20 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="tiramisu.jpeg" alt="Tiramisu" class="food-img"><div class="item-name">Tiramisu</div></div><div class="item-price">20 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="cheesecake.jpeg" alt="Cheesecake" class="food-img"><div class="item-name">Cheesecake</div></div><div class="item-price">15 <span>DH</span></div></div>
+      <div class="item"><div class="item-header"><img src="flan cuajada.jpeg" alt="Flan" class="food-img"><div class="item-name">Flan Cuajada</div></div><div class="item-price">15 <span>DH</span></div></div>
+    </section>
+
+    <section class="section" id="bowls">
+      <h2 class="section-title">Bowls</h2>
+      <div class="item">
+        <div class="item-header">
+           <img src="steak&tendersBL.jpeg" alt="Bowl" class="food-img">
+          <div>
+            <div class="item-name">Steak & Tenders</div>
+            <div class="item-desc">Viande hachée, tenders, sauce fromagère, frites</div>
+          </div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="magicbowlsBL.jpeg" alt="Bowl" class="food-img">
+          <div>
+            <div class="item-name">Magic Bowls</div>
+            <div class="item-desc">Tikka, jambon de dinde, oignon rings, sauce fromagère, frites</div>
+          </div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="cordonbleu&tendersBL.jpeg" alt="Bowl" class="food-img">
+          <div>
+            <div class="item-name">Cordon Bleu & Tenders</div>
+            <div class="item-desc">Cordon bleu, tenders, sauce fromagère, frites</div>
+          </div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="twister">
+      <h2 class="section-title">Twister</h2>
+      <div class="item">
+        <div class="item-header">
+           <img src="cheezytwisterTS.jpeg" alt="Twister" class="food-img">
+          <div>
+            <div class="item-name">Cheezy Twister</div>
+            <div class="item-desc">Viande hachée, tenders, galette de pomme de terre, sauce fromagère</div>
+          </div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="crunchytwisterTS.jpeg" alt="Twister" class="food-img">
+          <div>
+            <div class="item-name">Crunchy Twister</div>
+            <div class="item-desc">Tenders, onion rings, sauce au choix</div>
+          </div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="swisstwisterTS.jpeg" alt="Twister" class="food-img">
+          <div>
+            <div class="item-name">Swiss Twister</div>
+            <div class="item-desc">Poulet, merguez, jambon de dinde, galette de pomme de terre</div>
+          </div>
+        </div>
+        <div class="item-price">50 <span>DH</span></div>
+      </div>
+    </section>
+
+   
+
+    <section class="section" id="compose">
+      <h2 class="section-title">Compose selon tes goûts (Tacos)</h2>
+      
+      <div class="compose-grid">
+        <div class="compose-item"><strong>M</strong>30 DH <br><small>1 Viande</small></div>
+        <div class="compose-item"><strong>L</strong>35 DH <br><small>2 Viandes</small></div>
+        <div class="compose-item"><strong>XL</strong>60 DH <br><small>3 Viandes</small></div>
+      </div>
+
+      <div class="step-grid">
+        <div class="step-card">
+          <h3 class="step-title">1. Choisis ta base</h3>
+          <p class="item-desc" style="color: var(--white);">Nos bases sont garnies de frites et de notre sauce fromagère maison.</p>
+        </div>
+
+        <div class="step-card">
+          <h3 class="step-title">2. Choisis ta viande</h3>
+          <ul class="sub-list" style="padding-left:0;">
+            <li style="list-style:none;">Poulet · Viande Hachée · Merguez</li>
+            <li style="list-style:none;">Nuggets <strong style="color: var(--orange);">+5 DH</strong></li>
+            <li style="list-style:none;">Tenders <strong style="color: var(--orange);">+8 DH</strong></li>
+            <li style="list-style:none;">Cordon Bleu <strong style="color: var(--orange);">+15 DH</strong></li>
+            <li style="list-style:none;">Pepperoni <strong style="color: var(--orange);">+5 DH</strong></li>
+          </ul>
+        </div>
+
+        <div class="step-card">
+          <h3 class="step-title">3. Choisis ta sauce</h3>
+          <p class="item-desc" style="color: var(--white); line-height: 1.6;">
+            Algérienne, Andalouse, Brasil, Harissa, Cheezy Eazy, Mayonnaise, Biggy Burger, Ketchup, Barbecue, Fromagère, Pitakebab
+          </p>
+        </div>
+
+        <div class="step-card">
+          <h3 class="step-title">4. Choisis tes suppléments</h3>
+          <div class="pill-grid">
+            <span class="pill">Sauce <strong>+2DH</strong></span>
+            <span class="pill">Cheddar <strong>+5DH</strong></span>
+            <span class="pill">Oeuf <strong>+5DH</strong></span>
+            <span class="pill">Jambon de dinde <strong>+5DH</strong></span>
+            <span class="pill">Frites <strong>+8DH</strong></span>
+            <span class="pill">Frites Fromagère <strong>+10DH</strong></span>
+            <span class="pill">Soda 25cl <strong>+8DH</strong></span>
+            <span class="pill">Oasis <strong>+15DH</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-title" style="margin-top:3rem; font-size:1.6rem; border:none; display: block;">Ou nos Recettes Signatures</h3>
+      
+      <div class="item">
+        <div class="item-header">
+           <img src="tacarabia.jpeg" alt="Tacos" class="food-img">
+          <div>
+            <div class="item-name">Tac'Arabia</div>
+            <div class="item-desc">Viande au choix, poivron, oignon confit, oignon caramélisé, cheddar</div>
+          </div>
+        </div>
+        <div class="item-price">35 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="lechakal.jpeg" alt="Tacos" class="food-img">
+          <div>
+            <div class="item-name">Le Chakal</div>
+            <div class="item-desc">Gratiné cheddar, viande au choix</div>
+          </div>
+        </div>
+        <div class="item-price">40 <span>DH</span></div>
+      </div>
+      <div class="item">
+        <div class="item-header">
+           <img src="lesmoky.jpeg" alt="Tacos" class="food-img">
+          <div>
+            <div class="item-name">Le Smoky</div>
+            <div class="item-desc">Gratiné cheddar et pepperoni, viande au choix</div>
+          </div>
+        </div>
+        <div class="item-price">45 <span>DH</span></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="padding-bottom: 3rem;">
+    <p style="font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--orange); letter-spacing: 1px;">BIG UP <span style="color: var(--white); font-weight: 400;">· FAST FOOD</span></p>
+    
+    <div style="margin: 1.5rem 0; display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+      <div>
+        <p style="color: var(--white); font-weight: 600; font-size: 0.85rem; margin-bottom: 0.3rem;">📍 BD AL MAQDIS</p>
+        <p style="font-size: 0.8rem;"><a href="tel:+212536503590" style="color: var(--orange); text-decoration: none;">05 36 50 35 90</a></p>
+        <p style="font-size: 0.8rem;"><a href="tel:+212765806052" style="color: var(--orange); text-decoration: none;">07 65 80 60 52</a></p>
+      </div>
+
+      <div>
+        <p style="color: var(--white); font-weight: 600; font-size: 0.85rem; margin-bottom: 0.3rem;">📍 AV. OMAR IBN KHATTAB</p>
+        <p style="font-size: 0.8rem;"><a href="tel:+212536688027" style="color: var(--orange); text-decoration: none;">05 36 68 80 27</a></p>
+        <p style="font-size: 0.8rem;"><a href="tel:+212765806051" style="color: var(--orange); text-decoration: none;">07 65 80 60 51</a></p>
+      </div>
+    </div>
+    
+    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.05); margin: 1.5rem auto; width: 50%;">
+
+    <div class="social">
+      <a href="https://www.facebook.com/bigup.oujda/" target="_blank" rel="noopener" style="font-size: 0.8rem; letter-spacing: 1px;">FACEBOOK</a>
+      <a href="https://www.instagram.com/big_up_oujda_" target="_blank" rel="noopener" style="font-size: 0.8rem; letter-spacing: 1px;">INSTAGRAM</a>
+      
+      <div style="margin-top: 2rem; opacity: 0.6;">
+        <p style="font-size: 0.65rem; color: var(--gray-dark); letter-spacing: 0.2em; text-transform: uppercase;">
+         Designed & Developed by
+        </p>
+        <p style="font-size: 0.75rem; color: var(--orange); letter-spacing: 0.1em; margin-top: 0.2rem; font-weight: 600;">
+          SUHAYB DAWSON
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('nav a');
+    const nav = document.querySelector('nav');
+
+    function updateActive() {
+      const scrollY = window.scrollY;
+      
+      // Calculate offset based on whether we are on mobile (header relative) or desktop (header fixed)
+      const isMobile = window.innerWidth <= 768;
+      const offset = isMobile ? 100 : 220; 
+
+      sections.forEach((sec) => {
+        const top = sec.offsetTop - offset; 
+        const height = sec.offsetHeight;
+        if (scrollY >= top && scrollY < top + height) {
+          navLinks.forEach(a => a.classList.remove('active'));
+          const id = sec.getAttribute('id');
+          const link = document.querySelector(`nav a[href="#${id}"]`);
+          if (link) {
+            link.classList.add('active');
+            // Auto scroll nav to active item
+            link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActive);
+    window.addEventListener('load', updateActive);
+    window.addEventListener('resize', updateActive);
+  </script>
+</body>
+</html>
