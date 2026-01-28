@@ -17,11 +17,11 @@
       --gray: #a0a0a0;
       --gray-dark: #6b6b6b;
       
-      /* Desktop Defaults */
+      
       --header-height: 140px;
       --nav-height: 60px;
     }
-    /* --- GLOWING LOGO --- */
+    
 .logo-glow {
   color: var(--white);
   text-shadow:
@@ -51,6 +51,54 @@
       0 0 25px rgba(255, 107, 53, 0.15);
   }
 }
+/* ================= BACK TO TOP ================= */
+#backToTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: var(--orange);
+  color: #000;
+  font-size: 1.5rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--orange);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 9999;
+  animation: glow 2s infinite alternate;
+  
+  animation-play-state: paused;
+}
+
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 8px var(--orange), 0 0 20px var(--orange);
+  }
+  to {
+    box-shadow: 0 0 20px var(--orange), 0 0 30px #ffb347;
+  }
+}
+
+#backToTop.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  animation-play-state: running;
+}
+
+#backToTop:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 30px #ffb347, 0 0 40px #ffa500;
+}
+
+
 
 
     * {
@@ -128,7 +176,7 @@
    /* ================= CATEGORY NAV ================= */
 .category-nav {
   position: sticky;
-  top: 0; /* 🔑 THIS is the fix */
+  top: 0; 
   z-index: 999;
   display: flex;
   gap: .4rem;
@@ -171,7 +219,6 @@
     main {
       max-width: 900px;
       margin: 0 auto;
-      /* Padding top = Header + Nav + Buffer */
       padding: calc(var(--header-height) + var(--nav-height) + 2rem) 1.5rem 4rem;
     }
 
@@ -201,7 +248,7 @@
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    /* NEW STYLES FOR IMAGES */
+    
     .item-header {
       display: flex;
       gap: 15px;
@@ -216,7 +263,7 @@
       border: 1px solid rgba(255,255,255,0.1);
       flex-shrink: 0;
     }
-    /* END NEW STYLES */
+    
 
     .item-name { 
       font-weight: 700; 
@@ -382,8 +429,7 @@
         padding: 2px 8px;
         border-radius: 4px;
         margin-top: 0.25rem;
-        /* Push price below image on mobile, or keep nice layout? */
-        /* Let's align it with text by adding margin left equal to img width + gap */
+        
         margin-left: 75px; 
       }
 
@@ -1046,13 +1092,26 @@ function activateNav() {
 window.addEventListener("scroll", activateNav);
 activateNav();
 </script>
+<button id="backToTop" aria-label="Back to top">↑</button>
+<script>
+const backToTop = document.getElementById("backToTop");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 400) {
+    backToTop.classList.add("show");
+  } else {
+    backToTop.classList.remove("show");
+  }
+});
+
+backToTop.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
+</script>
+
 
 </body>
 </html>
-
-
-
-
-
-
-
