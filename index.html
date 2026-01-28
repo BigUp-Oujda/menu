@@ -21,6 +21,37 @@
       --header-height: 140px;
       --nav-height: 60px;
     }
+    /* --- GLOWING LOGO --- */
+.logo-glow {
+  color: var(--white);
+  text-shadow:
+    0 0 5px rgba(255, 107, 53, 0.4),
+    0 0 15px rgba(255, 107, 53, 0.4),
+    0 0 30px rgba(255, 107, 53, 0.2);
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0% {
+    text-shadow:
+      0 0 5px rgba(255, 107, 53, 0.3),
+      0 0 15px rgba(255, 107, 53, 0.3),
+      0 0 25px rgba(255, 107, 53, 0.15);
+  }
+  50% {
+    text-shadow:
+      0 0 10px rgba(255, 107, 53, 0.8),
+      0 0 25px rgba(255, 107, 53, 0.7),
+      0 0 45px rgba(255, 107, 53, 0.4);
+  }
+  100% {
+    text-shadow:
+      0 0 5px rgba(255, 107, 53, 0.3),
+      0 0 15px rgba(255, 107, 53, 0.3),
+      0 0 25px rgba(255, 107, 53, 0.15);
+  }
+}
+
 
     * {
       margin: 0;
@@ -94,50 +125,47 @@
       font-weight: 500;
     }
 
-    /* --- NAV --- */
-    nav {
-      display: flex;
-      gap: 0.5rem;
-      justify-content: center;
-      align-items: center;
-      padding: 0 1rem;
-      background: var(--bg-card);
-      border-bottom: 1px solid rgba(255,107,53,0.2);
-      position: fixed;
-      top: var(--header-height);
-      left: 0;
-      right: 0;
-      height: var(--nav-height);
-      z-index: 999;
-      overflow-x: auto;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
+   /* ================= CATEGORY NAV ================= */
+.category-nav {
+  position: sticky;
+  top: 0; /* 🔑 THIS is the fix */
+  z-index: 999;
+  display: flex;
+  gap: .4rem;
+  padding: .6rem 1rem;
+  overflow-x: auto;
+  background: rgba(20,20,20,0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
 
-    nav::-webkit-scrollbar { display: none; }
 
-    nav a {
-      color: var(--gray);
-      text-decoration: none;
-      padding: 0.5rem 1rem;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: all 0.2s;
-      border: 1px solid transparent;
-    }
+.category-nav::-webkit-scrollbar {
+  display: none;
+}
 
-    nav a:hover {
-      color: var(--white);
-      border-color: rgba(255,255,255,0.1);
-    }
+.category-nav a {
+  position: relative;
+  padding: .45rem 1.1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: .85rem;
+  white-space: nowrap;
+  transition: all .25s ease;
+}
 
-    nav a.active {
-      color: var(--white);
-      background: var(--orange);
-      border-color: var(--orange);
-    }
+.category-nav a:hover {
+  color: var(--text);
+}
+
+.category-nav a.active {
+  background: var(--orange);
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(255,107,53,0.45);
+}
+
 
     /* --- MAIN --- */
     main {
@@ -376,7 +404,8 @@
 <body>
   <header>
   <p class="tagline">Fast Food</p>
-  <h1>BIG UP</h1>
+  <h1 class="logo-glow">BIG UP</h1>
+
   <div class="header-info">
     <div style="width: 100%; margin-bottom: 0.5rem; font-weight: bold;">
        Sur place · Emporté · Livraison
@@ -392,22 +421,21 @@
   </div>
 </header>
 
-
-  <nav id="navbar">
-    <a href="#burgers">Burgers</a>
-    <a href="#sandwiches">Sandwichs</a>
-    <a href="#naan">Cheese Naan</a>
-    <a href="#panini">Panini</a>
-    <a href="#wraps">Wraps</a>
-    <a href="#shawarma">Shawarma</a>
-    <a href="#finger">Finger Food</a>
-    <a href="#salads">Salades</a>
-    <a href="#pizza">Pizza</a>
-    <a href="#jus">Jus & Desserts</a>
-    <a href="#bowls">Bowls</a>
-    <a href="#twister">Twister</a>
-    <a href="#compose">Compose Tacos</a>
-  </nav>
+<nav class="category-nav">
+  <a href="#burgers">Burgers</a>
+  <a href="#sandwiches">Sandwichs</a>
+  <a href="#naan">Cheese Naan</a>
+  <a href="#panini">Panini</a>
+  <a href="#wraps">Wraps</a>
+  <a href="#shawarma">Shawarma</a>
+  <a href="#finger">Finger Food</a>
+  <a href="#salads">Salades</a>
+  <a href="#pizza">Pizza</a>
+  <a href="#jus">Jus & Desserts</a>
+  <a href="#bowls">Bowls</a>
+  <a href="#twister">Twister</a>
+  <a href="#compose">Compose Tacos</a>
+</nav>
 
   <main>
     <section class="section" id="burgers">
@@ -988,40 +1016,39 @@
   </footer>
 
   <script>
-    const sections = document.querySelectorAll('.section');
-    const navLinks = document.querySelectorAll('nav a');
-    const nav = document.querySelector('nav');
+const navLinks = document.querySelectorAll(".category-nav a");
+const sections = document.querySelectorAll(".section");
 
-    function updateActive() {
-      const scrollY = window.scrollY;
-      
-      // Calculate offset based on whether we are on mobile (header relative) or desktop (header fixed)
-      const isMobile = window.innerWidth <= 768;
-      const offset = isMobile ? 100 : 220; 
+function activateNav() {
+  let scrollPos = window.scrollY + 160;
 
-      sections.forEach((sec) => {
-        const top = sec.offsetTop - offset; 
-        const height = sec.offsetHeight;
-        if (scrollY >= top && scrollY < top + height) {
-          navLinks.forEach(a => a.classList.remove('active'));
-          const id = sec.getAttribute('id');
-          const link = document.querySelector(`nav a[href="#${id}"]`);
-          if (link) {
-            link.classList.add('active');
-            // Auto scroll nav to active item
-            link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-          }
-        }
-      });
+  sections.forEach(section => {
+    if (
+      scrollPos >= section.offsetTop &&
+      scrollPos < section.offsetTop + section.offsetHeight
+    ) {
+      navLinks.forEach(link => link.classList.remove("active"));
+      const activeLink = document.querySelector(
+        `.category-nav a[href="#${section.id}"]`
+      );
+      if (activeLink) {
+        activeLink.classList.add("active");
+        activeLink.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest"
+        });
+      }
     }
+  });
+}
 
-    window.addEventListener('scroll', updateActive);
-    window.addEventListener('load', updateActive);
-    window.addEventListener('resize', updateActive);
-  </script>
+window.addEventListener("scroll", activateNav);
+activateNav();
+</script>
+
 </body>
 </html>
-
 
 
 
