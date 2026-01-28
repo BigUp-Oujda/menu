@@ -1054,7 +1054,7 @@
     </div>
   </footer>
 
- <script>
+<script>
   const sections = document.querySelectorAll('.section');
   const navLinks = document.querySelectorAll('nav a');
   const backToTop = document.getElementById('backToTop');
@@ -1070,11 +1070,17 @@
 
       if (scrollY >= top && scrollY < top + height) {
         navLinks.forEach(a => a.classList.remove('active'));
+
         const id = sec.getAttribute('id');
         const link = document.querySelector(`nav a[href="#${id}"]`);
+
         if (link) {
           link.classList.add('active');
-          link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          link.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+            inline: 'center'
+          });
         }
       }
     });
@@ -1099,10 +1105,12 @@
   window.addEventListener('resize', updateActive);
 </script>
 
+
   
 
 </body>
 </html>
+
 
 
 
