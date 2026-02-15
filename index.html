@@ -3,23 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BIG UP Fast Food à Oujda - Burgers, Tacos, Pizza, Shawarma et plus. Livraison disponible sur BD AL MAQDIS et Av. Omar Ibn Khattab">
+  <meta name="keywords" content="fast food oujda, burger oujda, tacos oujda, pizza oujda, livraison oujda">
   <title>BIG UP — Fast Food | Oujda</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
       --bg-dark: #1a1a1a;
       --bg-card: #242424;
       --orange: #ff6b35;
       --orange-light: #ff8c5a;
+      --orange-dark: #e85a2a;
       --white: #ffffff;
       --gray: #a0a0a0;
       --gray-dark: #6b6b6b;
+      --green-whatsapp: #25D366;
       
-      /* Desktop Defaults */
       --header-height: 140px;
       --nav-height: 60px;
+      --transition-speed: 0.3s;
     }
 
     * {
@@ -30,6 +36,8 @@
 
     html {
       scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     body {
@@ -37,10 +45,21 @@
       background: var(--bg-dark);
       color: var(--white);
       min-height: 100vh;
-      line-height: 1.5;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    /* --- HEADER --- */
+    /* ===== LOADING ANIMATION ===== */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    /* ===== HEADER ===== */
     header {
       background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-card) 100%);
       padding: 1rem;
@@ -55,7 +74,8 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      transition: all 0.3s ease;
+      transition: all var(--transition-speed) ease;
+      backdrop-filter: blur(10px);
     }
 
     .tagline {
@@ -64,6 +84,7 @@
       color: var(--orange);
       text-transform: uppercase;
       margin-bottom: 0.2rem;
+      font-weight: 500;
     }
 
     h1 {
@@ -72,6 +93,7 @@
       letter-spacing: 0.05em;
       color: var(--white);
       line-height: 1;
+      user-select: none;
     }
 
     .header-info {
@@ -92,9 +114,15 @@
       color: var(--orange);
       text-decoration: none;
       font-weight: 500;
+      transition: color var(--transition-speed);
     }
 
-    /* --- NAV --- */
+    .header-info a:hover {
+      color: var(--orange-light);
+      text-decoration: underline;
+    }
+
+    /* ===== NAVIGATION ===== */
     nav {
       display: flex;
       gap: 0.5rem;
@@ -113,9 +141,21 @@
       white-space: nowrap;
       -webkit-overflow-scrolling: touch;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
     }
 
-    nav::-webkit-scrollbar { display: none; }
+    nav::-webkit-scrollbar { 
+      height: 4px;
+    }
+
+    nav::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    nav::-webkit-scrollbar-thumb {
+      background: var(--orange);
+      border-radius: 2px;
+    }
 
     nav a {
       color: var(--gray);
@@ -124,13 +164,30 @@
       border-radius: 50px;
       font-size: 0.9rem;
       font-weight: 500;
-      transition: all 0.2s;
+      transition: all var(--transition-speed);
       border: 1px solid transparent;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 80%;
+      height: 2px;
+      background: var(--orange);
+      transition: transform var(--transition-speed);
     }
 
     nav a:hover {
       color: var(--white);
       border-color: rgba(255,255,255,0.1);
+    }
+
+    nav a:hover::after {
+      transform: translateX(-50%) scaleX(1);
     }
 
     nav a.active {
@@ -139,31 +196,51 @@
       border-color: var(--orange);
     }
 
-    /* --- MAIN --- */
+    nav a.active::after {
+      display: none;
+    }
+
+    /* ===== MAIN CONTENT ===== */
     main {
       max-width: 900px;
       margin: 0 auto;
-      /* Padding top = Header + Nav + Buffer */
       padding: calc(var(--header-height) + var(--nav-height) + 2rem) 1.5rem 4rem;
     }
 
     .section {
       margin-bottom: 3.5rem;
-      scroll-margin-top: calc(var(--nav-height) + 20px);
+      scroll-margin-top: calc(var(--header-height) + var(--nav-height) + 20px);
     }
 
     .section-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
+      font-size: 2.5rem;
       letter-spacing: 0.05em;
       color: var(--orange);
       margin-bottom: 1.25rem;
-      padding-bottom: 0.25rem;
-      border-bottom: 2px solid rgba(255,107,53,0.4);
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--orange);
       display: inline-block;
+      position: relative;
     }
 
-    /* --- MENU ITEMS --- */
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 50%;
+      height: 2px;
+      background: var(--orange-light);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* ===== MENU ITEMS (LEGACY) ===== */
     .item {
       display: flex;
       justify-content: space-between;
@@ -171,13 +248,18 @@
       gap: 1rem;
       padding: 1rem 0;
       border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: all var(--transition-speed);
     }
 
-    /* NEW STYLES FOR IMAGES */
+    .item:hover {
+      transform: translateX(5px);
+    }
+
     .item-header {
       display: flex;
       gap: 15px;
       align-items: center;
+      flex: 1;
     }
 
     .food-img {
@@ -187,8 +269,12 @@
       object-fit: cover;
       border: 1px solid rgba(255,255,255,0.1);
       flex-shrink: 0;
+      transition: transform var(--transition-speed);
     }
-    /* END NEW STYLES */
+
+    .item:hover .food-img {
+      transform: scale(1.05);
+    }
 
     .item-name { 
       font-weight: 700; 
@@ -217,276 +303,15 @@
       font-family: 'DM Sans', sans-serif; 
     }
 
-    .pizza-sizes { 
-      display: flex; 
-      gap: 1rem; 
-      margin-top: 0.4rem; 
-      font-size: 0.9rem; 
-      color: var(--white); 
-    }
-    
-    .pizza-sizes span { 
-      color: var(--orange); 
-      font-weight: 700; 
-    }
-
-    .sub-list { margin-top: 0.5rem; font-size: 0.85rem; color: var(--gray); }
-    .sub-list li { margin-bottom: 0.3rem; }
-
-    /* --- COMPONENT GRIDS --- */
-    .compose-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.75rem;
-      margin-bottom: 2rem;
-    }
-
-    .compose-item {
-      background: rgba(255,107,53,0.08);
-      border: 1px solid rgba(255,107,53,0.3);
-      border-radius: 8px;
-      padding: 0.8rem 0.5rem;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    .compose-item strong { color: var(--orange); font-size: 1.25rem; display: block; margin-bottom: 0.2rem;}
-
-    .step-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-
-    .step-card {
-      background: #222;
-      border: 1px solid #333;
-      border-radius: 12px;
-      padding: 1.25rem;
-    }
-
-    .step-title {
-      color: var(--orange);
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.3rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .pill-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .pill {
-      font-size: 0.8rem;
-      background: #2a2a2a;
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid #444;
-      color: #ccc;
-    }
-    .pill strong { color: var(--orange); margin-left: 3px;}
-
-    footer {
-      text-align: center;
-      padding: 3rem 1.5rem;
-      background: var(--bg-card);
-      border-top: 1px solid rgba(255,107,53,0.2);
-      color: var(--gray-dark);
-      font-size: 0.85rem;
-      margin-top: 4rem;
-    }
-
-    .social { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin-top: 1.5rem; }
-    .social a { color: var(--white); text-decoration: none; font-weight: 600; background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 50px; width: 100%; max-width: 250px;}
-    .social a:hover { background: var(--orange); }
-
-    /* --- MOBILE OPTIMIZATION --- */
-    @media (max-width: 768px) {
-      
-      header {
-        position: relative; 
-        height: auto;
-        padding: 1.5rem 1rem 1rem;
-      }
-
-      nav {
-        position: sticky;
-        top: 0;
-        justify-content: flex-start; 
-        padding-left: 1rem;
-        background: rgba(36, 36, 36, 0.98); 
-        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-      }
-
-      main {
-        padding: 2rem 1.25rem 4rem; 
-      }
-
-      .section {
-        scroll-margin-top: calc(var(--nav-height) + 10px);
-      }
-
-      h1 { font-size: 2.5rem; }
-
-      .item {
-        flex-direction: column; 
-        gap: 0.4rem;
-        padding: 1.25rem 0; 
-      }
-      
-      .item-header {
-        width: 100%;
-      }
-      
-      .food-img {
-         width: 60px;
-         height: 60px;
-      }
-
-      .item-name { font-size: 1.15rem; }
-
-      .item-price {
-        align-self: flex-start; 
-        font-size: 1.35rem;
-        background: rgba(255, 107, 53, 0.1);
-        padding: 2px 8px;
-        border-radius: 4px;
-        margin-top: 0.25rem;
-       
-        margin-left: 75px; 
-      }
-
-      .compose-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      
-      .step-grid {
-        grid-template-columns: 1fr; 
-      }
-
-      .header-info {
-         gap: 0.5rem;
-      }
-    }
-    /* ===== GLOWING LOGO ===== */
-.glow-logo {
-  text-shadow:
-    0 0 6px #ff6b35,
-    0 0 18px #ff6b35,
-    0 0 35px rgba(255,107,53,0.9);
-  animation: logoGlow 2.5s ease-in-out infinite alternate;
-}
-
-@keyframes logoGlow {
-  from {
-    text-shadow:
-      0 0 6px #ff6b35,
-      0 0 18px #ff6b35,
-      0 0 30px rgba(255,107,53,0.6);
-  }
-  to {
-    text-shadow:
-      0 0 12px #ff8c5a,
-      0 0 30px #ff6b35,
-      0 0 55px rgba(255,140,90,1);
-  }
-}
-
-/* ===== BACK TO TOP BUTTON ===== */
-#backToTop {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: none;
-  background: var(--orange);
-  color: #000;
-  font-size: 1.6rem;
-  font-weight: bold;
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(20px);
-  transition: all 0.3s ease;
-  z-index: 9999;
-  box-shadow: 0 0 15px var(--orange);
-}
-
-#backToTop.show {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-  animation: backGlow 2s infinite alternate;
-}
-
-@keyframes backGlow {
-  from {
-    box-shadow: 0 0 15px var(--orange), 0 0 30px var(--orange);
-  }
-  to {
-    box-shadow: 0 0 30px #ffb347, 0 0 55px #ffa500;
-  }
-}
-
-#backToTop:hover {
-  transform: translateY(-6px);
-}
-
-  </style>
-</head>
-<body>
-  <header>
-  <p class="tagline">Fast Food</p>
-  <h1 class="glow-logo">BIG UP</h1>
-
-  <div class="header-info">
-    <div style="width: 100%; margin-bottom: 0.5rem; font-weight: bold;">
-       Sur place · Emporté · Livraison
-    </div>
-
-    <span>📍 BD AL MAQDIS</span>
-    <span>📞 <a href="tel:+212536503590">05 36 50 35 90</a></span>
-    <span>📞 <a href="tel:+212765806052">07 65 80 60 52</a></span>
-    <span style="width: 100%; height: 0; margin: 0.2rem 0;"></span>
-    <span>📍 Av. Omar Ibn Khattab</span>
-    <span>📞 <a href="tel:+212536688027">05 36 68 80 27</a></span>
-    <span>📞 <a href="tel:+212765806051">07 65 80 60 51</a></span>
-  </div>
-</header>
-
-
-  <nav id="navbar">
-    <a href="#burgers">Burgers</a>
-    <a href="#sandwiches">Sandwichs</a>
-    <a href="#naan">Cheese Naan</a>
-    <a href="#panini">Panini</a>
-    <a href="#wraps">Wraps</a>
-    <a href="#shawarma">Shawarma</a>
-    <a href="#finger">Finger Food</a>
-    <a href="#salads">Salades</a>
-    <a href="#pizza">Pizza</a>
-    <a href="#jus">Jus & Desserts</a>
-    <a href="#bowls">Bowls</a>
-    <a href="#twister">Twister</a>
-    <a href="#compose">Compose Tacos</a>
-  </nav>
-
-  <main>
-    <section class="section" id="burgers">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;">The Burger House</h2>
-  
-  <style>
-    .burger-grid {
+    /* ===== MODERN GRID ITEMS ===== */
+    .menu-grid {
       display: grid; 
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
       gap: 20px;
       margin-top: 20px;
     }
-    .burger-item-orange {
+
+    .menu-item-card {
       background: var(--bg-card); 
       padding: 15px; 
       border-radius: 15px;
@@ -494,18 +319,39 @@
       flex-direction: column;
       gap: 12px; 
       border: 1px solid #333;
-      transition: 0.3s;
+      transition: all var(--transition-speed);
+      position: relative;
+      overflow: hidden;
     }
-    .burger-item-orange:hover {
+
+    .menu-item-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,107,53,0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .menu-item-card:hover::before {
+      left: 100%;
+    }
+
+    .menu-item-card:hover {
       border-color: var(--orange);
-      box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
+      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.2);
+      transform: translateY(-4px);
     }
-    .burger-info-top {
+
+    .menu-info-top {
       display: flex;
       gap: 15px;
       align-items: center;
     }
-    .burger-btn-orange {
+
+    .menu-btn {
       width: 100%;
       background: var(--orange);
       color: #000;
@@ -516,992 +362,58 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: 0.2s;
+      transition: all var(--transition-speed);
       font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      font-weight: bold;
+      position: relative;
+      overflow: hidden;
     }
-    .burger-btn-orange:hover {
+
+    .menu-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.4s, height 0.4s;
+    }
+
+    .menu-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .menu-btn:hover {
       background: var(--white);
-      transform: scale(1.02);
+      transform: scale(1.03);
+      box-shadow: 0 4px 15px rgba(255,107,53,0.4);
     }
-    .burger-btn-orange .add-text { font-size: 1rem; }
-    .burger-btn-orange .price-text { font-size: 1.3rem; font-weight: bold; }
-  </style>
 
-  <div class="burger-grid">
-    
-    <div class="burger-item-orange">
-      <div class="burger-info-top">
-        <img src="whooper.jpeg" alt="Whooper" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Whooper</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Steak haché, salade, tomate, cheddar</div>
-        </div>
-      </div>
-      <button class="burger-btn-orange" onclick="addToCart('Whooper', 20)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">20 DH</span>
-      </button>
-    </div>
-
-    <div class="burger-item-orange">
-      <div class="burger-info-top">
-        <img src="crispy.jpeg" alt="Crispy" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Le Crispy</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Poulet pané, salade, tomate, cheddar</div>
-        </div>
-      </div>
-      <button class="burger-btn-orange" onclick="addToCart('Le Crispy', 28)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">28 DH</span>
-      </button>
-    </div>
-
-    <div class="burger-item-orange">
-      <div class="burger-info-top">
-        <img src="double cheese.jpeg" alt="Double Cheese" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Double Cheese</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Double steak haché, salade, tomate, cheddar</div>
-        </div>
-      </div>
-      <button class="burger-btn-orange" onclick="addToCart('Double Cheese', 28)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">28 DH</span>
-      </button>
-    </div>
-
-    <div class="burger-item-orange">
-      <div class="burger-info-top">
-        <img src="bigup.jpeg" alt="Big Up" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Big Up</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Steak + Poulet, fromage, oignon caramélisé</div>
-        </div>
-      </div>
-      <button class="burger-btn-orange" onclick="addToCart('Big Up Burger', 35)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">35 DH</span>
-      </button>
-    </div>
-
-    <div class="burger-item-orange">
-      <div class="burger-info-top">
-        <img src="bleu chicken.jpeg" alt="Bleu Chicken" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Bleu Chicken</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Cordon bleu, crispy chicken, cheddar, salade</div>
-        </div>
-      </div>
-      <button class="burger-btn-orange" onclick="addToCart('Bleu Chicken', 38)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">38 DH</span>
-      </button>
-    </div>
-
-  </div>
-</section>
-   <section class="section" id="sandwiches">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;">Nos Sandwichs</h2>
-  
-  <style>
-    .sandwich-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-      gap: 20px;
-      margin-top: 20px;
+    .menu-btn:active {
+      transform: scale(0.98);
     }
-    .sandwich-item-orange {
-      background: var(--bg-card); 
-      padding: 15px; 
-      border-radius: 15px;
-      display: flex; 
-      flex-direction: column;
-      gap: 12px; 
-      border: 1px solid #333;
-      transition: 0.3s;
+
+    .add-text, .price-text {
+      position: relative;
+      z-index: 1;
     }
-    .sandwich-item-orange:hover {
-      border-color: var(--orange);
-      box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
+
+    .price-text { 
+      font-size: 1.3rem; 
     }
-    .sandwich-info-top {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-    .sandwich-btn-orange {
-      width: 100%;
-      background: var(--orange);
-      color: #000;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.2s;
-      font-family: 'Bebas Neue', sans-serif;
-    }
-    .sandwich-btn-orange:hover {
-      background: var(--white);
-      transform: scale(1.02);
-    }
-    .sandwich-btn-orange .add-text { font-size: 1rem; }
-    .sandwich-btn-orange .price-text { font-size: 1.3rem; font-weight: bold; }
-  </style>
 
-  <div class="sandwich-grid">
-    
-    <div class="sandwich-item-orange">
-      <div class="sandwich-info-top">
-        <img src="chiken curry.jpeg" alt="Chicken Tikka" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Chicken Tikka</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Poulet mariné au massala, salade, tomate, oignons</div>
-        </div>
-      </div>
-      <button class="sandwich-btn-orange" onclick="addToCart('Chicken Tikka', 20)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">20 DH</span>
-      </button>
-    </div>
-
-    <div class="sandwich-item-orange">
-      <div class="sandwich-info-top">
-        <img src="chiken curry.jpeg" alt="Chicken Curry" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Chicken Curry</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Poulet mariné au curry, salade, tomate, fromage</div>
-        </div>
-      </div>
-      <button class="sandwich-btn-orange" onclick="addToCart('Chicken Curry', 20)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">20 DH</span>
-      </button>
-    </div>
-
-    <div class="sandwich-item-orange">
-      <div class="sandwich-info-top">
-        <img src="chiken tandoori.jpeg" alt="Chicken Tandoori" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Chicken Tandoori</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Poulet mariné au tandoori, salade, tomate</div>
-        </div>
-      </div>
-      <button class="sandwich-btn-orange" onclick="addToCart('Chicken Tandoori', 20)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">20 DH</span>
-      </button>
-    </div>
-
-    <div class="sandwich-item-orange">
-      <div class="sandwich-info-top">
-        <img src="figaro.jpeg" alt="Le Figaro" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Le Figaro</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Steak haché, salade, tomate, fromage</div>
-        </div>
-      </div>
-      <button class="sandwich-btn-orange" onclick="addToCart('Le Figaro', 20)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">20 DH</span>
-      </button>
-    </div>
-
-    <div class="sandwich-item-orange">
-      <div class="sandwich-info-top">
-        <img src="gourmand.jpeg" alt="Le Gourmand" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Le Gourmand</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Poulet, viande hachée, fromage, œuf</div>
-        </div>
-      </div>
-      <button class="sandwich-btn-orange" onclick="addToCart('Le Gourmand', 28)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">28 DH</span>
-      </button>
-    </div>
-
-    <div class="sandwich-item-orange">
-      <div class="sandwich-info-top">
-        <img src="chilli turkish.jpeg" alt="Chilli Turkish" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Chilli Turkish</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Kebab, viande hachée, sauce piquante</div>
-        </div>
-      </div>
-      <button class="sandwich-btn-orange" onclick="addToCart('Chilli Turkish', 40)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">40 DH</span>
-      </button>
-    </div>
-
-    <div class="sandwich-item-orange">
-      <div class="sandwich-info-top">
-        <img src="savoyard.jpeg" alt="Savoyard" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Savoyard</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Poulet à la crème, jambon de dinde, cheddar</div>
-        </div>
-      </div>
-      <button class="sandwich-btn-orange" onclick="addToCart('Savoyard', 40)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">40 DH</span>
-      </button>
-    </div>
-
-    <div class="sandwich-item-orange">
-      <div class="sandwich-info-top">
-        <img src="american.jpeg" alt="America" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">America</div>
-          <div class="item-desc" style="font-size: 0.8rem;">2 steaks hachés, salade, tomate, fromage</div>
-        </div>
-      </div>
-      <button class="sandwich-btn-orange" onclick="addToCart('America', 40)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">40 DH</span>
-      </button>
-    </div>
-
-    <div class="sandwich-item-orange">
-      <div class="sandwich-info-top">
-        <img src="triple x.jpeg" alt="Triple X" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Triple X</div>
-          <div class="item-desc" style="font-size: 0.8rem;">3 steaks, jambon de dinde, boursin, cheddar</div>
-        </div>
-      </div>
-      <button class="sandwich-btn-orange" onclick="addToCart('Triple X', 40)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">40 DH</span>
-      </button>
-    </div>
-
-    <div class="sandwich-item-orange">
-      <div class="sandwich-info-top">
-        <img src="bigupS (1).jpeg" alt="Big Up" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Big Up</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Fromage frais, crispy chicken, sauce maison</div>
-        </div>
-      </div>
-      <button class="sandwich-btn-orange" onclick="addToCart('Big Up Sandwich', 40)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">40 DH</span>
-      </button>
-    </div>
-
-  </div>
-</section>
-
-   <section class="section" id="naan">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;">Menu Cheese Naan</h2>
-  
-  <style>
-    .naan-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .naan-item-orange {
-      background: var(--bg-card); 
-      padding: 15px; 
-      border-radius: 15px;
-      display: flex; 
-      flex-direction: column;
-      gap: 12px; 
-      border: 1px solid #333;
-      transition: 0.3s;
-    }
-    .naan-item-orange:hover {
-      border-color: var(--orange);
-      box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
-    }
-    .naan-info-top {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-    .naan-btn-orange {
-      width: 100%;
-      background: var(--orange);
-      color: #000;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.2s;
-      font-family: 'Bebas Neue', sans-serif;
-    }
-    .naan-btn-orange:hover {
-      background: var(--white);
-      transform: scale(1.02);
-    }
-    .naan-btn-orange .add-text { font-size: 1rem; }
-    .naan-btn-orange .price-text { font-size: 1.3rem; font-weight: bold; }
-  </style>
-
-  <div class="naan-grid">
-    
-    <div class="naan-item-orange">
-      <div class="naan-info-top">
-        <img src="tandooriN.jpeg" alt="Tandoori" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Tandoori</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Cheesenaan, poulet tandoori, laitue, tomate, cheddar</div>
-        </div>
-      </div>
-      <button class="naan-btn-orange" onclick="addToCart('Cheese Naan Tandoori', 35)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">35 DH</span>
-      </button>
-    </div>
-
-    <div class="naan-item-orange">
-      <div class="naan-info-top">
-        <img src="curryN.jpeg" alt="Curry" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Curry</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Cheesenaan, poulet curry, laitue, tomate, cheddar</div>
-        </div>
-      </div>
-      <button class="naan-btn-orange" onclick="addToCart('Cheese Naan Curry', 35)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">35 DH</span>
-      </button>
-    </div>
-
-    <div class="naan-item-orange">
-      <div class="naan-info-top">
-        <img src="kebabN.jpeg" alt="Kebab" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Kebab</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Cheesenaan, kebab, laitue, tomate, cheddar</div>
-        </div>
-      </div>
-      <button class="naan-btn-orange" onclick="addToCart('Cheese Naan Kebab', 40)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">40 DH</span>
-      </button>
-    </div>
-
-    <div class="naan-item-orange">
-      <div class="naan-info-top">
-        <img src="bombayN.jpeg" alt="Bombay" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Bombay</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Viande hachée, crispy, rosty, laitue, cheddar</div>
-        </div>
-      </div>
-      <button class="naan-btn-orange" onclick="addToCart('Cheese Naan Bombay', 45)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">45 DH</span>
-      </button>
-    </div>
-
-    <div class="naan-item-orange">
-      <div class="naan-info-top">
-        <img src="bigupN.jpeg" alt="Big Up" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Big Up</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Cordon bleu, nugget, jambon dinde, cheddar</div>
-        </div>
-      </div>
-      <button class="naan-btn-orange" onclick="addToCart('Cheese Naan Big Up', 45)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">45 DH</span>
-      </button>
-    </div>
-
-  </div>
-</section>
-
-   <section class="section" id="panini">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;">Menu Panini</h2>
-  
-  <style>
-    .panini-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .panini-item-orange {
-      background: var(--bg-card); 
-      padding: 15px; 
-      border-radius: 15px;
-      display: flex; 
-      flex-direction: column;
-      gap: 12px; 
-      border: 1px solid #333;
-      transition: 0.3s;
-    }
-    .panini-item-orange:hover {
-      border-color: var(--orange);
-      box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
-    }
-    .panini-info-top {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-    .panini-btn-orange {
-      width: 100%;
-      background: var(--orange);
-      color: #000;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.2s;
-      font-family: 'Bebas Neue', sans-serif;
-    }
-    .panini-btn-orange:hover {
-      background: var(--white);
-      transform: scale(1.02);
-    }
-    .panini-btn-orange .add-text { font-size: 1rem; }
-    .panini-btn-orange .price-text { font-size: 1.3rem; font-weight: bold; }
-  </style>
-
-  <div class="panini-grid">
-    
-    <div class="panini-item-orange">
-      <div class="panini-info-top">
-        <img src="chacutrerieSH.jpeg" alt="Charcuterie" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Charcuterie</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Panini chaud, charcuterie de qualité, fromage fondu</div>
-        </div>
-      </div>
-      <button class="panini-btn-orange" onclick="addToCart('Panini Charcuterie', 18)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">18 DH</span>
-      </button>
-    </div>
-
-    <div class="panini-item-orange">
-      <div class="panini-info-top">
-        <img src="merguezSH.jpeg" alt="Merguez" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Merguez</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Merguez grillées, épices, fromage fondu</div>
-        </div>
-      </div>
-      <button class="panini-btn-orange" onclick="addToCart('Panini Merguez', 18)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">18 DH</span>
-      </button>
-    </div>
-
-    <div class="panini-item-orange">
-      <div class="panini-info-top">
-        <img src="chickenSH.jpeg" alt="Chicken" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Chicken</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Blanc de poulet émincé, sauce, fromage</div>
-        </div>
-      </div>
-      <button class="panini-btn-orange" onclick="addToCart('Panini Chicken', 20)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">20 DH</span>
-      </button>
-    </div>
-
-    <div class="panini-item-orange">
-      <div class="panini-info-top">
-        <img src="vvvv.jpeg" alt="Viande Hachée" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Viande Hachée</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Viande hachée assaisonnée, fromage fondu</div>
-        </div>
-      </div>
-      <button class="panini-btn-orange" onclick="addToCart('Panini Viande Hachée', 20)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">20 DH</span>
-      </button>
-    </div>
-
-    <div class="panini-item-orange">
-      <div class="panini-info-top">
-        <img src="nuggetsSH.jpeg" alt="Nuggets" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Nuggets</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Nuggets croustillants, sauce au choix, fromage</div>
-        </div>
-      </div>
-      <button class="panini-btn-orange" onclick="addToCart('Panini Nuggets', 22)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">22 DH</span>
-      </button>
-    </div>
-
-    <div class="panini-item-orange">
-      <div class="panini-info-top">
-        <img src="mixteSH.jpeg" alt="Mixte" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Mixte</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Le mélange parfait de plusieurs viandes et fromage</div>
-        </div>
-      </div>
-      <button class="panini-btn-orange" onclick="addToCart('Panini Mixte', 25)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">25 DH</span>
-      </button>
-    </div>
-
-  </div>
-</section>
-
-<section class="section" id="wraps">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;">Menu Wraps</h2>
-  
-  <style>
-    .wrap-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .wrap-item-orange {
-      background: var(--bg-card); 
-      padding: 15px; 
-      border-radius: 15px;
-      display: flex; 
-      flex-direction: column;
-      gap: 12px; 
-      border: 1px solid #333;
-      transition: 0.3s;
-    }
-    .wrap-item-orange:hover {
-      border-color: var(--orange);
-      box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
-    }
-    .wrap-info-top {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-    .wrap-btn-orange {
-      width: 100%;
-      background: var(--orange);
-      color: #000;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.2s;
-      font-family: 'Bebas Neue', sans-serif;
-    }
-    .wrap-btn-orange:hover {
-      background: var(--white);
-      transform: scale(1.02);
-    }
-    .wrap-btn-orange .add-text { font-size: 1rem; }
-    .wrap-btn-orange .price-text { font-size: 1.3rem; font-weight: bold; }
-  </style>
-
-  <div class="wrap-grid">
-    
-    <div class="wrap-item-orange">
-      <div class="wrap-info-top">
-        <img src="wrapnuggts.jpeg" alt="Wrap Nuggets" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Wrap Nuggets</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Nuggets croustillants, salade, tomate, fromage</div>
-        </div>
-      </div>
-      <button class="wrap-btn-orange" onclick="addToCart('Wrap Nuggets', 20)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">20 DH</span>
-      </button>
-    </div>
-
-    <div class="wrap-item-orange">
-      <div class="wrap-info-top">
-        <img src="wrapcordonbleu.jpeg" alt="Wrap Cordon Bleu" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Wrap Cordon Bleu</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Cordon bleu, cheddar fondu, salade, tomate</div>
-        </div>
-      </div>
-      <button class="wrap-btn-orange" onclick="addToCart('Wrap Cordon Bleu', 25)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">25 DH</span>
-      </button>
-    </div>
-
-  </div>
-</section>
-<section class="section" id="shawarma">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;">Menu Shawarma</h2>
-  
-  <style>
-    .shawarma-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .shawarma-item-orange {
-      background: var(--bg-card); 
-      padding: 15px; 
-      border-radius: 15px;
-      display: flex; 
-      flex-direction: column;
-      gap: 12px; 
-      border: 1px solid #333;
-      transition: 0.3s;
-    }
-    .shawarma-item-orange:hover {
-      border-color: var(--orange);
-      box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
-    }
-    .shawarma-info-top {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-    .shawarma-btn-orange {
-      width: 100%;
-      background: var(--orange);
-      color: #000;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.2s;
-      font-family: 'Bebas Neue', sans-serif;
-    }
-    .shawarma-btn-orange:hover {
-      background: var(--white);
-      transform: scale(1.02);
-    }
-    .shawarma-btn-orange .add-text { font-size: 1rem; }
-    .shawarma-btn-orange .price-text { font-size: 1.3rem; font-weight: bold; }
-  </style>
-
-  <div class="shawarma-grid">
-    
-    <div class="shawarma-item-orange">
-      <div class="shawarma-info-top">
-        <img src="libanaisPA.jpeg" alt="Lbanais" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Libanais</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Pain libanais authentique, viande marinée, ail, salade</div>
-        </div>
-      </div>
-      <button class="shawarma-btn-orange" onclick="addToCart('Shawarma Libanais', 25)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">25 DH</span>
-      </button>
-    </div>
-
-    <div class="shawarma-item-orange">
-      <div class="shawarma-info-top">
-        <img src="donerkebabPA.jpeg" alt="Doner Kebab" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Doner Kebab</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Kebab grillé à la broche, oignons, sauce blanche</div>
-        </div>
-      </div>
-      <button class="shawarma-btn-orange" onclick="addToCart('Doner Kebab', 30)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">30 DH</span>
-      </button>
-    </div>
-
-    <div class="shawarma-item-orange">
-      <div class="shawarma-info-top">
-        <img src="lebilndePA.jpeg" alt="Le Blinde" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Le Blindé</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Format généreux, mélange de viandes, extra fromage</div>
-        </div>
-      </div>
-      <button class="shawarma-btn-orange" onclick="addToCart('Shawarma Le Blindé', 30)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">30 DH</span>
-      </button>
-    </div>
-
-  </div>
-<section class="section" id="finger">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;">Finger Food</h2>
-  
-  <style>
-    .finger-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .finger-item-orange {
-      background: var(--bg-card); 
-      padding: 15px; 
-      border-radius: 15px;
-      display: flex; 
-      flex-direction: column;
-      gap: 12px; 
-      border: 1px solid #333;
-      transition: 0.3s;
-    }
-    .finger-item-orange:hover {
-      border-color: var(--orange);
-      box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
-    }
-    .finger-info-top {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-    .finger-btn-orange {
-      width: 100%;
-      background: var(--orange);
-      color: #000;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.2s;
-      font-family: 'Bebas Neue', sans-serif;
-    }
-    .finger-btn-orange:hover {
-      background: var(--white);
-      transform: scale(1.02);
-    }
-    .finger-btn-orange .add-text { font-size: 1rem; }
-    .finger-btn-orange .price-text { font-size: 1.3rem; font-weight: bold; }
-  </style>
-
-  <div class="finger-grid">
-    
-    <div class="finger-item-orange">
-      <div class="finger-info-top">
-        <img src="cheesyfriesFA.jpeg" alt="Cheesy Fries" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Cheesy Fries</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Frites croustillantes nappées de sauce fromage</div>
-        </div>
-      </div>
-      <button class="finger-btn-orange" onclick="addToCart('Cheesy Fries', 20)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">20 DH</span>
-      </button>
-    </div>
-
-    <div class="finger-item-orange">
-      <div class="finger-info-top">
-        <img src="oniognringsFA.jpeg" alt="Onion Rings" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Oignon Rings</div>
-          <div class="item-desc" style="font-size: 0.8rem;">5 pièces - Beignets d'oignons croustillants</div>
-        </div>
-      </div>
-      <button class="finger-btn-orange" onclick="addToCart('Oignon Rings', 20)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">20 DH</span>
-      </button>
-    </div>
-
-    <div class="finger-item-orange">
-      <div class="finger-info-top">
-        <img src="fingermozzaFA.jpeg" alt="Mozza Sticks" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Finger Mozza</div>
-          <div class="item-desc" style="font-size: 0.8rem;">4 pièces - Sticks de mozzarella fondante</div>
-        </div>
-      </div>
-      <button class="finger-btn-orange" onclick="addToCart('Finger Mozza', 25)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">25 DH</span>
-      </button>
-    </div>
-
-    <div class="finger-item-orange">
-      <div class="finger-info-top">
-        <img src="nuggtsFA.jpeg" alt="Nuggets" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Nuggets</div>
-          <div class="item-desc" style="font-size: 0.8rem;">5 pièces - Poulet finement pané</div>
-        </div>
-      </div>
-      <button class="finger-btn-orange" onclick="addToCart('Nuggets Finger', 25)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">25 DH</span>
-      </button>
-    </div>
-
-    <div class="finger-item-orange">
-      <div class="finger-info-top">
-        <img src="croquantgoudaFA.jpeg" alt="Gouda" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Croquant Gouda</div>
-          <div class="item-desc" style="font-size: 0.8rem;">5 pièces - Bouchées croustillantes au gouda</div>
-        </div>
-      </div>
-      <button class="finger-btn-orange" onclick="addToCart('Croquant Gouda', 30)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">30 DH</span>
-      </button>
-    </div>
-
-    <div class="finger-item-orange">
-      <div class="finger-info-top">
-        <img src="tendersFA.jpeg" alt="Tenders" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Tenders</div>
-          <div class="item-desc" style="font-size: 0.8rem;">4 pièces - Filets de poulet marinés et panés</div>
-        </div>
-      </div>
-      <button class="finger-btn-orange" onclick="addToCart('Tenders', 30)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">30 DH</span>
-      </button>
-    </div>
-
-  </div>
-</section>
-
-    <section class="section" id="salads">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;">Menu Salades</h2>
-  
-  <style>
-    .salad-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .salad-item-orange {
-      background: var(--bg-card); 
-      padding: 15px; 
-      border-radius: 15px;
-      display: flex; 
-      flex-direction: column;
-      gap: 12px; 
-      border: 1px solid #333;
-      transition: 0.3s;
-    }
-    .salad-item-orange:hover {
-      border-color: var(--orange);
-      box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
-    }
-    .salad-info-top {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-    .salad-btn-orange {
-      width: 100%;
-      background: var(--orange);
-      color: #000;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.2s;
-      font-family: 'Bebas Neue', sans-serif;
-    }
-    .salad-btn-orange:hover {
-      background: var(--white);
-      transform: scale(1.02);
-    }
-    .salad-btn-orange .add-text { font-size: 1rem; }
-    .salad-btn-orange .price-text { font-size: 1.3rem; font-weight: bold; }
-  </style>
-
-  <div class="salad-grid">
-    
-    <div class="salad-item-orange">
-      <div class="salad-info-top">
-        <img src="saladecesar.jpeg" alt="Salade César" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Salade César</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Laitue, tomates cerises, poulet, croutons, fromage</div>
-        </div>
-      </div>
-      <button class="salad-btn-orange" onclick="addToCart('Salade César', 25)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">25 DH</span>
-      </button>
-    </div>
-
-    <div class="salad-item-orange">
-      <div class="salad-info-top">
-        <img src="saladebigup.jpeg" alt="Salade Big Up" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Salade Big Up</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Pennes, crispy chicken, tomates cerises, jambon, fromage</div>
-        </div>
-      </div>
-      <button class="salad-btn-orange" onclick="addToCart('Salade Big Up', 30)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">30 DH</span>
-      </button>
-    </div>
-
-  </div>
-</section>
-
-     <section class="section" id="pizza">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;">Menu Pizza</h2>
-  <p class="item-desc" style="margin-bottom:1.5rem; color: var(--white); background: rgba(255, 107, 53, 0.1); padding: 10px; border-radius: 8px; border-left: 4px solid var(--orange);">
-    🍕 Toutes nos pizzas sont disponibles en tailles <strong style="color:var(--orange)">M</strong> et <strong style="color:var(--orange)">G</strong>
-  </p>
-
-  <style>
-    .orange-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-      gap: 20px;
-    }
-    .pizza-item-orange {
-      background: var(--bg-card); 
-      padding: 15px; 
-      border-radius: 15px;
-      display: flex; 
-      flex-direction: column; /* Better for mobile price visibility */
-      gap: 12px; 
-      border: 1px solid #333;
-      transition: 0.3s;
-    }
-    .pizza-item-orange:hover {
-      border-color: var(--orange);
-      box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
-    }
-    .pizza-info-top {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
+    /* ===== PIZZA SIZES ===== */
     .price-tag-container {
       display: flex;
       gap: 10px;
       width: 100%;
     }
+
     .pizza-btn-orange {
       flex: 1;
       background: var(--orange);
@@ -1513,477 +425,37 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: 0.2s;
+      transition: all var(--transition-speed);
+      font-weight: bold;
     }
+
     .pizza-btn-orange:hover {
       background: var(--white);
-      transform: scale(1.03);
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(255,107,53,0.3);
     }
+
     .btn-size-label {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
+
     .btn-price-label {
       font-family: 'DM Sans', sans-serif;
       font-weight: 800;
       font-size: 1.1rem;
     }
-  </style>
 
-  <div class="orange-grid">
-    
-    <div class="pizza-item-orange">
-      <div class="pizza-info-top">
-        <img src="pizzarouge.png" alt="Pizza Rouge" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Pizza Rouge</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Sauce tomate, fromage, origan</div>
-        </div>
-      </div>
-      <div class="price-tag-container">
-        <button class="pizza-btn-orange" onclick="addToCart('Pizza Rouge M', 32)">
-          <span class="btn-size-label">Taille M</span>
-          <span class="btn-price-label">32 DH</span>
-        </button>
-        <button class="pizza-btn-orange" onclick="addToCart('Pizza Rouge G', 47)">
-          <span class="btn-size-label">Taille G</span>
-          <span class="btn-price-label">47 DH</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="pizza-item-orange">
-      <div class="pizza-info-top">
-        <img src="pizzathon.png" alt="Pizza Thon" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Pizza Thon</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Thon, fromage, olives, origan</div>
-        </div>
-      </div>
-      <div class="price-tag-container">
-        <button class="pizza-btn-orange" onclick="addToCart('Pizza Thon M', 37)">
-          <span class="btn-size-label">Taille M</span>
-          <span class="btn-price-label">37 DH</span>
-        </button>
-        <button class="pizza-btn-orange" onclick="addToCart('Pizza Thon G', 52)">
-          <span class="btn-size-label">Taille G</span>
-          <span class="btn-price-label">52 DH</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="pizza-item-orange">
-      <div class="pizza-info-top">
-        <img src="pizzabologanaise.png" alt="Pizza Bolognaise" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Pizza Bolognaise</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Viande hachée, légumes, fromage</div>
-        </div>
-      </div>
-      <div class="price-tag-container">
-        <button class="pizza-btn-orange" onclick="addToCart('Pizza Bolo M', 40)">
-          <span class="btn-size-label">Taille M</span>
-          <span class="btn-price-label">40 DH</span>
-        </button>
-        <button class="pizza-btn-orange" onclick="addToCart('Pizza Bolo G', 60)">
-          <span class="btn-size-label">Taille G</span>
-          <span class="btn-price-label">60 DH</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="pizza-item-orange">
-      <div class="pizza-info-top">
-        <img src="pizzachiken.png" alt="Pizza Chicken" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Pizza Chicken</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Poulet, sauce gruyère, fromage</div>
-        </div>
-      </div>
-      <div class="price-tag-container">
-        <button class="pizza-btn-orange" onclick="addToCart('Pizza Chicken M', 40)">
-          <span class="btn-size-label">Taille M</span>
-          <span class="btn-price-label">40 DH</span>
-        </button>
-        <button class="pizza-btn-orange" onclick="addToCart('Pizza Chicken G', 60)">
-          <span class="btn-size-label">Taille G</span>
-          <span class="btn-price-label">60 DH</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="pizza-item-orange">
-      <div class="pizza-info-top">
-        <img src="pizzabigup.png" alt="Pizza Big Up" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Pizza Big Up</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Crispy chicken, basilic, fromage</div>
-        </div>
-      </div>
-      <div class="price-tag-container">
-        <button class="pizza-btn-orange" onclick="addToCart('Pizza Big Up M', 45)">
-          <span class="btn-size-label">Taille M</span>
-          <span class="btn-price-label">45 DH</span>
-        </button>
-        <button class="pizza-btn-orange" onclick="addToCart('Pizza Big Up G', 65)">
-          <span class="btn-size-label">Taille G</span>
-          <span class="btn-price-label">65 DH</span>
-        </button>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-    <section class="section" id="jus">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;">Jus & Desserts</h2>
-  
-  <style>
-    .jus-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .jus-item-orange {
-      background: var(--bg-card); 
-      padding: 15px; 
-      border-radius: 15px;
-      display: flex; 
-      flex-direction: column;
-      gap: 12px; 
-      border: 1px solid #333;
-      transition: 0.3s;
-    }
-    .jus-item-orange:hover {
-      border-color: var(--orange);
-      box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
-    }
-    .jus-info-top {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-    .jus-btn-orange {
-      width: 100%;
-      background: var(--orange);
-      color: #000;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.2s;
-      font-family: 'Bebas Neue', sans-serif;
-    }
-    .jus-btn-orange:hover {
-      background: var(--white);
-      transform: scale(1.02);
-    }
-    .jus-btn-orange .add-text { font-size: 1rem; }
-    .jus-btn-orange .price-text { font-size: 1.3rem; font-weight: bold; }
-  </style>
-
-  <div class="jus-grid">
-    
-    <div class="jus-item-orange">
-      <div class="jus-info-top">
-        <img src="jusdorange.jpeg" alt="Jus d'Orange" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Jus d'Orange</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Orange fraîchement pressée</div>
-        </div>
-      </div>
-      <button class="jus-btn-orange" onclick="addToCart('Jus d\'Orange', 15)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">15 DH</span>
-      </button>
-    </div>
-
-    <div class="jus-item-orange">
-      <div class="jus-info-top">
-        <img src="jusdecitron.jpeg" alt="Jus de Citron" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Jus de Citron</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Citronnade maison rafraîchissante</div>
-        </div>
-      </div>
-      <button class="jus-btn-orange" onclick="addToCart('Jus de Citron', 15)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">15 DH</span>
-      </button>
-    </div>
-
-    <div class="jus-item-orange">
-      <div class="jus-info-top">
-        <img src="cocktail.jpeg" alt="Cocktail" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Cocktail</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Mélange de fruits de saison</div>
-        </div>
-      </div>
-      <button class="jus-btn-orange" onclick="addToCart('Cocktail', 20)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">20 DH</span>
-      </button>
-    </div>
-
-    <div class="jus-item-orange">
-      <div class="jus-info-top">
-        <img src="tiramisu.jpeg" alt="Tiramisu" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Tiramisu</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Le classique italien fait maison</div>
-        </div>
-      </div>
-      <button class="jus-btn-orange" onclick="addToCart('Tiramisu', 20)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">20 DH</span>
-      </button>
-    </div>
-
-    <div class="jus-item-orange">
-      <div class="jus-info-top">
-        <img src="cheesecake.jpeg" alt="Cheesecake" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Cheesecake</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Gâteau au fromage onctueux</div>
-        </div>
-      </div>
-      <button class="jus-btn-orange" onclick="addToCart('Cheesecake', 15)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">15 DH</span>
-      </button>
-    </div>
-
-    <div class="jus-item-orange">
-      <div class="jus-info-top">
-        <img src="flan cuajada.jpeg" alt="Flan Cuajada" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Flan Cuajada</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Dessert traditionnel fondant</div>
-        </div>
-      </div>
-      <button class="jus-btn-orange" onclick="addToCart('Flan Cuajada', 15)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">15 DH</span>
-      </button>
-    </div>
-
-  </div>
-</section>
-
-   <section class="section" id="bowls">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;">Menu Bowls</h2>
-  
-  <style>
-    .bowl-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .bowl-item-orange {
-      background: var(--bg-card); 
-      padding: 15px; 
-      border-radius: 15px;
-      display: flex; 
-      flex-direction: column;
-      gap: 12px; 
-      border: 1px solid #333;
-      transition: 0.3s;
-    }
-    .bowl-item-orange:hover {
-      border-color: var(--orange);
-      box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
-    }
-    .bowl-info-top {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-    .bowl-btn-orange {
-      width: 100%;
-      background: var(--orange);
-      color: #000;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.2s;
-      font-family: 'Bebas Neue', sans-serif;
-    }
-    .bowl-btn-orange:hover {
-      background: var(--white);
-      transform: scale(1.02);
-    }
-    .bowl-btn-orange .add-text { font-size: 1rem; }
-    .bowl-btn-orange .price-text { font-size: 1.3rem; font-weight: bold; }
-  </style>
-
-  <div class="bowl-grid">
-    
-    <div class="bowl-item-orange">
-      <div class="bowl-info-top">
-        <img src="steak&tendersBL.jpeg" alt="Steak & Tenders" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Steak & Tenders</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Viande hachée, tenders, sauce fromagère, frites</div>
-        </div>
-      </div>
-      <button class="bowl-btn-orange" onclick="addToCart('Bowl Steak & Tenders', 45)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">45 DH</span>
-      </button>
-    </div>
-
-    <div class="bowl-item-orange">
-      <div class="bowl-info-top">
-        <img src="magicbowlsBL.jpeg" alt="Magic Bowls" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Magic Bowls</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Tikka, jambon dinde, oignon rings, sauce fromagère</div>
-        </div>
-      </div>
-      <button class="bowl-btn-orange" onclick="addToCart('Magic Bowls', 45)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">45 DH</span>
-      </button>
-    </div>
-
-    <div class="bowl-item-orange">
-      <div class="bowl-info-top">
-        <img src="cordonbleu&tendersBL.jpeg" alt="Cordon Bleu & Tenders" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Cordon Bleu & Tenders</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Cordon bleu, tenders, sauce fromagère, frites</div>
-        </div>
-      </div>
-      <button class="bowl-btn-orange" onclick="addToCart('Bowl Cordon Bleu & Tenders', 45)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">45 DH</span>
-      </button>
-    </div>
-
-  </div>
-</section>
-   <section class="section" id="twister">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;">Menu Twister</h2>
-  
-  <style>
-    .twister-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .twister-item-orange {
-      background: var(--bg-card); 
-      padding: 15px; 
-      border-radius: 15px;
-      display: flex; 
-      flex-direction: column;
-      gap: 12px; 
-      border: 1px solid #333;
-      transition: 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-    .twister-item-orange:hover {
-      border-color: var(--orange);
-      box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
-    }
-    .twister-info-top {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-    .twister-btn-orange {
-      width: 100%;
-      background: var(--orange);
-      color: #000;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.2s;
-      font-family: 'Bebas Neue', sans-serif;
-    }
-    .twister-btn-orange:hover {
-      background: var(--white);
-      transform: scale(1.02);
-    }
-    .twister-btn-orange .add-text { font-size: 1rem; font-weight: bold; }
-    .twister-btn-orange .price-text { font-size: 1.3rem; font-weight: bold; }
-  </style>
-
-  <div class="twister-grid">
-    
-    <div class="twister-item-orange">
-      <div class="twister-info-top">
-        <img src="cheezytwisterTS.jpeg" alt="Cheezy Twister" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Cheezy Twister</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Viande hachée, tenders, galette de pomme de terre, sauce fromagère</div>
-        </div>
-      </div>
-      <button class="twister-btn-orange" onclick="addToCart('Cheezy Twister', 45)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">45 DH</span>
-      </button>
-    </div>
-
-    <div class="twister-item-orange">
-      <div class="twister-info-top">
-        <img src="crunchytwisterTS.jpeg" alt="Crunchy Twister" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Crunchy Twister</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Tenders croustillants, onion rings, sauce au choix</div>
-        </div>
-      </div>
-      <button class="twister-btn-orange" onclick="addToCart('Crunchy Twister', 45)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">45 DH</span>
-      </button>
-    </div>
-
-    <div class="twister-item-orange">
-      <div class="twister-info-top">
-        <img src="swisstwisterTS.jpeg" alt="Swiss Twister" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Swiss Twister</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Poulet, merguez, jambon de dinde, galette de pomme de terre</div>
-        </div>
-      </div>
-      <button class="twister-btn-orange" onclick="addToCart('Swiss Twister', 50)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">50 DH</span>
-      </button>
-    </div>
-
-  </div>
-</section>
-
-   <section class="section" id="compose">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;">Compose ton Tacos</h2>
-
-  <style>
+    /* ===== TACOS BUILDER ===== */
     .tacos-builder-container {
-      background: #111;
-      border: 1px solid var(--orange);
+      background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+      border: 2px solid var(--orange);
       border-radius: 20px;
-      padding: 20px;
+      padding: 25px;
       color: white;
+      box-shadow: 0 10px 40px rgba(255,107,53,0.2);
     }
 
     .builder-group {
@@ -2000,7 +472,6 @@
       font-size: 1.4rem;
     }
 
-    /* Grille de cases à cocher stylisées */
     .selection-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -2026,8 +497,14 @@
       border-radius: 10px;
       text-align: center;
       font-size: 0.9rem;
-      transition: 0.3s;
+      transition: all var(--transition-speed);
       cursor: pointer;
+      user-select: none;
+    }
+
+    .checkmark:hover {
+      background: #2a2a2a;
+      border-color: var(--orange);
     }
 
     .custom-checkbox input:checked ~ .checkmark {
@@ -2035,7 +512,8 @@
       color: #000;
       border-color: var(--orange);
       font-weight: bold;
-      box-shadow: 0 0 10px rgba(255, 107, 53, 0.4);
+      box-shadow: 0 0 15px rgba(255, 107, 53, 0.4);
+      transform: scale(1.05);
     }
 
     .price-tag {
@@ -2045,214 +523,1524 @@
       opacity: 0.7;
     }
 
-    /* Barre de prix fixe en bas du builder */
     .builder-summary {
-      background: #1a1a1a;
+      background: linear-gradient(135deg, #1a1a1a 0%, #242424 100%);
       padding: 20px;
       border-radius: 15px;
       text-align: center;
       margin-top: 20px;
+      border: 1px solid var(--orange);
     }
 
     #total-price-display {
       font-size: 2.5rem;
       font-family: 'Bebas Neue', sans-serif;
-      color: var(--white);
+      color: var(--orange);
+      text-shadow: 0 0 20px rgba(255,107,53,0.3);
     }
-  </style>
 
-  <div class="tacos-builder-container">
-    <form id="tacosForm">
-      
-      <div class="builder-group">
-        <h3>1. Choisis ta taille</h3>
-        <div class="selection-grid">
-          <label class="custom-checkbox">
-            <input type="radio" name="size" value="30" checked onchange="calculateTacos()">
-            <span class="checkmark">Taille M<span class="price-tag">30 DH (1 viande)</span></span>
-          </label>
-          <label class="custom-checkbox">
-            <input type="radio" name="size" value="35" onchange="calculateTacos()">
-            <span class="checkmark">Taille L<span class="price-tag">35 DH (2 viandes)</span></span>
-          </label>
-          <label class="custom-checkbox">
-            <input type="radio" name="size" value="60" onchange="calculateTacos()">
-            <span class="checkmark">Taille XL<span class="price-tag">60 DH (3 viandes)</span></span>
-          </label>
-        </div>
-      </div>
-
-      <div class="builder-group">
-        <h3>2. Viandes (Incluses selon taille)</h3>
-        <div class="selection-grid">
-          <label class="custom-checkbox"><input type="checkbox" value="0" onchange="calculateTacos()"><span class="checkmark">Poulet</span></label>
-          <label class="custom-checkbox"><input type="checkbox" value="0" onchange="calculateTacos()"><span class="checkmark">Haché</span></label>
-          <label class="custom-checkbox"><input type="checkbox" value="0" onchange="calculateTacos()"><span class="checkmark">Merguez</span></label>
-          <label class="custom-checkbox"><input type="checkbox" value="5" onchange="calculateTacos()"><span class="checkmark">Nuggets<span class="price-tag">+5 DH</span></span></label>
-          <label class="custom-checkbox"><input type="checkbox" value="8" onchange="calculateTacos()"><span class="checkmark">Tenders<span class="price-tag">+8 DH</span></span></label>
-          <label class="custom-checkbox"><input type="checkbox" value="15" onchange="calculateTacos()"><span class="checkmark">Cordon Bleu<span class="price-tag">+15 DH</span></span></label>
-        </div>
-      </div>
-
-      <div class="builder-group">
-        <h3>3. Tes Sauces (Gratuit)</h3>
-        <div class="selection-grid">
-          <label class="custom-checkbox"><input type="checkbox" value="0"><span class="checkmark">Algérienne</span></label>
-          <label class="custom-checkbox"><input type="checkbox" value="0"><span class="checkmark">Andalouse</span></label>
-          <label class="custom-checkbox"><input type="checkbox" value="0"><span class="checkmark">Biggy</span></label>
-          <label class="custom-checkbox"><input type="checkbox" value="0"><span class="checkmark">Samouraï</span></label>
-          <label class="custom-checkbox"><input type="checkbox" value="0"><span class="checkmark">Blanche</span></label>
-          <label class="custom-checkbox"><input type="checkbox" value="0"><span class="checkmark">Barbecue</span></label>
-        </div>
-      </div>
-
-      <div class="builder-group" style="border:none;">
-        <h3>4. Suppléments (Optionnel)</h3>
-        <div class="selection-grid">
-          <label class="custom-checkbox"><input type="checkbox" value="5" onchange="calculateTacos()"><span class="checkmark">Cheddar<span class="price-tag">+5 DH</span></span></label>
-          <label class="custom-checkbox"><input type="checkbox" value="5" onchange="calculateTacos()"><span class="checkmark">Oeuf<span class="price-tag">+5 DH</span></span></label>
-          <label class="custom-checkbox"><input type="checkbox" value="5" onchange="calculateTacos()"><span class="checkmark">Jambon<span class="price-tag">+5 DH</span></span></label>
-          <label class="custom-checkbox"><input type="checkbox" value="2" onchange="calculateTacos()"><span class="checkmark">Poivron<span class="price-tag">+2 DH</span></span></label>
-        </div>
-      </div>
-
-      <div class="builder-summary">
-        <div id="total-price-display">30 DH</div>
-        <button type="button" class="burger-btn-orange" style="margin-top:15px; width: 100%; height: 50px;" onclick="confirmTacos()">
-          <span class="add-text">AJOUTER AU PANIER</span>
-        </button>
-      </div>
-    </form>
-  </div>
-</section>
-<section class="section" id="tacos-signatures">
-  <h2 class="section-title" style="color: var(--orange); border-bottom: 2px solid var(--orange); font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; margin-top: 3rem;">Recettes Signatures</h2>
-  
-  <style>
-    .tacos-grid {
-      display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-      gap: 20px;
-      margin-top: 20px;
+    /* ===== GLOWING LOGO ===== */
+    .glow-logo {
+      text-shadow:
+        0 0 6px #ff6b35,
+        0 0 18px #ff6b35,
+        0 0 35px rgba(255,107,53,0.9);
+      animation: logoGlow 2.5s ease-in-out infinite alternate;
     }
-    .tacos-item-orange {
-      background: var(--bg-card); 
-      padding: 15px; 
-      border-radius: 15px;
-      display: flex; 
-      flex-direction: column;
-      gap: 12px; 
-      border: 1px solid #333;
-      transition: 0.3s;
+
+    @keyframes logoGlow {
+      from {
+        text-shadow:
+          0 0 6px #ff6b35,
+          0 0 18px #ff6b35,
+          0 0 30px rgba(255,107,53,0.6);
+      }
+      to {
+        text-shadow:
+          0 0 12px #ff8c5a,
+          0 0 30px #ff6b35,
+          0 0 55px rgba(255,140,90,1);
+      }
     }
-    .tacos-item-orange:hover {
-      border-color: var(--orange);
-      box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
-    }
-    .tacos-info-top {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-    .tacos-btn-orange {
-      width: 100%;
+
+    /* ===== BACK TO TOP BUTTON ===== */
+    #backToTop {
+      position: fixed;
+      bottom: 100px;
+      right: 22px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: none;
       background: var(--orange);
       color: #000;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
+      font-size: 1.6rem;
+      font-weight: bold;
       cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      transition: all var(--transition-speed);
+      z-index: 9998;
+      box-shadow: 0 4px 15px rgba(255,107,53,0.4);
+    }
+
+    #backToTop.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    #backToTop:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 25px rgba(255,107,53,0.6);
+    }
+
+    #backToTop:active {
+      transform: translateY(-2px);
+    }
+
+    /* ===== CART FLOATING BUTTON ===== */
+    #cartFloat {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: none;
+      background: var(--green-whatsapp);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      transition: all var(--transition-speed);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      }
+      50% {
+        box-shadow: 0 4px 30px rgba(37,211,102,0.7);
+      }
+    }
+
+    #cartFloat:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(37,211,102,0.6);
+    }
+
+    #cartFloat:active {
+      transform: scale(0.95);
+    }
+
+    #cartCount {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #ff3b3b;
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 3px 6px;
+      border-radius: 50%;
+      font-weight: bold;
+      min-width: 20px;
+      text-align: center;
+      animation: bounce 0.5s;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* ===== CART MODAL ===== */
+    #cartModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 20px;
+      animation: fadeIn 0.3s;
+    }
+
+    #cartModal.show {
+      display: flex;
+    }
+
+    .cartBox {
+      background: var(--bg-card);
+      width: 100%;
+      max-width: 420px;
+      padding: 25px;
+      border-radius: 20px;
+      border: 2px solid var(--orange);
+      color: #fff;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: slideUp 0.3s;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .cartBox h2 {
+      color: var(--orange);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 15px;
+      border-bottom: 2px solid var(--orange);
+      padding-bottom: 10px;
+    }
+
+    .cartRow {
+      border-bottom: 1px solid #333;
+      padding: 12px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: 0.2s;
+      transition: background var(--transition-speed);
+    }
+
+    .cartRow:hover {
+      background: rgba(255,107,53,0.05);
+      padding-left: 5px;
+    }
+
+    .cartRow button {
+      background: #ff3b3b;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 8px;
+      font-weight: bold;
+      transition: all var(--transition-speed);
+    }
+
+    .cartRow button:hover {
+      background: #ff1f1f;
+      transform: scale(1.1);
+    }
+
+    .cartInput {
+      width: 100%;
+      margin-top: 8px;
+      padding: 12px;
+      background: #1a1a1a;
+      border: 1px solid #444;
+      color: #fff;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color var(--transition-speed);
+    }
+
+    .cartInput:focus {
+      outline: none;
+      border-color: var(--orange);
+      box-shadow: 0 0 10px rgba(255,107,53,0.2);
+    }
+
+    .orderBtn {
+      margin-top: 15px;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: var(--green-whatsapp);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.1rem;
       font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 1px;
+      transition: all var(--transition-speed);
     }
-    .tacos-btn-orange:hover {
-      background: var(--white);
-      transform: scale(1.02);
+
+    .orderBtn:hover {
+      background: #1ea952;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37,211,102,0.4);
     }
-    .tacos-btn-orange .add-text { font-size: 1rem; }
-    .tacos-btn-orange .price-text { font-size: 1.3rem; font-weight: bold; }
+
+    .orderBtn:active {
+      transform: translateY(0);
+    }
+
+    .closeModal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      color: var(--gray);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all var(--transition-speed);
+    }
+
+    .closeModal:hover {
+      color: var(--orange);
+      transform: rotate(90deg);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: var(--bg-card);
+      border-top: 1px solid rgba(255,107,53,0.2);
+      color: var(--gray-dark);
+      font-size: 0.85rem;
+      margin-top: 4rem;
+    }
+
+    .social {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .social a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      background: rgba(255,255,255,0.05);
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      width: 100%;
+      max-width: 250px;
+      transition: all var(--transition-speed);
+      border: 1px solid transparent;
+    }
+
+    .social a:hover {
+      background: var(--orange);
+      border-color: var(--orange);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255,107,53,0.3);
+    }
+
+    /* ===== UTILITY CLASSES ===== */
+    .add-btn {
+      margin: 4px 2px;
+      background: var(--orange);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all var(--transition-speed);
+    }
+
+    .add-btn:hover {
+      background: var(--orange-dark);
+      transform: scale(1.05);
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 768px) {
+      :root {
+        --header-height: auto;
+      }
+
+      header {
+        position: relative;
+        height: auto;
+        padding: 1.5rem 1rem 1rem;
+      }
+
+      nav {
+        position: sticky;
+        top: 0;
+        justify-content: flex-start;
+        padding-left: 1rem;
+        background: rgba(36, 36, 36, 0.98);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      }
+
+      main {
+        padding: 2rem 1.25rem 4rem;
+      }
+
+      .section {
+        scroll-margin-top: calc(var(--nav-height) + 10px);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .item {
+        flex-direction: column;
+        gap: 0.4rem;
+        padding: 1.25rem 0;
+      }
+
+      .food-img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .item-price {
+        align-self: flex-start;
+        font-size: 1.35rem;
+        background: rgba(255, 107, 53, 0.1);
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-top: 0.25rem;
+        margin-left: 75px;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .selection-grid {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      }
+
+      #backToTop {
+        bottom: 90px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.4rem;
+      }
+
+      #cartFloat {
+        bottom: 15px;
+        right: 15px;
+        width: 55px;
+        height: 55px;
+      }
+    }
+
+    /* ===== ACCESSIBILITY ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ===== LOADING STATE ===== */
+    .skeleton {
+      background: linear-gradient(90deg, #242424 25%, #2a2a2a 50%, #242424 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
+
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ===== PRINT STYLES ===== */
+    @media print {
+      header, nav, footer, #cartFloat, #backToTop {
+        display: none;
+      }
+
+      main {
+        padding: 0;
+      }
+
+      .menu-btn, .add-btn {
+        display: none;
+      }
+    }
   </style>
-
-  <div class="tacos-grid">
+</head>
+<body>
+  <header>
+    <p class="tagline">Fast Food</p>
+    <h1 class="glow-logo">BIG UP</h1>
     
-    <div class="tacos-item-orange">
-      <div class="tacos-info-top">
-        <img src="tacarabia.jpeg" alt="Tac'Arabia" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Tac'Arabia</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Viande au choix, poivron, oignon confit & caramélisé, cheddar</div>
+    <div class="header-info">
+      <div style="width: 100%; margin-bottom: 0.5rem; font-weight: bold;">
+        Sur place · Emporté · Livraison
+      </div>
+      
+      <span>📍 BD AL MAQDIS</span>
+      <span>📞 <a href="tel:+212536503590">05 36 50 35 90</a></span>
+      <span>📞 <a href="tel:+212765806052">07 65 80 60 52</a></span>
+      <span style="width: 100%; height: 0; margin: 0.2rem 0;"></span>
+      <span>📍 Av. Omar Ibn Khattab</span>
+      <span>📞 <a href="tel:+212536688027">05 36 68 80 27</a></span>
+      <span>📞 <a href="tel:+212765806051">07 65 80 60 51</a></span>
+    </div>
+  </header>
+
+  <nav id="navbar" role="navigation" aria-label="Menu principal">
+    <a href="#burgers">Burgers</a>
+    <a href="#sandwiches">Sandwichs</a>
+    <a href="#naan">Cheese Naan</a>
+    <a href="#panini">Panini</a>
+    <a href="#wraps">Wraps</a>
+    <a href="#shawarma">Shawarma</a>
+    <a href="#finger">Finger Food</a>
+    <a href="#salads">Salades</a>
+    <a href="#pizza">Pizza</a>
+    <a href="#jus">Jus & Desserts</a>
+    <a href="#bowls">Bowls</a>
+    <a href="#twister">Twister</a>
+    <a href="#compose">Compose Tacos</a>
+  </nav>
+
+  <main>
+    <!-- BURGERS SECTION -->
+    <section class="section" id="burgers">
+      <h2 class="section-title">The Burger House</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="whooper.jpeg" alt="Whooper" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Whooper</div>
+              <div class="item-desc">Steak haché, salade, tomate, cheddar</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Whooper', 20)" aria-label="Ajouter Whooper au panier">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">20 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="crispy.jpeg" alt="Crispy" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Le Crispy</div>
+              <div class="item-desc">Poulet pané, salade, tomate, cheddar</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Le Crispy', 28)" aria-label="Ajouter Le Crispy au panier">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">28 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="double cheese.jpeg" alt="Double Cheese" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Double Cheese</div>
+              <div class="item-desc">Double steak haché, salade, tomate, cheddar</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Double Cheese', 28)" aria-label="Ajouter Double Cheese au panier">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">28 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="bigup.jpeg" alt="Big Up" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Big Up</div>
+              <div class="item-desc">Steak + Poulet, fromage, oignon caramélisé</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Big Up Burger', 35)" aria-label="Ajouter Big Up Burger au panier">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">35 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="bleu chicken.jpeg" alt="Bleu Chicken" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Bleu Chicken</div>
+              <div class="item-desc">Cordon bleu, crispy chicken, cheddar, salade</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Bleu Chicken', 38)" aria-label="Ajouter Bleu Chicken au panier">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">38 DH</span>
+          </button>
         </div>
       </div>
-      <button class="tacos-btn-orange" onclick="addToCart('Tacos Tac\'Arabia', 35)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">35 DH</span>
-      </button>
-    </div>
+    </section>
 
-    <div class="tacos-item-orange">
-      <div class="tacos-info-top">
-        <img src="lechakal.jpeg" alt="Le Chakal" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Le Chakal</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Gratiné cheddar, viande au choix, frites, sauce fromagère</div>
+    <!-- SANDWICHES SECTION -->
+    <section class="section" id="sandwiches">
+      <h2 class="section-title">Nos Sandwichs</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="chiken curry.jpeg" alt="Chicken Tikka" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Chicken Tikka</div>
+              <div class="item-desc">Poulet mariné au massala, salade, tomate, oignons</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Chicken Tikka', 20)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">20 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="chiken curry.jpeg" alt="Chicken Curry" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Chicken Curry</div>
+              <div class="item-desc">Poulet mariné au curry, salade, tomate, fromage</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Chicken Curry', 20)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">20 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="chiken tandoori.jpeg" alt="Chicken Tandoori" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Chicken Tandoori</div>
+              <div class="item-desc">Poulet mariné au tandoori, salade, tomate</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Chicken Tandoori', 20)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">20 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="figaro.jpeg" alt="Le Figaro" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Le Figaro</div>
+              <div class="item-desc">Steak haché, salade, tomate, fromage</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Le Figaro', 20)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">20 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="gourmand.jpeg" alt="Le Gourmand" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Le Gourmand</div>
+              <div class="item-desc">Poulet, viande hachée, fromage, œuf</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Le Gourmand', 28)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">28 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="chilli turkish.jpeg" alt="Chilli Turkish" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Chilli Turkish</div>
+              <div class="item-desc">Kebab, viande hachée, sauce piquante</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Chilli Turkish', 40)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">40 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="savoyard.jpeg" alt="Savoyard" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Savoyard</div>
+              <div class="item-desc">Poulet à la crème, jambon de dinde, cheddar</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Savoyard', 40)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">40 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="american.jpeg" alt="America" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">America</div>
+              <div class="item-desc">2 steaks hachés, salade, tomate, fromage</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('America', 40)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">40 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="triple x.jpeg" alt="Triple X" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Triple X</div>
+              <div class="item-desc">3 steaks, jambon de dinde, boursin, cheddar</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Triple X', 40)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">40 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="bigupS (1).jpeg" alt="Big Up" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Big Up</div>
+              <div class="item-desc">Fromage frais, crispy chicken, sauce maison</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Big Up Sandwich', 40)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">40 DH</span>
+          </button>
         </div>
       </div>
-      <button class="tacos-btn-orange" onclick="addToCart('Tacos Le Chakal', 40)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">40 DH</span>
-      </button>
-    </div>
+    </section>
 
-    <div class="tacos-item-orange">
-      <div class="tacos-info-top">
-        <img src="lesmoky.jpeg" alt="Le Smoky" class="food-img" style="border: 2px solid var(--orange);">
-        <div>
-          <div class="item-name" style="color: var(--white); font-size: 1.2rem;">Le Smoky</div>
-          <div class="item-desc" style="font-size: 0.8rem;">Gratiné cheddar et pepperoni, viande au choix</div>
+    <!-- CHEESE NAAN SECTION -->
+    <section class="section" id="naan">
+      <h2 class="section-title">Menu Cheese Naan</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="tandooriN.jpeg" alt="Tandoori" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Tandoori</div>
+              <div class="item-desc">Cheesenaan, poulet tandoori, laitue, tomate, cheddar</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Cheese Naan Tandoori', 35)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">35 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="curryN.jpeg" alt="Curry" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Curry</div>
+              <div class="item-desc">Cheesenaan, poulet curry, laitue, tomate, cheddar</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Cheese Naan Curry', 35)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">35 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="kebabN.jpeg" alt="Kebab" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Kebab</div>
+              <div class="item-desc">Cheesenaan, kebab, laitue, tomate, cheddar</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Cheese Naan Kebab', 40)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">40 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="bombayN.jpeg" alt="Bombay" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Bombay</div>
+              <div class="item-desc">Viande hachée, crispy, rosty, laitue, cheddar</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Cheese Naan Bombay', 45)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">45 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="bigupN.jpeg" alt="Big Up" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Big Up</div>
+              <div class="item-desc">Cordon bleu, nugget, jambon dinde, cheddar</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Cheese Naan Big Up', 45)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">45 DH</span>
+          </button>
         </div>
       </div>
-      <button class="tacos-btn-orange" onclick="addToCart('Tacos Le Smoky', 45)">
-        <span class="add-text">+ Ajouter au panier</span>
-        <span class="price-text">45 DH</span>
-      </button>
-    </div>
+    </section>
 
-  </div>
-</section>
+    <!-- PANINI SECTION -->
+    <section class="section" id="panini">
+      <h2 class="section-title">Menu Panini</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="chacutrerieSH.jpeg" alt="Charcuterie" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Charcuterie</div>
+              <div class="item-desc">Panini chaud, charcuterie de qualité, fromage fondu</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Panini Charcuterie', 18)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">18 DH</span>
+          </button>
+        </div>
 
-<script>
-function calculateTacos() {
-  const form = document.getElementById('tacosForm');
-  let total = 0;
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="merguezSH.jpeg" alt="Merguez" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Merguez</div>
+              <div class="item-desc">Merguez grillées, épices, fromage fondu</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Panini Merguez', 18)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">18 DH</span>
+          </button>
+        </div>
 
-  // Récupérer le prix de la radio box (Taille)
-  const sizes = document.getElementsByName('size');
-  for(let size of sizes) {
-    if(size.checked) total += parseInt(size.value);
-  }
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="chickenSH.jpeg" alt="Chicken" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Chicken</div>
+              <div class="item-desc">Blanc de poulet émincé, sauce, fromage</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Panini Chicken', 20)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">20 DH</span>
+          </button>
+        </div>
 
-  // Récupérer tous les suppléments cochés (Viandes payantes et Extras)
-  const checkboxes = form.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach(cb => {
-    if(cb.checked) total += parseInt(cb.value);
-  });
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="vvvv.jpeg" alt="Viande Hachée" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Viande Hachée</div>
+              <div class="item-desc">Viande hachée assaisonnée, fromage fondu</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Panini Viande Hachée', 20)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">20 DH</span>
+          </button>
+        </div>
 
-  document.getElementById('total-price-display').innerText = total + " DH";
-}
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="nuggetsSH.jpeg" alt="Nuggets" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Nuggets</div>
+              <div class="item-desc">Nuggets croustillants, sauce au choix, fromage</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Panini Nuggets', 22)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">22 DH</span>
+          </button>
+        </div>
 
-function confirmTacos() {
-  const finalPrice = document.getElementById('total-price-display').innerText;
-  alert("Tacos personnalisé ajouté ! Total : " + finalPrice);
-  // Ici vous pouvez appeler votre fonction addToCart réelle
-}
-</script>
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="mixteSH.jpeg" alt="Mixte" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Mixte</div>
+              <div class="item-desc">Le mélange parfait de plusieurs viandes et fromage</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Panini Mixte', 25)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">25 DH</span>
+          </button>
+        </div>
+      </div>
+    </section>
 
+    <!-- WRAPS SECTION -->
+    <section class="section" id="wraps">
+      <h2 class="section-title">Menu Wraps</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="wrapnuggts.jpeg" alt="Wrap Nuggets" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Wrap Nuggets</div>
+              <div class="item-desc">Nuggets croustillants, salade, tomate, fromage</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Wrap Nuggets', 20)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">20 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="wrapcordonbleu.jpeg" alt="Wrap Cordon Bleu" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Wrap Cordon Bleu</div>
+              <div class="item-desc">Cordon bleu, cheddar fondu, salade, tomate</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Wrap Cordon Bleu', 25)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">25 DH</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHAWARMA SECTION -->
+    <section class="section" id="shawarma">
+      <h2 class="section-title">Menu Shawarma</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="libanaisPA.jpeg" alt="Libanais" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Libanais</div>
+              <div class="item-desc">Pain libanais authentique, viande marinée, ail, salade</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Shawarma Libanais', 25)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">25 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="donerkebabPA.jpeg" alt="Doner Kebab" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Doner Kebab</div>
+              <div class="item-desc">Kebab grillé à la broche, oignons, sauce blanche</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Doner Kebab', 30)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">30 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="lebilndePA.jpeg" alt="Le Blindé" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Le Blindé</div>
+              <div class="item-desc">Format généreux, mélange de viandes, extra fromage</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Shawarma Le Blindé', 30)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">30 DH</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINGER FOOD SECTION -->
+    <section class="section" id="finger">
+      <h2 class="section-title">Finger Food</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="cheesyfriesFA.jpeg" alt="Cheesy Fries" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Cheesy Fries</div>
+              <div class="item-desc">Frites croustillantes nappées de sauce fromage</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Cheesy Fries', 20)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">20 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="oniognringsFA.jpeg" alt="Onion Rings" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Oignon Rings</div>
+              <div class="item-desc">5 pièces - Beignets d'oignons croustillants</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Oignon Rings', 20)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">20 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="fingermozzaFA.jpeg" alt="Mozza Sticks" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Finger Mozza</div>
+              <div class="item-desc">4 pièces - Sticks de mozzarella fondante</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Finger Mozza', 25)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">25 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="nuggtsFA.jpeg" alt="Nuggets" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Nuggets</div>
+              <div class="item-desc">5 pièces - Poulet finement pané</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Nuggets Finger', 25)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">25 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="croquantgoudaFA.jpeg" alt="Gouda" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Croquant Gouda</div>
+              <div class="item-desc">5 pièces - Bouchées croustillantes au gouda</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Croquant Gouda', 30)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">30 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="tendersFA.jpeg" alt="Tenders" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Tenders</div>
+              <div class="item-desc">4 pièces - Filets de poulet marinés et panés</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Tenders', 30)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">30 DH</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SALADS SECTION -->
+    <section class="section" id="salads">
+      <h2 class="section-title">Menu Salades</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="saladecesar.jpeg" alt="Salade César" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Salade César</div>
+              <div class="item-desc">Laitue, tomates cerises, poulet, croutons, fromage</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Salade César', 25)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">25 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="saladebigup.jpeg" alt="Salade Big Up" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Salade Big Up</div>
+              <div class="item-desc">Pennes, crispy chicken, tomates cerises, jambon, fromage</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Salade Big Up', 30)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">30 DH</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PIZZA SECTION -->
+    <section class="section" id="pizza">
+      <h2 class="section-title">Menu Pizza</h2>
+      <p class="item-desc" style="margin-bottom:1.5rem; color: var(--white); background: rgba(255, 107, 53, 0.1); padding: 10px; border-radius: 8px; border-left: 4px solid var(--orange);">
+        🍕 Toutes nos pizzas sont disponibles en tailles <strong style="color:var(--orange)">M</strong> et <strong style="color:var(--orange)">G</strong>
+      </p>
+
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="pizzarouge.png" alt="Pizza Rouge" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Pizza Rouge</div>
+              <div class="item-desc">Sauce tomate, fromage, origan</div>
+            </div>
+          </div>
+          <div class="price-tag-container">
+            <button class="pizza-btn-orange" onclick="addToCart('Pizza Rouge M', 32)">
+              <span class="btn-size-label">Taille M</span>
+              <span class="btn-price-label">32 DH</span>
+            </button>
+            <button class="pizza-btn-orange" onclick="addToCart('Pizza Rouge G', 47)">
+              <span class="btn-size-label">Taille G</span>
+              <span class="btn-price-label">47 DH</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="pizzathon.png" alt="Pizza Thon" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Pizza Thon</div>
+              <div class="item-desc">Thon, fromage, olives, origan</div>
+            </div>
+          </div>
+          <div class="price-tag-container">
+            <button class="pizza-btn-orange" onclick="addToCart('Pizza Thon M', 37)">
+              <span class="btn-size-label">Taille M</span>
+              <span class="btn-price-label">37 DH</span>
+            </button>
+            <button class="pizza-btn-orange" onclick="addToCart('Pizza Thon G', 52)">
+              <span class="btn-size-label">Taille G</span>
+              <span class="btn-price-label">52 DH</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="pizzabologanaise.png" alt="Pizza Bolognaise" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Pizza Bolognaise</div>
+              <div class="item-desc">Viande hachée, légumes, fromage</div>
+            </div>
+          </div>
+          <div class="price-tag-container">
+            <button class="pizza-btn-orange" onclick="addToCart('Pizza Bolo M', 40)">
+              <span class="btn-size-label">Taille M</span>
+              <span class="btn-price-label">40 DH</span>
+            </button>
+            <button class="pizza-btn-orange" onclick="addToCart('Pizza Bolo G', 60)">
+              <span class="btn-size-label">Taille G</span>
+              <span class="btn-price-label">60 DH</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="pizzachiken.png" alt="Pizza Chicken" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Pizza Chicken</div>
+              <div class="item-desc">Poulet, sauce gruyère, fromage</div>
+            </div>
+          </div>
+          <div class="price-tag-container">
+            <button class="pizza-btn-orange" onclick="addToCart('Pizza Chicken M', 40)">
+              <span class="btn-size-label">Taille M</span>
+              <span class="btn-price-label">40 DH</span>
+            </button>
+            <button class="pizza-btn-orange" onclick="addToCart('Pizza Chicken G', 60)">
+              <span class="btn-size-label">Taille G</span>
+              <span class="btn-price-label">60 DH</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="pizzabigup.png" alt="Pizza Big Up" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Pizza Big Up</div>
+              <div class="item-desc">Crispy chicken, basilic, fromage</div>
+            </div>
+          </div>
+          <div class="price-tag-container">
+            <button class="pizza-btn-orange" onclick="addToCart('Pizza Big Up M', 45)">
+              <span class="btn-size-label">Taille M</span>
+              <span class="btn-price-label">45 DH</span>
+            </button>
+            <button class="pizza-btn-orange" onclick="addToCart('Pizza Big Up G', 65)">
+              <span class="btn-size-label">Taille G</span>
+              <span class="btn-price-label">65 DH</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JUS & DESSERTS SECTION -->
+    <section class="section" id="jus">
+      <h2 class="section-title">Jus & Desserts</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="jusdorange.jpeg" alt="Jus d'Orange" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Jus d'Orange</div>
+              <div class="item-desc">Orange fraîchement pressée</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Jus d\'Orange', 15)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">15 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="jusdecitron.jpeg" alt="Jus de Citron" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Jus de Citron</div>
+              <div class="item-desc">Citronnade maison rafraîchissante</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Jus de Citron', 15)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">15 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="cocktail.jpeg" alt="Cocktail" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Cocktail</div>
+              <div class="item-desc">Mélange de fruits de saison</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Cocktail', 20)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">20 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="tiramisu.jpeg" alt="Tiramisu" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Tiramisu</div>
+              <div class="item-desc">Le classique italien fait maison</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Tiramisu', 20)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">20 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="cheesecake.jpeg" alt="Cheesecake" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Cheesecake</div>
+              <div class="item-desc">Gâteau au fromage onctueux</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Cheesecake', 15)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">15 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="flan cuajada.jpeg" alt="Flan Cuajada" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Flan Cuajada</div>
+              <div class="item-desc">Dessert traditionnel fondant</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Flan Cuajada', 15)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">15 DH</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOWLS SECTION -->
+    <section class="section" id="bowls">
+      <h2 class="section-title">Menu Bowls</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="steak&tendersBL.jpeg" alt="Steak & Tenders" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Steak & Tenders</div>
+              <div class="item-desc">Viande hachée, tenders, sauce fromagère, frites</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Bowl Steak & Tenders', 45)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">45 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="magicbowlsBL.jpeg" alt="Magic Bowls" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Magic Bowls</div>
+              <div class="item-desc">Tikka, jambon dinde, oignon rings, sauce fromagère</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Magic Bowls', 45)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">45 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="cordonbleu&tendersBL.jpeg" alt="Cordon Bleu & Tenders" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Cordon Bleu & Tenders</div>
+              <div class="item-desc">Cordon bleu, tenders, sauce fromagère, frites</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Bowl Cordon Bleu & Tenders', 45)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">45 DH</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TWISTER SECTION -->
+    <section class="section" id="twister">
+      <h2 class="section-title">Menu Twister</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="cheezytwisterTS.jpeg" alt="Cheezy Twister" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Cheezy Twister</div>
+              <div class="item-desc">Viande hachée, tenders, galette de pomme de terre, sauce fromagère</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Cheezy Twister', 45)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">45 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="crunchytwisterTS.jpeg" alt="Crunchy Twister" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Crunchy Twister</div>
+              <div class="item-desc">Tenders croustillants, onion rings, sauce au choix</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Crunchy Twister', 45)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">45 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="swisstwisterTS.jpeg" alt="Swiss Twister" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Swiss Twister</div>
+              <div class="item-desc">Poulet, merguez, jambon de dinde, galette de pomme de terre</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Swiss Twister', 50)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">50 DH</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPOSE TACOS SECTION -->
+    <section class="section" id="compose">
+      <h2 class="section-title">Compose ton Tacos</h2>
+
+      <div class="tacos-builder-container">
+        <form id="tacosForm">
+          
+          <div class="builder-group">
+            <h3>1. Choisis ta taille</h3>
+            <div class="selection-grid">
+              <label class="custom-checkbox">
+                <input type="radio" name="size" value="30" data-label="Taille M" checked onchange="calculateTacos()">
+                <span class="checkmark">Taille M<span class="price-tag">30 DH (1 viande)</span></span>
+              </label>
+              <label class="custom-checkbox">
+                <input type="radio" name="size" value="35" data-label="Taille L" onchange="calculateTacos()">
+                <span class="checkmark">Taille L<span class="price-tag">35 DH (2 viandes)</span></span>
+              </label>
+              <label class="custom-checkbox">
+                <input type="radio" name="size" value="60" data-label="Taille XL" onchange="calculateTacos()">
+                <span class="checkmark">Taille XL<span class="price-tag">60 DH (3 viandes)</span></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="builder-group">
+            <h3>2. Viandes (Incluses selon taille)</h3>
+            <div class="selection-grid">
+              <label class="custom-checkbox"><input type="checkbox" value="0" data-name="Poulet" onchange="calculateTacos()"><span class="checkmark">Poulet</span></label>
+              <label class="custom-checkbox"><input type="checkbox" value="0" data-name="Haché" onchange="calculateTacos()"><span class="checkmark">Haché</span></label>
+              <label class="custom-checkbox"><input type="checkbox" value="0" data-name="Merguez" onchange="calculateTacos()"><span class="checkmark">Merguez</span></label>
+              <label class="custom-checkbox"><input type="checkbox" value="5" data-name="Nuggets" onchange="calculateTacos()"><span class="checkmark">Nuggets<span class="price-tag">+5 DH</span></span></label>
+              <label class="custom-checkbox"><input type="checkbox" value="8" data-name="Tenders" onchange="calculateTacos()"><span class="checkmark">Tenders<span class="price-tag">+8 DH</span></span></label>
+              <label class="custom-checkbox"><input type="checkbox" value="15" data-name="Cordon Bleu" onchange="calculateTacos()"><span class="checkmark">Cordon Bleu<span class="price-tag">+15 DH</span></span></label>
+            </div>
+          </div>
+
+          <div class="builder-group">
+            <h3>3. Tes Sauces (Gratuit)</h3>
+            <div class="selection-grid">
+              <label class="custom-checkbox"><input type="checkbox" value="0" data-name="Algérienne"><span class="checkmark">Algérienne</span></label>
+              <label class="custom-checkbox"><input type="checkbox" value="0" data-name="Andalouse"><span class="checkmark">Andalouse</span></label>
+              <label class="custom-checkbox"><input type="checkbox" value="0" data-name="Biggy"><span class="checkmark">Biggy</span></label>
+              <label class="custom-checkbox"><input type="checkbox" value="0" data-name="Samouraï"><span class="checkmark">Samouraï</span></label>
+              <label class="custom-checkbox"><input type="checkbox" value="0" data-name="Blanche"><span class="checkmark">Blanche</span></label>
+              <label class="custom-checkbox"><input type="checkbox" value="0" data-name="Barbecue"><span class="checkmark">Barbecue</span></label>
+            </div>
+          </div>
+
+          <div class="builder-group" style="border:none;">
+            <h3>4. Suppléments (Optionnel)</h3>
+            <div class="selection-grid">
+              <label class="custom-checkbox"><input type="checkbox" value="5" data-name="Cheddar" onchange="calculateTacos()"><span class="checkmark">Cheddar<span class="price-tag">+5 DH</span></span></label>
+              <label class="custom-checkbox"><input type="checkbox" value="5" data-name="Oeuf" onchange="calculateTacos()"><span class="checkmark">Oeuf<span class="price-tag">+5 DH</span></span></label>
+              <label class="custom-checkbox"><input type="checkbox" value="5" data-name="Jambon" onchange="calculateTacos()"><span class="checkmark">Jambon<span class="price-tag">+5 DH</span></span></label>
+              <label class="custom-checkbox"><input type="checkbox" value="2" data-name="Poivron" onchange="calculateTacos()"><span class="checkmark">Poivron<span class="price-tag">+2 DH</span></span></label>
+            </div>
+          </div>
+
+          <div class="builder-summary">
+            <div id="total-price-display">30 DH</div>
+            <button type="button" class="menu-btn" style="margin-top:15px; width: 100%;" onclick="confirmTacos()">
+              <span class="add-text">AJOUTER AU PANIER</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- TACOS SIGNATURES SECTION -->
+    <section class="section" id="tacos-signatures">
+      <h2 class="section-title" style="margin-top: 3rem;">Recettes Signatures</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="tacarabia.jpeg" alt="Tac'Arabia" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Tac'Arabia</div>
+              <div class="item-desc">Viande au choix, poivron, oignon confit & caramélisé, cheddar</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Tacos Tac\'Arabia', 35)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">35 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="lechakal.jpeg" alt="Le Chakal" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Le Chakal</div>
+              <div class="item-desc">Gratiné cheddar, viande au choix, frites, sauce fromagère</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Tacos Le Chakal', 40)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">40 DH</span>
+          </button>
+        </div>
+
+        <div class="menu-item-card">
+          <div class="menu-info-top">
+            <img src="lesmoky.jpeg" alt="Le Smoky" class="food-img" loading="lazy">
+            <div>
+              <div class="item-name">Le Smoky</div>
+              <div class="item-desc">Gratiné cheddar et pepperoni, viande au choix</div>
+            </div>
+          </div>
+          <button class="menu-btn" onclick="addToCart('Tacos Le Smoky', 45)">
+            <span class="add-text">+ Ajouter au panier</span>
+            <span class="price-text">45 DH</span>
+          </button>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer style="padding-bottom: 3rem;">
+  <footer>
     <p style="font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--orange); letter-spacing: 1px;">BIG UP <span style="color: var(--white); font-weight: 400;">· FAST FOOD</span></p>
     
     <div style="margin: 1.5rem 0; display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
@@ -2272,390 +2060,390 @@ function confirmTacos() {
     <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.05); margin: 1.5rem auto; width: 50%;">
 
     <div class="social">
-      <a href="https://www.facebook.com/bigup.oujda/" target="_blank" rel="noopener" style="font-size: 0.8rem; letter-spacing: 1px;">FACEBOOK</a>
-      <a href="https://www.instagram.com/big_up_oujda_" target="_blank" rel="noopener" style="font-size: 0.8rem; letter-spacing: 1px;">INSTAGRAM</a>
+      <a href="https://www.facebook.com/bigup.oujda/" target="_blank" rel="noopener noreferrer">FACEBOOK</a>
+      <a href="https://www.instagram.com/big_up_oujda_" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
       
       <div style="margin-top: 2rem; opacity: 0.6;">
         <p style="font-size: 0.65rem; color: var(--gray-dark); letter-spacing: 0.2em; text-transform: uppercase;">
-         Designed & Developed by
+          Designed & Developed by
         </p>
         <p style="font-size: 0.75rem; color: var(--orange); letter-spacing: 0.1em; margin-top: 0.2rem; font-weight: 600;">
           SUHAYB DAWSON
         </p>
-        <button id="backToTop" aria-label="Retour en haut">↑</button>
       </div>
     </div>
   </footer>
 
-  <!-- ===== CART UI ===== -->
-<style>
-#cartFloat{
-  position:fixed;
-  bottom:22px;
-  left:22px;
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  background:#25D366;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:1.6rem;
-  cursor:pointer;
-  z-index:9999;
-  box-shadow:0 0 15px #25D366;
-}
-#cartCount{
-  position:absolute;
-  top:-5px;
-  right:-5px;
-  background:red;
-  color:#fff;
-  font-size:0.7rem;
-  padding:3px 6px;
-  border-radius:50%;
-}
-
-#cartModal{
-  position:fixed;
-  inset:0;
-  background:#000c;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:10000;
-}
-
-.cartBox{
-  background:#242424;
-  width:90%;
-  max-width:420px;
-  padding:20px;
-  border-radius:15px;
-  border:1px solid #ff6b35;
-  color:#fff;
-}
-.cartRow{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:6px;
-}
-.cartInput{
-  width:100%;
-  margin-top:8px;
-  padding:10px;
-  background:#1a1a1a;
-  border:1px solid #444;
-  color:#fff;
-  border-radius:6px;
-}
-.orderBtn{
-  margin-top:10px;
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  background:#25D366;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
-</style>
-
-<div id="cartFloat" onclick="toggleCart()">🛒<span id="cartCount">0</span></div>
-
-<div id="cartModal">
-  <div class="cartBox">
-    <h2 style="color:#ff6b35">Mon Panier</h2>
-    <div id="cartList"></div>
-    <b>Total: <span id="cartTotal">0</span> DH</b>
-
-    <select id="cartBranch" class="cartInput">
-      <option value="212765806052">BIG UP Qods</option>
-      <option value="212765806051">BIG UP CNSS</option>
-    </select>
-
-    <input id="cartName" class="cartInput" placeholder="Nom">
-    <input id="cartAddr" class="cartInput" placeholder="Adresse">
-
-    <button class="orderBtn" onclick="sendOrder()">Commander WhatsApp</button>
+  <!-- FLOATING CART BUTTON -->
+  <div id="cartFloat" onclick="toggleCart()" aria-label="Ouvrir le panier">
+    🛒
+    <span id="cartCount">0</span>
   </div>
-</div>
 
-<script>
-/**
- * BIG UP - UNIFIED MENU SYSTEM
- * Optimized for performance and smooth navigation
- */
+  <!-- BACK TO TOP BUTTON -->
+  <button id="backToTop" aria-label="Retour en haut">↑</button>
 
-// 1. GLOBAL STATE & SELECTORS
-const state = {
-    cart: [],
-    currentActiveId: ""
-};
+  <!-- CART MODAL -->
+  <div id="cartModal" onclick="handleModalClick(event)">
+    <div class="cartBox">
+      <button class="closeModal" onclick="toggleCart()" aria-label="Fermer le panier">✕</button>
+      <h2>Mon Panier</h2>
+      <div id="cartList"></div>
+      <div style="margin-top: 1rem; padding-top: 1rem; border-top: 2px solid var(--orange);">
+        <b style="font-size: 1.3rem;">Total: <span id="cartTotal">0</span> DH</b>
+      </div>
 
-const UI = {
-    sections: document.querySelectorAll('.section'),
-    navLinks: document.querySelectorAll('nav a'),
-    backToTop: document.getElementById('backToTop'),
-    cartList: document.getElementById('cartList'),
-    cartTotal: document.getElementById('cartTotal'),
-    cartCount: document.getElementById('cartCount'),
-    cartModal: document.getElementById('cartModal'),
-    cartName: document.getElementById('cartName'),
-    cartAddr: document.getElementById('cartAddr'),
-    cartBranch: document.getElementById('cartBranch'),
-    tacosForm: document.getElementById('tacosForm'),
-    tacosPriceDisplay: document.getElementById('total-price-display')
-};
+      <select id="cartBranch" class="cartInput" aria-label="Choisir une branche">
+        <option value="212765806052">🏪 BIG UP Qods</option>
+        <option value="212765806051">🏪 BIG UP CNSS</option>
+      </select>
 
-/**
- * 2. NAVIGATION & SCROLL LOGIC
- * Fixes the "laggy" nav by using requestAnimationFrame and state tracking
- */
-function handleNavigation() {
-    const scrollY = window.scrollY;
-    const offset = window.innerWidth <= 768 ? 120 : 250;
-    let activeSecId = "";
+      <input id="cartName" class="cartInput" placeholder="Votre nom *" required aria-label="Votre nom">
+      <input id="cartAddr" class="cartInput" placeholder="Adresse de livraison (optionnel)" aria-label="Adresse de livraison">
 
-    // Find current section
-    UI.sections.forEach(sec => {
+      <button class="orderBtn" onclick="sendOrder()">📱 Commander via WhatsApp</button>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * BIG UP - OPTIMIZED MENU SYSTEM
+     * Enhanced performance, accessibility, and user experience
+     */
+
+    // ===== GLOBAL STATE =====
+    const state = {
+      cart: [],
+      currentActiveId: "",
+      lastScrollY: 0,
+      ticking: false
+    };
+
+    const UI = {
+      sections: document.querySelectorAll('.section'),
+      navLinks: document.querySelectorAll('nav a'),
+      backToTop: document.getElementById('backToTop'),
+      cartList: document.getElementById('cartList'),
+      cartTotal: document.getElementById('cartTotal'),
+      cartCount: document.getElementById('cartCount'),
+      cartModal: document.getElementById('cartModal'),
+      cartName: document.getElementById('cartName'),
+      cartAddr: document.getElementById('cartAddr'),
+      cartBranch: document.getElementById('cartBranch'),
+      tacosForm: document.getElementById('tacosForm'),
+      tacosPriceDisplay: document.getElementById('total-price-display')
+    };
+
+    // ===== NAVIGATION & SCROLL =====
+    function handleNavigation() {
+      const scrollY = window.scrollY;
+      const offset = window.innerWidth <= 768 ? 120 : 250;
+      let activeSecId = "";
+
+      UI.sections.forEach(sec => {
         const top = sec.offsetTop - offset;
         const height = sec.offsetHeight;
         if (scrollY >= top && scrollY < top + height) {
-            activeSecId = sec.getAttribute('id');
+          activeSecId = sec.getAttribute('id');
         }
-    });
+      });
 
-    // Only update DOM if section changed to prevent lag
-    if (activeSecId && activeSecId !== state.currentActiveId) {
+      if (activeSecId && activeSecId !== state.currentActiveId) {
         state.currentActiveId = activeSecId;
 
         UI.navLinks.forEach(a => {
-            const isTarget = a.getAttribute('href') === `#${activeSecId}`;
-            a.classList.toggle('active', isTarget);
+          const isTarget = a.getAttribute('href') === `#${activeSecId}`;
+          a.classList.toggle('active', isTarget);
 
-            if (isTarget) {
-                a.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'nearest',
-                    inline: 'center'
-                });
-            }
+          if (isTarget && window.innerWidth <= 768) {
+            a.scrollIntoView({
+              behavior: 'smooth',
+              block: 'nearest',
+              inline: 'center'
+            });
+          }
         });
-    }
+      }
 
-    // Back to top visibility
-    if (UI.backToTop) {
+      if (UI.backToTop) {
         UI.backToTop.classList.toggle('show', scrollY > 500);
-    }
-}
+      }
 
-/**
- * 3. CART CORE FUNCTIONS
- */
-function addToCart(name, price) {
-    const existing = state.cart.find(item => item.name === name);
-    if (existing) {
+      state.ticking = false;
+    }
+
+    function requestTick() {
+      if (!state.ticking) {
+        window.requestAnimationFrame(handleNavigation);
+        state.ticking = true;
+      }
+    }
+
+    // ===== CART FUNCTIONS =====
+    function addToCart(name, price) {
+      const existing = state.cart.find(item => item.name === name);
+      if (existing) {
         existing.qty++;
-    } else {
+      } else {
         state.cart.push({ name, price, qty: 1 });
+      }
+      updateCartDisplay();
+      showCartNotification(name);
     }
-    updateCartDisplay();
-}
 
-function updateCartDisplay() {
-    let total = 0, count = 0;
-    let html = "";
+    function updateCartDisplay() {
+      let total = 0, count = 0;
+      let html = "";
 
-    state.cart.forEach((item, idx) => {
+      state.cart.forEach((item, idx) => {
         total += item.price * item.qty;
         count += item.qty;
         html += `
-            <div class="cartRow">
-                <div class="cartInfo">
-                    <strong>${item.name}</strong><br>
-                    <small>${item.qty} x ${item.price} DH</small>
-                </div>
-                <span>${item.price * item.qty} DH <button onclick="removeItem(${idx})">✕</button></span>
-            </div>`;
-    });
+          <div class="cartRow">
+            <div style="flex: 1;">
+              <strong>${item.name}</strong><br>
+              <small style="color: var(--gray);">${item.qty} x ${item.price} DH</small>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <strong>${item.price * item.qty} DH</strong>
+              <button onclick="removeItem(${idx})" aria-label="Supprimer ${item.name}">✕</button>
+            </div>
+          </div>`;
+      });
 
-    if (UI.cartList) UI.cartList.innerHTML = html || "<p style='text-align:center; padding:20px;'>Votre panier est vide</p>";
-    if (UI.cartTotal) UI.cartTotal.innerText = total;
-    if (UI.cartCount) UI.cartCount.innerText = count;
-}
+      if (UI.cartList) {
+        UI.cartList.innerHTML = html || "<p style='text-align:center; padding:20px; color: var(--gray);'>Votre panier est vide 🛒</p>";
+      }
+      if (UI.cartTotal) UI.cartTotal.innerText = total;
+      if (UI.cartCount) {
+        UI.cartCount.innerText = count;
+        UI.cartCount.style.display = count > 0 ? 'block' : 'none';
+      }
 
-function removeItem(index) {
-    state.cart.splice(index, 1);
-    updateCartDisplay();
-}
+      // Save to localStorage
+      try {
+        localStorage.setItem('bigup_cart', JSON.stringify(state.cart));
+      } catch (e) {
+        console.warn('Could not save cart to localStorage');
+      }
+    }
 
-function toggleCart() {
-    if (!UI.cartModal) return;
-    const isFlex = UI.cartModal.style.display === "flex";
-    UI.cartModal.style.display = isFlex ? "none" : "flex";
-}
+    function removeItem(index) {
+      state.cart.splice(index, 1);
+      updateCartDisplay();
+    }
 
-/**
- * 4. TACOS BUILDER LOGIC
- */
-function calculateTacos() {
-    if (!UI.tacosForm) return;
+    function toggleCart() {
+      if (!UI.cartModal) return;
+      const isVisible = UI.cartModal.classList.contains('show');
+      UI.cartModal.classList.toggle('show', !isVisible);
+      UI.cartModal.style.display = isVisible ? 'none' : 'flex';
+      
+      // Focus management for accessibility
+      if (!isVisible) {
+        setTimeout(() => UI.cartName.focus(), 300);
+      }
+    }
 
-    let total = 0;
-    const size = UI.tacosForm.querySelector('input[name="size"]:checked');
-    if (size) total += parseInt(size.value);
+    function handleModalClick(event) {
+      if (event.target.id === 'cartModal') {
+        toggleCart();
+      }
+    }
 
-    UI.tacosForm.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+    function showCartNotification(itemName) {
+      // Visual feedback
+      const cartFloat = document.getElementById('cartFloat');
+      if (cartFloat) {
+        cartFloat.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+          cartFloat.style.transform = 'scale(1)';
+        }, 200);
+      }
+    }
+
+    // ===== TACOS BUILDER =====
+    function calculateTacos() {
+      if (!UI.tacosForm) return;
+
+      let total = 0;
+      const size = UI.tacosForm.querySelector('input[name="size"]:checked');
+      if (size) total += parseInt(size.value);
+
+      UI.tacosForm.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
         total += parseInt(cb.value || 0);
-    });
+      });
 
-    if (UI.tacosPriceDisplay) UI.tacosPriceDisplay.innerText = total + " DH";
-}
+      if (UI.tacosPriceDisplay) UI.tacosPriceDisplay.innerText = total + " DH";
+    }
 
-function confirmTacos() {
-    if (!UI.tacosForm) return;
+    function confirmTacos() {
+      if (!UI.tacosForm) return;
 
-    const sizeInput = UI.tacosForm.querySelector('input[name="size"]:checked');
-    if (!sizeInput) return alert("Veuillez choisir une taille");
+      const sizeInput = UI.tacosForm.querySelector('input[name="size"]:checked');
+      if (!sizeInput) {
+        alert("⚠️ Veuillez choisir une taille");
+        return;
+      }
 
-    const sizeLabel = sizeInput.closest('.custom-checkbox').querySelector('.checkmark').firstChild.textContent.trim();
-    
-    let details = [];
-    UI.tacosForm.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
-        const itemName = cb.closest('.custom-checkbox').querySelector('.checkmark').firstChild.textContent.trim();
-        details.push(itemName);
-    });
+      const sizeLabel = sizeInput.getAttribute('data-label') || 'Tacos';
+      
+      let details = [];
+      UI.tacosForm.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+        const itemName = cb.getAttribute('data-name');
+        if (itemName) details.push(itemName);
+      });
 
-    const finalName = `${sizeLabel} (${details.length > 0 ? details.join(', ') : 'Nature'})`;
-    const finalPrice = parseInt(UI.tacosPriceDisplay.innerText);
+      const finalName = `Tacos ${sizeLabel} (${details.length > 0 ? details.join(', ') : 'Nature'})`;
+      const finalPrice = parseInt(UI.tacosPriceDisplay.innerText);
 
-    addToCart(finalName, finalPrice);
+      addToCart(finalName, finalPrice);
 
-    // Feedback
-    const btn = UI.tacosForm.querySelector('.burger-btn-orange') || UI.tacosForm.querySelector('button[onclick="confirmTacos()"]');
-    if (btn) {
-        const originalText = btn.innerHTML;
-        btn.innerHTML = "AJOUTÉ ! ✓";
+      // Visual feedback
+      const btn = UI.tacosForm.querySelector('button[onclick="confirmTacos()"]');
+      if (btn) {
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="add-text">✓ AJOUTÉ !</span>';
         btn.style.background = "#28a745";
         setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.style.background = "";
-            UI.tacosForm.reset();
-            calculateTacos();
-        }, 1200);
+          btn.innerHTML = originalHTML;
+          btn.style.background = "";
+          UI.tacosForm.reset();
+          calculateTacos();
+        }, 1500);
+      }
     }
-}
 
-/**
- * 5. ORDER SUBMISSION
- */
-function sendOrder() {
-    if (!state.cart.length || !UI.cartName.value.trim()) {
-        alert("Nom et produits requis");
+    // ===== ORDER SUBMISSION =====
+    function sendOrder() {
+      if (!state.cart.length) {
+        alert("⚠️ Votre panier est vide");
         return;
-    }
+      }
 
-    const branch = UI.cartBranch.options[UI.cartBranch.selectedIndex].text;
-    const address = UI.cartAddr.value.trim() || "Sur place / A emporter";
+      const name = UI.cartName.value.trim();
+      if (!name) {
+        alert("⚠️ Veuillez entrer votre nom");
+        UI.cartName.focus();
+        return;
+      }
 
-    let msg = `*COMMANDE BIG UP*\n\n`;
-    msg += `📍 *Branche:* ${branch}\n`;
-    msg += `👤 *Client:* ${UI.cartName.value}\n`;
-    msg += `🏠 *Adresse:* ${address}\n\n`;
-    msg += `*DÉTAILS:*\n`;
+      const branch = UI.cartBranch.options[UI.cartBranch.selectedIndex].text;
+      const address = UI.cartAddr.value.trim() || "Sur place / À emporter";
 
-    state.cart.forEach(item => {
-        msg += `- ${item.name} (x${item.qty}) = ${item.price * item.qty} DH\n`;
-    });
+      let msg = `*🍔 COMMANDE BIG UP*\n\n`;
+      msg += `📍 *Branche:* ${branch}\n`;
+      msg += `👤 *Client:* ${name}\n`;
+      msg += `🏠 *Adresse:* ${address}\n\n`;
+      msg += `*📋 DÉTAILS DE LA COMMANDE:*\n`;
+      msg += `${'─'.repeat(30)}\n`;
 
-    msg += `\n💰 *TOTAL:* ${UI.cartTotal.innerText} DH`;
+      state.cart.forEach((item, index) => {
+        msg += `${index + 1}. ${item.name}\n`;
+        msg += `   Qté: ${item.qty} x ${item.price} DH = ${item.price * item.qty} DH\n`;
+      });
 
-    window.open(`https://wa.me/${UI.cartBranch.value}?text=${encodeURIComponent(msg)}`, '_blank');
-}
+      msg += `${'─'.repeat(30)}\n`;
+      msg += `\n💰 *TOTAL:* ${UI.cartTotal.innerText} DH`;
+      msg += `\n\n_Commande passée via bigup-oujda.com_`;
 
-/**
- * 6. INITIALIZATION & EVENTS
- */
-document.addEventListener("DOMContentLoaded", () => {
-    // Scroll event with requestAnimationFrame for smoothness
-    window.addEventListener('scroll', () => {
-        window.requestAnimationFrame(handleNavigation);
-    }, { passive: true });
+      const whatsappURL = `https://wa.me/${UI.cartBranch.value}?text=${encodeURIComponent(msg)}`;
+      window.open(whatsappURL, '_blank', 'noopener,noreferrer');
 
-    window.addEventListener('resize', handleNavigation);
-    handleNavigation();
-
-    // Back to top click
-    if (UI.backToTop) {
-        UI.backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
-
-    // Modal click outside
-    if (UI.cartModal) {
-        UI.cartModal.addEventListener("click", e => {
-            if (e.target.id === "cartModal") toggleCart();
-        });
-    }
-
-    // Static Item Detection (Pizza & Regular)
-    document.querySelectorAll(".item").forEach(item => {
-        const nameEl = item.querySelector(".item-name");
-        const priceEl = item.querySelector(".item-price");
-        if (!nameEl || !priceEl || item.querySelector('button')) return;
-
-        const name = nameEl.innerText.trim();
-        const priceText = priceEl.innerText;
-        const pizzaMatch = priceText.match(/M\s*(\d+).*G\s*(\d+)/);
-        const normalMatch = priceText.match(/(\d+)\s*DH/);
-
-        if (pizzaMatch) {
-            const m = parseInt(pizzaMatch[1]), g = parseInt(pizzaMatch[2]);
-            const wrap = document.createElement("div");
-            wrap.innerHTML = `
-                <button class="add-btn" onclick="addToCart('${name} M', ${m})">M</button>
-                <button class="add-btn" onclick="addToCart('${name} G', ${g})">G</button>
-            `;
-            priceEl.appendChild(wrap);
-        } else if (normalMatch) {
-            const btn = document.createElement("button");
-            btn.className = "add-btn";
-            btn.textContent = "+ Ajouter";
-            btn.onclick = () => addToCart(name, parseInt(normalMatch[1]));
-            priceEl.appendChild(document.createElement("br"));
-            priceEl.appendChild(btn);
+      // Clear cart after order
+      setTimeout(() => {
+        if (confirm("✅ Commande envoyée ! Voulez-vous vider le panier ?")) {
+          state.cart = [];
+          updateCartDisplay();
+          toggleCart();
         }
+      }, 1000);
+    }
+
+    // ===== INITIALIZATION =====
+    document.addEventListener("DOMContentLoaded", () => {
+      // Load cart from localStorage
+      try {
+        const savedCart = localStorage.getItem('bigup_cart');
+        if (savedCart) {
+          state.cart = JSON.parse(savedCart);
+          updateCartDisplay();
+        }
+      } catch (e) {
+        console.warn('Could not load cart from localStorage');
+      }
+
+      // Scroll event with requestAnimationFrame
+      window.addEventListener('scroll', requestTick, { passive: true });
+      window.addEventListener('resize', handleNavigation);
+      
+      // Initial navigation state
+      handleNavigation();
+
+      // Back to top
+      if (UI.backToTop) {
+        UI.backToTop.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        // ESC to close cart
+        if (e.key === 'Escape' && UI.cartModal.classList.contains('show')) {
+          toggleCart();
+        }
+      });
+
+      // Initialize tacos calculator
+      if (UI.tacosForm) {
+        calculateTacos();
+      }
+
+      // Lazy loading for images (if IntersectionObserver is supported)
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              if (img.dataset.src) {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+              }
+              observer.unobserve(img);
+            }
+          });
+        });
+
+        document.querySelectorAll('img[data-src]').forEach(img => {
+          imageObserver.observe(img);
+        });
+      }
+
+      // Add fade-in animation to sections
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      UI.sections.forEach(section => {
+        sectionObserver.observe(section);
+      });
     });
 
-    // Init Tacos
-    calculateTacos();
-});
-</script>
-
-
-<style>
-/* Add these classes to your CSS for the buttons created by the script */
-.add-btn {
-    margin: 4px 2px;
-    background: #ff6b35;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: 0.2s;
-}
-.add-btn:hover { background: #e85a2a; }
-.cartRow { border-bottom: 1px solid #333; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; }
-</style>
-
-
-
+    // ===== SERVICE WORKER (Optional PWA Support) =====
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        // Uncomment to enable PWA
+        // navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
 </body>
 </html>
+
+
 
