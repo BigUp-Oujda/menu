@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -2074,15 +2075,13 @@
     </div>
   </footer>
 
-  <!-- FLOATING CART BUTTON -->
+   <!-- FLOATING CART BUTTON -->
   <div id="cartFloat" onclick="toggleCart()" aria-label="Ouvrir le panier">
     🛒
     <span id="cartCount">0</span>
   </div>
-
   <!-- BACK TO TOP BUTTON -->
   <button id="backToTop" aria-label="Retour en haut">↑</button>
-
   <!-- CART MODAL -->
   <div id="cartModal" onclick="handleModalClick(event)">
     <div class="cartBox">
@@ -2092,25 +2091,44 @@
       <div style="margin-top: 1rem; padding-top: 1rem; border-top: 2px solid var(--orange);">
         <b style="font-size: 1.3rem;">Total: <span id="cartTotal">0</span> DH</b>
       </div>
-
       <select id="cartBranch" class="cartInput" aria-label="Choisir une branche">
         <option value="212765806052">🏪 BIG UP Qods</option>
         <option value="212765806051">🏪 BIG UP CNSS</option>
       </select>
-
+      <div style="margin-top: 12px;">
+        <label style="display: block; margin-bottom: 8px; color: var(--orange); font-weight: 600;">
+          Type de commande :
+        </label>
+        <div style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;">
+          <label class="order-type-radio">
+            <input type="radio" name="orderType" value="delivery" checked onchange="toggleOrderType()">
+            <span>🛵 Livraison</span>
+          </label>
+          <label class="order-type-radio">
+            <input type="radio" name="orderType" value="dine-in" onchange="toggleOrderType()">
+            <span>🪑 Sur place</span>
+          </label>
+          <label class="order-type-radio">
+            <input type="radio" name="orderType" value="takeaway" onchange="toggleOrderType()">
+            <span>📦 À emporter</span>
+          </label>
+        </div>
+      </div>
       <input id="cartName" class="cartInput" placeholder="Votre nom *" required aria-label="Votre nom">
-      <input id="cartAddr" class="cartInput" placeholder="Adresse de livraison (optionnel)" aria-label="Adresse de livraison">
-
+      <div id="deliveryField">
+        <input id="cartAddr" class="cartInput" placeholder="Adresse de livraison *" aria-label="Adresse de livraison">
+      </div>
+      <div id="tableField" style="display: none;">
+        <input id="cartTable" class="cartInput" placeholder="Numéro de table *" type="number" min="1" aria-label="Numéro de table">
+      </div>
       <button class="orderBtn" onclick="sendOrder()">📱 Commander via WhatsApp</button>
     </div>
   </div>
-
   <script>
     /**
      * BIG UP - OPTIMIZED MENU SYSTEM
      * Enhanced performance, accessibility, and user experience
      */
-
     // ===== GLOBAL STATE =====
     const state = {
       cart: [],
@@ -2118,7 +2136,6 @@
       lastScrollY: 0,
       ticking: false
     };
-
     const UI = {
       sections: document.querySelectorAll('.section'),
       navLinks: document.querySelectorAll('nav a'),
@@ -2129,17 +2146,16 @@
       cartModal: document.getElementById('cartModal'),
       cartName: document.getElementById('cartName'),
       cartAddr: document.getElementById('cartAddr'),
+      cartTable: document.getElementById('cartTable'),
       cartBranch: document.getElementById('cartBranch'),
       tacosForm: document.getElementById('tacosForm'),
       tacosPriceDisplay: document.getElementById('total-price-display')
     };
-
     // ===== NAVIGATION & SCROLL =====
     function handleNavigation() {
       const scrollY = window.scrollY;
       const offset = window.innerWidth <= 768 ? 120 : 250;
       let activeSecId = "";
-
       UI.sections.forEach(sec => {
         const top = sec.offsetTop - offset;
         const height = sec.offsetHeight;
@@ -2147,14 +2163,11 @@
           activeSecId = sec.getAttribute('id');
         }
       });
-
       if (activeSecId && activeSecId !== state.currentActiveId) {
         state.currentActiveId = activeSecId;
-
         UI.navLinks.forEach(a => {
           const isTarget = a.getAttribute('href') === `#${activeSecId}`;
           a.classList.toggle('active', isTarget);
-
           if (isTarget && window.innerWidth <= 768) {
             a.scrollIntoView({
               behavior: 'smooth',
@@ -2164,21 +2177,17 @@
           }
         });
       }
-
       if (UI.backToTop) {
         UI.backToTop.classList.toggle('show', scrollY > 500);
       }
-
       state.ticking = false;
     }
-
     function requestTick() {
       if (!state.ticking) {
         window.requestAnimationFrame(handleNavigation);
         state.ticking = true;
       }
     }
-
     // ===== CART FUNCTIONS =====
     function addToCart(name, price) {
       const existing = state.cart.find(item => item.name === name);
@@ -2190,11 +2199,9 @@
       updateCartDisplay();
       showCartNotification(name);
     }
-
     function updateCartDisplay() {
       let total = 0, count = 0;
       let html = "";
-
       state.cart.forEach((item, idx) => {
         total += item.price * item.qty;
         count += item.qty;
@@ -2210,7 +2217,6 @@
             </div>
           </div>`;
       });
-
       if (UI.cartList) {
         UI.cartList.innerHTML = html || "<p style='text-align:center; padding:20px; color: var(--gray);'>Votre panier est vide 🛒</p>";
       }
@@ -2219,7 +2225,6 @@
         UI.cartCount.innerText = count;
         UI.cartCount.style.display = count > 0 ? 'block' : 'none';
       }
-
       // Save to localStorage
       try {
         localStorage.setItem('bigup_cart', JSON.stringify(state.cart));
@@ -2227,12 +2232,10 @@
         console.warn('Could not save cart to localStorage');
       }
     }
-
     function removeItem(index) {
       state.cart.splice(index, 1);
       updateCartDisplay();
     }
-
     function toggleCart() {
       if (!UI.cartModal) return;
       const isVisible = UI.cartModal.classList.contains('show');
@@ -2244,13 +2247,11 @@
         setTimeout(() => UI.cartName.focus(), 300);
       }
     }
-
     function handleModalClick(event) {
       if (event.target.id === 'cartModal') {
         toggleCart();
       }
     }
-
     function showCartNotification(itemName) {
       // Visual feedback
       const cartFloat = document.getElementById('cartFloat');
@@ -2261,31 +2262,48 @@
         }, 200);
       }
     }
-
+    // ===== ORDER TYPE TOGGLE =====
+    function toggleOrderType() {
+      const orderType = document.querySelector('input[name="orderType"]:checked').value;
+      const deliveryField = document.getElementById('deliveryField');
+      const tableField = document.getElementById('tableField');
+      const cartAddr = document.getElementById('cartAddr');
+      const cartTable = document.getElementById('cartTable');
+      if (orderType === 'delivery') {
+        deliveryField.style.display = 'block';
+        tableField.style.display = 'none';
+        cartAddr.required = true;
+        cartTable.required = false;
+      } else if (orderType === 'dine-in') {
+        deliveryField.style.display = 'none';
+        tableField.style.display = 'block';
+        cartAddr.required = false;
+        cartTable.required = true;
+      } else {
+        deliveryField.style.display = 'none';
+        tableField.style.display = 'none';
+        cartAddr.required = false;
+        cartTable.required = false;
+      }
+    }
     // ===== TACOS BUILDER =====
     function calculateTacos() {
       if (!UI.tacosForm) return;
-
       let total = 0;
       const size = UI.tacosForm.querySelector('input[name="size"]:checked');
       if (size) total += parseInt(size.value);
-
       UI.tacosForm.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
         total += parseInt(cb.value || 0);
       });
-
       if (UI.tacosPriceDisplay) UI.tacosPriceDisplay.innerText = total + " DH";
     }
-
     function confirmTacos() {
       if (!UI.tacosForm) return;
-
       const sizeInput = UI.tacosForm.querySelector('input[name="size"]:checked');
       if (!sizeInput) {
         alert("⚠️ Veuillez choisir une taille");
         return;
       }
-
       const sizeLabel = sizeInput.getAttribute('data-label') || 'Tacos';
       
       let details = [];
@@ -2293,12 +2311,9 @@
         const itemName = cb.getAttribute('data-name');
         if (itemName) details.push(itemName);
       });
-
       const finalName = `Tacos ${sizeLabel} (${details.length > 0 ? details.join(', ') : 'Nature'})`;
       const finalPrice = parseInt(UI.tacosPriceDisplay.innerText);
-
       addToCart(finalName, finalPrice);
-
       // Visual feedback
       const btn = UI.tacosForm.querySelector('button[onclick="confirmTacos()"]');
       if (btn) {
@@ -2313,43 +2328,62 @@
         }, 1500);
       }
     }
-
     // ===== ORDER SUBMISSION =====
     function sendOrder() {
       if (!state.cart.length) {
         alert("⚠️ Votre panier est vide");
         return;
       }
-
       const name = UI.cartName.value.trim();
       if (!name) {
         alert("⚠️ Veuillez entrer votre nom");
         UI.cartName.focus();
         return;
       }
-
+      const orderType = document.querySelector('input[name="orderType"]:checked').value;
       const branch = UI.cartBranch.options[UI.cartBranch.selectedIndex].text;
-      const address = UI.cartAddr.value.trim() || "Sur place / À emporter";
-
+      let orderTypeText = "";
+      let locationInfo = "";
+      if (orderType === 'delivery') {
+        const address = document.getElementById('cartAddr').value.trim();
+        if (!address) {
+          alert("⚠️ Veuillez entrer votre adresse de livraison");
+          document.getElementById('cartAddr').focus();
+          return;
+        }
+        orderTypeText = "🛵 Livraison";
+        locationInfo = `🏠 *Adresse:* ${address}`;
+      } else if (orderType === 'dine-in') {
+        const tableNumber = document.getElementById('cartTable').value.trim();
+        if (!tableNumber) {
+          alert("⚠️ Veuillez entrer votre numéro de table");
+          document.getElementById('cartTable').focus();
+          return;
+        }
+        orderTypeText = "🪑 Sur place";
+        locationInfo = `🔢 *Table:* N° ${tableNumber}`;
+      } else {
+        orderTypeText = "📦 À emporter";
+        locationInfo = "";
+      }
       let msg = `*🍔 COMMANDE BIG UP*\n\n`;
       msg += `📍 *Branche:* ${branch}\n`;
       msg += `👤 *Client:* ${name}\n`;
-      msg += `🏠 *Adresse:* ${address}\n\n`;
+      if (locationInfo) {
+        msg += `${locationInfo}\n`;
+      }
+      msg += `📋 *Mode:* ${orderTypeText}\n\n`;
       msg += `*📋 DÉTAILS DE LA COMMANDE:*\n`;
       msg += `${'─'.repeat(30)}\n`;
-
       state.cart.forEach((item, index) => {
         msg += `${index + 1}. ${item.name}\n`;
         msg += `   Qté: ${item.qty} x ${item.price} DH = ${item.price * item.qty} DH\n`;
       });
-
       msg += `${'─'.repeat(30)}\n`;
       msg += `\n💰 *TOTAL:* ${UI.cartTotal.innerText} DH`;
       msg += `\n\n_Commande passée via bigup-oujda.com_`;
-
       const whatsappURL = `https://wa.me/${UI.cartBranch.value}?text=${encodeURIComponent(msg)}`;
       window.open(whatsappURL, '_blank', 'noopener,noreferrer');
-
       // Clear cart after order
       setTimeout(() => {
         if (confirm("✅ Commande envoyée ! Voulez-vous vider le panier ?")) {
@@ -2359,7 +2393,6 @@
         }
       }, 1000);
     }
-
     // ===== INITIALIZATION =====
     document.addEventListener("DOMContentLoaded", () => {
       // Load cart from localStorage
@@ -2372,21 +2405,18 @@
       } catch (e) {
         console.warn('Could not load cart from localStorage');
       }
-
       // Scroll event with requestAnimationFrame
       window.addEventListener('scroll', requestTick, { passive: true });
       window.addEventListener('resize', handleNavigation);
       
       // Initial navigation state
       handleNavigation();
-
       // Back to top
       if (UI.backToTop) {
         UI.backToTop.addEventListener('click', () => {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         });
       }
-
       // Keyboard shortcuts
       document.addEventListener('keydown', (e) => {
         // ESC to close cart
@@ -2394,12 +2424,10 @@
           toggleCart();
         }
       });
-
       // Initialize tacos calculator
       if (UI.tacosForm) {
         calculateTacos();
       }
-
       // Lazy loading for images (if IntersectionObserver is supported)
       if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -2414,12 +2442,10 @@
             }
           });
         });
-
         document.querySelectorAll('img[data-src]').forEach(img => {
           imageObserver.observe(img);
         });
       }
-
       // Add fade-in animation to sections
       const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -2428,12 +2454,10 @@
           }
         });
       }, { threshold: 0.1 });
-
       UI.sections.forEach(section => {
         sectionObserver.observe(section);
       });
     });
-
     // ===== SERVICE WORKER (Optional PWA Support) =====
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -2444,6 +2468,3 @@
   </script>
 </body>
 </html>
-
-
-
