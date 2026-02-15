@@ -2287,57 +2287,6 @@ function confirmTacos() {
     </div>
   </footer>
 
- <script>
-  const sections = document.querySelectorAll('.section');
-  const navLinks = document.querySelectorAll('nav a');
-  const backToTop = document.getElementById('backToTop');
-
-  function updateActive() {
-    const scrollY = window.scrollY;
-    const isMobile = window.innerWidth <= 768;
-    const offset = isMobile ? 100 : 220;
-
-    sections.forEach((sec) => {
-      const top = sec.offsetTop - offset;
-      const height = sec.offsetHeight;
-
-      if (scrollY >= top && scrollY < top + height) {
-        navLinks.forEach(a => a.classList.remove('active'));
-
-        const id = sec.getAttribute('id');
-        const link = document.querySelector(`nav a[href="#${id}"]`);
-
-        if (link) {
-          link.classList.add('active');
-          link.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-            inline: 'center'
-          });
-        }
-      }
-    });
-
-    // Back to top visibility
-    if (scrollY > 500) {
-      backToTop.classList.add('show');
-    } else {
-      backToTop.classList.remove('show');
-    }
-  }
-
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
-
-  window.addEventListener('scroll', updateActive);
-  window.addEventListener('load', updateActive);
-  window.addEventListener('resize', updateActive);
-</script>
-
   <!-- ===== CART UI ===== -->
 <style>
 #cartFloat{
@@ -2435,176 +2384,278 @@ function confirmTacos() {
 </div>
 
 <script>
-let cart = [];
+/**
+ * BIG UP - UNIFIED MENU SYSTEM
+ * Optimized for performance and smooth navigation
+ */
 
-function addToCart(name, price){
-  const f = cart.find(i=>i.name===name);
-  f ? f.qty++ : cart.push({name,price,qty:1});
-  updateCart();
+// 1. GLOBAL STATE & SELECTORS
+const state = {
+    cart: [],
+    currentActiveId: ""
+};
+
+const UI = {
+    sections: document.querySelectorAll('.section'),
+    navLinks: document.querySelectorAll('nav a'),
+    backToTop: document.getElementById('backToTop'),
+    cartList: document.getElementById('cartList'),
+    cartTotal: document.getElementById('cartTotal'),
+    cartCount: document.getElementById('cartCount'),
+    cartModal: document.getElementById('cartModal'),
+    cartName: document.getElementById('cartName'),
+    cartAddr: document.getElementById('cartAddr'),
+    cartBranch: document.getElementById('cartBranch'),
+    tacosForm: document.getElementById('tacosForm'),
+    tacosPriceDisplay: document.getElementById('total-price-display')
+};
+
+/**
+ * 2. NAVIGATION & SCROLL LOGIC
+ * Fixes the "laggy" nav by using requestAnimationFrame and state tracking
+ */
+function handleNavigation() {
+    const scrollY = window.scrollY;
+    const offset = window.innerWidth <= 768 ? 120 : 250;
+    let activeSecId = "";
+
+    // Find current section
+    UI.sections.forEach(sec => {
+        const top = sec.offsetTop - offset;
+        const height = sec.offsetHeight;
+        if (scrollY >= top && scrollY < top + height) {
+            activeSecId = sec.getAttribute('id');
+        }
+    });
+
+    // Only update DOM if section changed to prevent lag
+    if (activeSecId && activeSecId !== state.currentActiveId) {
+        state.currentActiveId = activeSecId;
+
+        UI.navLinks.forEach(a => {
+            const isTarget = a.getAttribute('href') === `#${activeSecId}`;
+            a.classList.toggle('active', isTarget);
+
+            if (isTarget) {
+                a.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
+            }
+        });
+    }
+
+    // Back to top visibility
+    if (UI.backToTop) {
+        UI.backToTop.classList.toggle('show', scrollY > 500);
+    }
 }
 
-function updateCart(){
-  let total=0,count=0;
-  cartList.innerHTML="";
-  cart.forEach((i,idx)=>{
-    total+=i.price*i.qty;
-    count+=i.qty;
-    cartList.innerHTML+=`
-      <div class="cartRow">
-        ${i.name} x${i.qty}
-        <span>${i.price*i.qty} DH <button onclick="removeItem(${idx})">✕</button></span>
-      </div>`;
-  });
-  cartTotal.innerText=total;
-  cartCount.innerText=count;
+/**
+ * 3. CART CORE FUNCTIONS
+ */
+function addToCart(name, price) {
+    const existing = state.cart.find(item => item.name === name);
+    if (existing) {
+        existing.qty++;
+    } else {
+        state.cart.push({ name, price, qty: 1 });
+    }
+    updateCartDisplay();
 }
 
-function removeItem(i){
-  cart.splice(i,1);
-  updateCart();
+function updateCartDisplay() {
+    let total = 0, count = 0;
+    let html = "";
+
+    state.cart.forEach((item, idx) => {
+        total += item.price * item.qty;
+        count += item.qty;
+        html += `
+            <div class="cartRow">
+                <div class="cartInfo">
+                    <strong>${item.name}</strong><br>
+                    <small>${item.qty} x ${item.price} DH</small>
+                </div>
+                <span>${item.price * item.qty} DH <button onclick="removeItem(${idx})">✕</button></span>
+            </div>`;
+    });
+
+    if (UI.cartList) UI.cartList.innerHTML = html || "<p style='text-align:center; padding:20px;'>Votre panier est vide</p>";
+    if (UI.cartTotal) UI.cartTotal.innerText = total;
+    if (UI.cartCount) UI.cartCount.innerText = count;
 }
 
-function toggleCart(){
-  cartModal.style.display = cartModal.style.display==="flex" ? "none" : "flex";
+function removeItem(index) {
+    state.cart.splice(index, 1);
+    updateCartDisplay();
 }
 
-cartModal.addEventListener("click",e=>{
-  if(e.target.id==="cartModal") toggleCart();
-});
-
-/* ===== DETECT ITEMS + PIZZA ===== */
-document.querySelectorAll(".item").forEach(item=>{
-  const name = item.querySelector(".item-name")?.innerText.trim();
-  const priceText = item.querySelector(".item-price")?.innerText;
-
-  if(!name || !priceText) return;
-
-  const normal = priceText.match(/(\d+)\s*DH/);
-  const pizza = priceText.match(/M\s*(\d+).*G\s*(\d+)/);
-
-  if(normal && !pizza){
-    const btn=document.createElement("button");
-    btn.textContent="+ Ajouter";
-    btn.style="margin-top:6px;background:#ff6b35;color:white;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;";
-    btn.onclick=()=>addToCart(name,parseInt(normal[1]));
-    item.querySelector(".item-price").appendChild(document.createElement("br"));
-    item.querySelector(".item-price").appendChild(btn);
-  }
-
-  if(pizza){
-    const m=parseInt(pizza[1]);
-    const g=parseInt(pizza[2]);
-
-    const wrap=document.createElement("div");
-    wrap.innerHTML=`
-      <button style="margin:4px;background:#ff6b35;color:#fff;border:none;padding:6px;border-radius:6px;">M</button>
-      <button style="margin:4px;background:#ff6b35;color:#fff;border:none;padding:6px;border-radius:6px;">G</button>
-    `;
-    const [mBtn,gBtn]=wrap.querySelectorAll("button");
-
-    mBtn.onclick=()=>addToCart(name+" M",m);
-    gBtn.onclick=()=>addToCart(name+" G",g);
-
-    item.querySelector(".item-price").appendChild(wrap);
-  }
-});
-
-function sendOrder(){
-  if(!cart.length || !cartName.value){
-    alert("Nom + produits requis");
-    return;
-  }
-
-  const branch = cartBranch.selectedIndex===0?"BIG UP Qods":"BIG UP CNSS";
-
-  let msg=`COMMANDE BIG UP\n\nBranche: ${branch}\nNom: ${cartName.value}\nAdresse: ${cartAddr.value||"Sur place"}\n\n`;
-
-  cart.forEach(i=> msg+=`- ${i.name} x${i.qty} = ${i.price*i.qty} DH\n`);
-
-  msg+=`\nTOTAL: ${cartTotal.innerText} DH`;
-
-  window.open(`https://wa.me/${cartBranch.value}?text=${encodeURIComponent(msg)}`);
+function toggleCart() {
+    if (!UI.cartModal) return;
+    const isFlex = UI.cartModal.style.display === "flex";
+    UI.cartModal.style.display = isFlex ? "none" : "flex";
 }
-/* --- ADD THIS TO YOUR EXISTING <script> TAG --- */
 
-// 1. Function to calculate the Tacos price based on selections
+/**
+ * 4. TACOS BUILDER LOGIC
+ */
 function calculateTacos() {
-  const form = document.getElementById('tacosForm');
-  if (!form) return;
+    if (!UI.tacosForm) return;
 
-  let total = 0;
+    let total = 0;
+    const size = UI.tacosForm.querySelector('input[name="size"]:checked');
+    if (size) total += parseInt(size.value);
 
-  // Get the base price from the selected Radio (Size)
-  const sizes = document.getElementsByName('size');
-  for (let size of sizes) {
-    if (size.checked) {
-      total += parseInt(size.value);
-    }
-  }
+    UI.tacosForm.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+        total += parseInt(cb.value || 0);
+    });
 
-  // Add prices from all checked checkboxes (Meats and Extras)
-  const checkboxes = form.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach(cb => {
-    if (cb.checked) {
-      total += parseInt(cb.value);
-    }
-  });
-
-  // Update the display on the screen
-  const display = document.getElementById('total-price-display');
-  if (display) display.innerText = total + " DH";
+    if (UI.tacosPriceDisplay) UI.tacosPriceDisplay.innerText = total + " DH";
 }
 
-// 2. Function to gather all choices and send them to your main addToCart function
 function confirmTacos() {
-  const form = document.getElementById('tacosForm');
-  if (!form) return;
+    if (!UI.tacosForm) return;
 
-  // Find the selected size label
-  const sizeInput = form.querySelector('input[name="size"]:checked');
-  const sizeLabel = sizeInput.parentElement.querySelector('.checkmark').firstChild.textContent.trim();
+    const sizeInput = UI.tacosForm.querySelector('input[name="size"]:checked');
+    if (!sizeInput) return alert("Veuillez choisir une taille");
 
-  // Collect all checked ingredients and sauces
-  let selectedItems = [];
-  const checkedBoxes = form.querySelectorAll('input[type="checkbox"]:checked');
-  checkedBoxes.forEach(cb => {
-    // Get the name only (ignoring the +5DH part)
-    const itemName = cb.parentElement.querySelector('.checkmark').firstChild.textContent.trim();
-    selectedItems.push(itemName);
-  });
+    const sizeLabel = sizeInput.closest('.custom-checkbox').querySelector('.checkmark').firstChild.textContent.trim();
+    
+    let details = [];
+    UI.tacosForm.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+        const itemName = cb.closest('.custom-checkbox').querySelector('.checkmark').firstChild.textContent.trim();
+        details.push(itemName);
+    });
 
-  // Create the full product name: e.g., "Taille L (Poulet, Tenders, Algérienne)"
-  const finalName = `${sizeLabel} (${selectedItems.length > 0 ? selectedItems.join(', ') : 'Nature'})`;
-  
-  // Get the final calculated price
-  const finalPriceText = document.getElementById('total-price-display').innerText;
-  const finalPrice = parseInt(finalPriceText);
+    const finalName = `${sizeLabel} (${details.length > 0 ? details.join(', ') : 'Nature'})`;
+    const finalPrice = parseInt(UI.tacosPriceDisplay.innerText);
 
-  // CALL YOUR EXISTING GLOBAL FUNCTION
-  if (typeof addToCart === "function") {
     addToCart(finalName, finalPrice);
 
-    // Provide visual feedback on the button
-    const submitBtn = form.querySelector('.burger-btn-orange');
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = "AJOUTÉ ! ✓";
-    submitBtn.style.background = "#28a745"; // Temporary Green
-
-    // Reset form after 2 seconds
-    setTimeout(() => {
-      submitBtn.innerHTML = originalText;
-      submitBtn.style.background = ""; // Back to CSS orange
-      form.reset();
-      calculateTacos(); // Reset price to base (30 DH)
-    }, 1500);
-
-  } else {
-    alert("Erreur: La fonction addToCart est introuvable.");
-  }
+    // Feedback
+    const btn = UI.tacosForm.querySelector('.burger-btn-orange') || UI.tacosForm.querySelector('button[onclick="confirmTacos()"]');
+    if (btn) {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "AJOUTÉ ! ✓";
+        btn.style.background = "#28a745";
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = "";
+            UI.tacosForm.reset();
+            calculateTacos();
+        }, 1200);
+    }
 }
+
+/**
+ * 5. ORDER SUBMISSION
+ */
+function sendOrder() {
+    if (!state.cart.length || !UI.cartName.value.trim()) {
+        alert("Nom et produits requis");
+        return;
+    }
+
+    const branch = UI.cartBranch.options[UI.cartBranch.selectedIndex].text;
+    const address = UI.cartAddr.value.trim() || "Sur place / A emporter";
+
+    let msg = `*COMMANDE BIG UP*\n\n`;
+    msg += `📍 *Branche:* ${branch}\n`;
+    msg += `👤 *Client:* ${UI.cartName.value}\n`;
+    msg += `🏠 *Adresse:* ${address}\n\n`;
+    msg += `*DÉTAILS:*\n`;
+
+    state.cart.forEach(item => {
+        msg += `- ${item.name} (x${item.qty}) = ${item.price * item.qty} DH\n`;
+    });
+
+    msg += `\n💰 *TOTAL:* ${UI.cartTotal.innerText} DH`;
+
+    window.open(`https://wa.me/${UI.cartBranch.value}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+/**
+ * 6. INITIALIZATION & EVENTS
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    // Scroll event with requestAnimationFrame for smoothness
+    window.addEventListener('scroll', () => {
+        window.requestAnimationFrame(handleNavigation);
+    }, { passive: true });
+
+    window.addEventListener('resize', handleNavigation);
+    handleNavigation();
+
+    // Back to top click
+    if (UI.backToTop) {
+        UI.backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // Modal click outside
+    if (UI.cartModal) {
+        UI.cartModal.addEventListener("click", e => {
+            if (e.target.id === "cartModal") toggleCart();
+        });
+    }
+
+    // Static Item Detection (Pizza & Regular)
+    document.querySelectorAll(".item").forEach(item => {
+        const nameEl = item.querySelector(".item-name");
+        const priceEl = item.querySelector(".item-price");
+        if (!nameEl || !priceEl || item.querySelector('button')) return;
+
+        const name = nameEl.innerText.trim();
+        const priceText = priceEl.innerText;
+        const pizzaMatch = priceText.match(/M\s*(\d+).*G\s*(\d+)/);
+        const normalMatch = priceText.match(/(\d+)\s*DH/);
+
+        if (pizzaMatch) {
+            const m = parseInt(pizzaMatch[1]), g = parseInt(pizzaMatch[2]);
+            const wrap = document.createElement("div");
+            wrap.innerHTML = `
+                <button class="add-btn" onclick="addToCart('${name} M', ${m})">M</button>
+                <button class="add-btn" onclick="addToCart('${name} G', ${g})">G</button>
+            `;
+            priceEl.appendChild(wrap);
+        } else if (normalMatch) {
+            const btn = document.createElement("button");
+            btn.className = "add-btn";
+            btn.textContent = "+ Ajouter";
+            btn.onclick = () => addToCart(name, parseInt(normalMatch[1]));
+            priceEl.appendChild(document.createElement("br"));
+            priceEl.appendChild(btn);
+        }
+    });
+
+    // Init Tacos
+    calculateTacos();
+});
 </script>
+
+
+<style>
+/* Add these classes to your CSS for the buttons created by the script */
+.add-btn {
+    margin: 4px 2px;
+    background: #ff6b35;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+.add-btn:hover { background: #e85a2a; }
+.cartRow { border-bottom: 1px solid #333; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; }
+</style>
 
 
 
 </body>
 </html>
+
