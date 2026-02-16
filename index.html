@@ -2467,8 +2467,20 @@
         // navigator.serviceWorker.register('/sw.js').catch(() => {});
       });
     }
+   // Force the page to scroll to the top on every fresh load
+window.onload = function() {
+    setTimeout(function() {
+        window.scrollTo(0, 0);
+    }, 1);
+};
+
+// Prevent the browser from remembering the previous scroll position
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
   </script>
 </body>
 </html>
+
 
 
