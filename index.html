@@ -2381,7 +2381,7 @@
       });
       msg += `${'─'.repeat(30)}\n`;
       msg += `\n💰 *TOTAL:* ${UI.cartTotal.innerText} DH`;
-      msg += `\n\n_Commande passée via bigup-oujda.com_`;
+      
       const whatsappURL = `https://wa.me/${UI.cartBranch.value}?text=${encodeURIComponent(msg)}`;
       window.open(whatsappURL, '_blank', 'noopener,noreferrer');
       // Clear cart after order
@@ -2468,3 +2468,4 @@
   </script>
 </body>
 </html>
+
