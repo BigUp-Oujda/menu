@@ -2125,6 +2125,21 @@
     </div>
   </div>
   <script>
+    if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+  /**
+   * BIG UP - OPTIMIZED MENU SYSTEM
+   * Enhanced performance, accessibility, and user experience
+   */
+  // ===== GLOBAL STATE =====
+  const state = {
+    cart: [],
+    currentActiveId: "",
+    lastScrollY: 0,
+    ticking: false
+  };
     /**
      * BIG UP - OPTIMIZED MENU SYSTEM
      * Enhanced performance, accessibility, and user experience
@@ -2468,4 +2483,5 @@
   </script>
 </body>
 </html>
+
 
